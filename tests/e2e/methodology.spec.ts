@@ -14,6 +14,17 @@ test("methodology exposes official source, download, terms, and normalized evide
   });
   await expect(regionalInventory).toBeVisible();
   await expect(regionalInventory.getByRole("row")).toHaveCount(9);
+  const offerEvidenceNote = page.getByRole("complementary", {
+    name: "Alcance del recurso de evidencia de ofertas",
+  });
+  await expect(offerEvidenceNote).toBeVisible();
+  await expect(offerEvidenceNote).not.toContainText("offerEvidence");
+  await expect(offerEvidenceNote).toContainText(
+    "recurso propio de evidencia sobre las ofertas",
+  );
+  await expect(offerEvidenceNote).toContainText(
+    "repositorio abierto del proyecto",
+  );
   await expect(
     regionalInventory.getByRole("link", { name: "Contratos por provincia" }),
   ).toBeVisible();

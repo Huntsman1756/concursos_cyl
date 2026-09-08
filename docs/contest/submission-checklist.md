@@ -13,26 +13,29 @@
 ## Campos técnicos
 
 - URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Fallback verificada: [https://huntsman1756.github.io/concursos_cyl/](https://huntsman1756.github.io/concursos_cyl/)
-- Commit fuente del freeze: `032426013a88c35bad348f3c443dae7d9a1639a3`.
-- Snapshot: `20260822085631889-fc9bf2ba23f9`.
-- Commit desplegado: `753a3160cc3cc895b943ccd5c8d7c52129a6dc9f`.
-- Run del workflow: `33189836718`.
-- `version.json` verificado: [respuesta pública](https://salida-cyl.157-90-22-40.sslip.io/version.json) con commit igual a `753a3160cc3cc895b943ccd5c8d7c52129a6dc9f`.
+- El estado del respaldo GitHub Pages se registra por separado en [verification-20260908.md](verification-20260908.md).
+- Commit fuente del freeze: `136a08859f387427b74605bdcf8c19ea9584aebc`.
+- Snapshot: `20260908044344059-f92da75832e9`.
+- Commit desplegado: `2aaef9a1fa545e35b76c9b05f6cf98172175b94d`.
+- Run del workflow: no aplica (despliegue por script VPS, sin GitHub Actions).
+- Release: `v2026.09.08-candidate.17`.
+- `version.json` verificado: [respuesta pública](https://salida-cyl.157-90-22-40.sslip.io/version.json) con commit igual a `2aaef9a1fa545e35b76c9b05f6cf98172175b94d`.
+- Identidad del producto: el commit desplegado registrado arriba es el commit de producto; esta documentación de candidatura vive en una rama documental posterior y no forma parte del commit desplegado.
+
 - Evidencia visual: **capturada y validada en `docs/contest/evidence-capture.json`**.
 
 ## Evidencia visual y gate final
 
 - [x] Captura automatizada A4: 13/13 capturas actuales recapturadas y validadas en `docs/contest/evidence-capture.json`.
-- [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
+- [ ] Capturar y revisar visualmente los recorridos de la versión final en un navegador disponible, en escritorio y móvil; registrar versión, fecha y límites de la comprobación.
 - [ ] Revisar la aplicación pública de la release actual en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
 - [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; el manifiesto contiene capturas actuales ligadas al commit de publicación.
 - [x] Ejecutar los gates de release y verificar la aplicación pública.
-- [x] Rellenar el commit desplegado y el run del workflow con datos observados.
+- [x] Registrar el commit desplegado y la verificación pública observados (despliegue por script VPS, sin run de GitHub Actions).
 - [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales. (capturas actuales; revisión humana pendiente)
-- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260822085631889-fc9bf2ba23f9`. (revisión humana pendiente)
+- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260908044344059-f92da75832e9`. (revisión humana pendiente)
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
 
-Cualquier cambio posterior debe seguir el flujo rama de trabajo → PR → checks → revisión/aprobación → merge a `main` → GitHub Pages.
+Antes de publicar cambios posteriores, ejecutar las comprobaciones pertinentes, revisar el diff y verificar el despliegue contra su commit. La observación pública más reciente se registra en [verification-20260908.md](verification-20260908.md); los registros históricos no garantizan el estado actual.

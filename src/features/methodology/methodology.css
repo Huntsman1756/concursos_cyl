@@ -1,29 +1,43 @@
 .methodology-page {
   display: grid;
+  width: 100%;
   gap: var(--space-8);
+  max-width: none;
+  margin: 0;
 }
 
 .methodology-page__intro {
   max-width: 52rem;
 }
 
-.methodology-page__eyebrow {
-  margin: 0 0 var(--space-2);
-  color: var(--color-action-text);
-  font-weight: 750;
-}
-
 .methodology-page__intro h1 {
-  margin: 0 0 var(--space-3);
-  color: var(--color-primary);
-  font-size: clamp(2rem, 5vw, 3rem);
-  line-height: 1.1;
+  max-width: var(--reading-max);
 }
 
-.methodology-page__intro p:last-child {
-  margin: 0;
+.methodology-page__intro > .page-lede {
+  margin: var(--space-3) 0 0;
   color: var(--color-text-muted);
-  font-size: 1.0625rem;
+  font-size: var(--type-body);
+  line-height: var(--text-body-large-line-height);
+}
+
+.methodology-ai-disclosure {
+  max-width: var(--reading-max);
+  padding: var(--space-3) var(--space-4);
+  border-left: 0.3rem solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  background: var(--color-warning-surface);
+}
+
+/* Long prose reads comfortably at ~65-75 characters per line. */
+.methodology-page > aside:not(.methodology-ai-disclosure) {
+  max-width: var(--reading-max);
+}
+
+.methodology-ai-disclosure p {
+  margin: 0;
+  line-height: 1.5;
 }
 
 .regional-dataset-inventory {
@@ -93,29 +107,39 @@
 
 .source-method-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-6);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-5);
   align-items: start;
 }
 
 .source-method-card {
   min-width: 0;
-  padding: clamp(var(--space-5), 3vw, var(--space-8));
+  padding: var(--panel-padding-md);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-card);
   background: var(--color-surface);
 }
 
+.methodology-statistics-card {
+  grid-column: span 6;
+}
+
+.methodology-complementary-card,
 .methodology-catalog-card {
   grid-column: 1 / -1;
   scroll-margin-top: var(--space-6);
 }
 
+.methodology-derived-card {
+  grid-column: 1 / -1;
+}
+
 .source-method-card > h2 {
   margin: 0;
   color: var(--color-primary);
-  font-size: 1.5rem;
-  line-height: 1.2;
+  font-size: var(--type-card-title);
+  font-weight: var(--type-card-title-weight);
+  line-height: var(--text-h3-line-height);
 }
 
 .source-method-card > section {
@@ -126,7 +150,8 @@
 
 .source-method-card h3 {
   margin: 0 0 var(--space-2);
-  font-size: 1rem;
+  font-size: var(--type-control);
+  font-weight: var(--type-control-weight);
 }
 
 .source-method-card p,
@@ -148,8 +173,9 @@
 
 .source-method-card__warning {
   margin-top: var(--space-3) !important;
-  padding: var(--space-3);
+  padding: var(--panel-padding-sm);
   border-left: 0.25rem solid var(--color-action);
+  border-radius: var(--radius-panel);
   background: var(--color-warning-surface);
 }
 
@@ -161,7 +187,7 @@
 .source-table-list details {
   padding: var(--space-3);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-card);
   background: var(--color-surface-subtle);
 }
 
@@ -179,9 +205,9 @@
 
 .methodology-notes {
   max-width: 58rem;
-  padding: clamp(var(--space-5), 3vw, var(--space-8));
+  padding: var(--panel-padding-md);
   border-left: 0.3rem solid var(--color-primary);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-panel);
   background: var(--color-surface-subtle);
 }
 
@@ -189,14 +215,14 @@
   max-width: 58rem;
   padding: var(--space-5);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-panel);
   background: var(--color-surface);
 }
 
 .methodology-scope summary {
   color: var(--color-primary);
-  font-size: 1.125rem;
-  font-weight: 750;
+  font-size: var(--type-control);
+  font-weight: var(--type-control-weight);
   cursor: pointer;
 }
 
@@ -222,13 +248,13 @@
   margin-block: var(--space-5);
   padding: var(--space-4);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-card);
   background: var(--color-surface);
 }
 
 .methodology-technical summary {
   color: var(--color-action-text);
-  font-weight: 750;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -239,6 +265,13 @@
 @media (max-width: 47.999rem) {
   .source-method-grid {
     grid-template-columns: 1fr;
+  }
+
+  .methodology-statistics-card,
+  .methodology-complementary-card,
+  .methodology-catalog-card,
+  .methodology-derived-card {
+    grid-column: 1;
   }
 
   .regional-dataset-inventory__heading {

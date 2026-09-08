@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Icon } from "../components/Icon";
+
 import { RouteReadyProvider } from "./RouteReady";
 import { titleForPathname } from "./routeTitles";
+import { useRouteScrollFocus } from "./useRouteScrollFocus";
 import "../styles/global.css";
+import "../styles/visualRefresh.css";
+import "../styles/salida.css";
 
 interface AppShellProps {
   children: ReactNode;
@@ -11,49 +14,54 @@ interface AppShellProps {
 
 const DESKTOP_NAV_QUERY = "(min-width: 48rem)";
 
-interface PrimaryNavigationLinksProps {
-  onNavigate?: () => void;
-}
+const PRIMARY_LINKS: Array<{ to: string; label: string }> = [
+  { to: "/desde-fp", label: "Explorar" },
+  { to: "/desde-oferta", label: "Ofertas" },
+  { to: "/donde-estudiar", label: "Dónde estudiar" },
+  { to: "/comparar", label: "Comparar estudios" },
+];
 
-function PrimaryNavigationLinks({ onNavigate }: PrimaryNavigationLinksProps) {
-  return (
-    <ul>
-      <li>
-        <NavLink to="/" end onClick={onNavigate}>
-          Inicio
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/desde-fp" onClick={onNavigate}>
-          Desde FP
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/desde-ocupacion" onClick={onNavigate}>
-          Desde ocupación
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/desde-oferta" onClick={onNavigate}>
-          Desde oferta
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/comparar" onClick={onNavigate}>
-          Comparar estudios
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/recursos" onClick={onNavigate}>
-          Más formación
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/metodologia" onClick={onNavigate}>
-          Metodología
-        </NavLink>
-      </li>
-    </ul>
+const SECONDARY_LINKS: Array<{ to: string; label: string }> = [
+  { to: "/recursos", label: "Más formación" },
+  { to: "/datos-abiertos", label: "Datos abiertos" },
+  { to: "/metodologia", label: "Metodología" },
+  { to: "/accesibilidad", label: "Accesibilidad" },
+];
+
+function MobileMenuIcon({ open }: { open: boolean }) {
+  return open ? (
+    <svg
+      className="icon"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="18" x2="6" y1="6" y2="18" />
+      <line x1="6" x2="18" y1="6" y2="18" />
+    </svg>
+  ) : (
+    <svg
+      className="icon"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="4" x2="20" y1="6" y2="6" />
+      <line x1="4" x2="20" y1="12" y2="12" />
+      <line x1="4" x2="20" y1="18" y2="18" />
+    </svg>
   );
 }
 
@@ -69,6 +77,8 @@ export function AppShell({ children }: AppShellProps) {
   ].join("|");
   const previousLocationSignature = useRef(locationSignature);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useRouteScrollFocus(mainRef);
 
   useEffect(() => {
     document.title = titleForPathname(location.pathname);
@@ -114,40 +124,68 @@ export function AppShell({ children }: AppShellProps) {
       <a className="skip-link" href="#main-content">
         Saltar al contenido
       </a>
-      <header className="site-header">
-        <div className="site-header__inner">
-          <div className="site-identity">
-            <Link className="site-name" to="/">
-              <span>SALIDA</span> CyL
-            </Link>
-            <span className="site-descriptor">
-              FP y empleo con datos públicos
-            </span>
-          </div>
+      <header className="header">
+        <div className="container header-bar">
+          <Link className="wordmark" to="/">
+            SALIDA <span className="cyl">CyL</span>
+          </Link>
+          <nav className="header-secondary" aria-label="Enlaces secundarios">
+            {SECONDARY_LINKS.map((link) => (
+              <NavLink key={link.to} to={link.to}>
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
           <button
             ref={menuButtonRef}
-            className="site-menu-button"
+            className="menu-button"
             type="button"
-            aria-label={
-              menuOpen ? "Cerrar menú principal" : "Abrir menú principal"
-            }
             aria-expanded={menuOpen}
-            aria-controls="mobile-primary-navigation"
+            aria-controls="mobile-menu"
             onClick={() => setMenuOpen((open) => !open)}
           >
-            <Icon name={menuOpen ? "x" : "menu"} size={22} />
+            <MobileMenuIcon open={menuOpen} />
+            Menú
           </button>
-          <nav className="site-nav site-nav--desktop" aria-label="Principal">
-            <PrimaryNavigationLinks />
-          </nav>
-          <nav
-            className="site-nav site-nav--mobile"
-            id="mobile-primary-navigation"
-            aria-label="Principal móvil"
-            hidden={!menuOpen}
-          >
-            <PrimaryNavigationLinks onNavigate={() => setMenuOpen(false)} />
-          </nav>
+        </div>
+        <nav className="global-nav" aria-label="Navegación principal">
+          <div className="container">
+            <ul className="global-nav-list">
+              {PRIMARY_LINKS.map((link) => (
+                <li key={link.to}>
+                  <NavLink className="global-nav-link" to={link.to}>
+                    {link.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+        <div
+          className={"mobile-menu" + (menuOpen ? " is-open" : "")}
+          id="mobile-menu"
+          hidden={!menuOpen}
+        >
+          <ul className="mobile-menu-list">
+            {PRIMARY_LINKS.map((link) => (
+              <li key={link.to}>
+                <NavLink to={link.to} onClick={() => setMenuOpen(false)}>
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+          <div className="mobile-menu-secondary">
+            {SECONDARY_LINKS.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                onClick={() => setMenuOpen(false)}
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </div>
         </div>
       </header>
       <RouteReadyProvider mainRef={mainRef}>
@@ -161,24 +199,69 @@ export function AppShell({ children }: AppShellProps) {
           {children}
         </main>
       </RouteReadyProvider>
-      <footer className="site-footer">
-        <div className="site-footer__inner">
-          <div className="site-footer__identity">
-            <strong>SALIDA CyL</strong>
-            <span>Proyecto independiente basado en datos públicos.</span>
-            <span>
-              Desarrollado para el X Concurso de Datos Abiertos de Castilla y
-              León en la categoría Productos y Servicios.
-            </span>
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-grid">
+            <div>
+              <h2 className="footer-group-title">Explorar</h2>
+              <ul className="footer-group-list">
+                <li>
+                  <Link to="/desde-fp">Desde tu FP</Link>
+                </li>
+                <li>
+                  <Link to="/desde-ocupacion">Desde una profesión</Link>
+                </li>
+                <li>
+                  <Link to="/desde-oferta">Desde una oferta</Link>
+                </li>
+                <li>
+                  <Link to="/donde-estudiar">Dónde estudiar</Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h2 className="footer-group-title">Datos y método</h2>
+              <ul className="footer-group-list">
+                <li>
+                  <Link to="/metodologia">Metodología</Link>
+                </li>
+                <li>
+                  <Link to="/datos-abiertos">Datos abiertos</Link>
+                </li>
+                <li>
+                  <Link to="/comparar">Comparar estudios</Link>
+                </li>
+                <li>
+                  <Link to="/recursos">Más formación</Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h2 className="footer-group-title">Información</h2>
+              <ul className="footer-group-list">
+                <li>
+                  <Link to="/accesibilidad">Accesibilidad</Link>
+                </li>
+                <li>
+                  <Link to="/para-organizaciones">Para organizaciones</Link>
+                </li>
+                <li>
+                  <a href={`${import.meta.env.BASE_URL}candidatura.html`}>
+                    Candidatura 2026
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-          <nav aria-label="Pie de página">
-            <Link to="/datos-abiertos">Datos abiertos</Link>
-            <Link to="/metodologia">Metodología</Link>
-            <Link to="/metodologia#limitaciones">Limitaciones</Link>
-            <Link to="/para-organizaciones">Para organizaciones</Link>
-            <Link to="/accesibilidad">Accesibilidad</Link>
-          </nav>
-          <p>Datos públicos estatales y de Castilla y León</p>
+          <div className="footer-bottom">
+            <p className="caption">
+              SALIDA CyL — orientación profesional con datos públicos de
+              Castilla y León.
+            </p>
+            <p className="caption">
+              Imágenes editoriales generadas mediante IA.
+            </p>
+          </div>
         </div>
       </footer>
     </>

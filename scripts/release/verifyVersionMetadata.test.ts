@@ -26,6 +26,11 @@ describe("verifyCaddyContainer (Metadata)", () => {
       records: Array.from({ length: 116 }, () => ({})),
     });
     const sepeSha256 = createHash("sha256").update(sepe).digest("hex");
+    const evidence = JSON.stringify({
+      records: [{ offerId: "1" }],
+      counts: { offerCount: 1 },
+    });
+    const evidenceSha256 = createHash("sha256").update(evidence).digest("hex");
     const request = vi.fn((input: string | URL) => {
       const path = new URL(input).pathname;
       if (path === "/version.json") {
@@ -61,6 +66,29 @@ describe("verifyCaddyContainer (Metadata)", () => {
                 resourcePath: "/data/v1/snapshots/abc/open-data-catalog.json",
                 recordCount: 1,
               },
+              offerEvidence: {
+                resourcePath: "/data/v1/snapshots/abc/offer-evidence.json",
+                recordCount: 1,
+                sha256: evidenceSha256,
+              },
+            },
+          }),
+        );
+      }
+      if (path.endsWith("/offer-evidence.json")) {
+        return Promise.resolve(
+          new Response(evidence, {
+            headers: { "content-type": "application/json" },
+          }),
+        );
+      }
+      if (path.includes("qa-cache-guard-does-not-exist")) {
+        return Promise.resolve(
+          new Response("not found", {
+            status: 404,
+            headers: {
+              "content-type": "text/plain",
+              "cache-control": "no-store",
             },
           }),
         );

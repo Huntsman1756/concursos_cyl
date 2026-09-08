@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Metodología — SALIDA CyL · prototipo</title>
+    <link rel="stylesheet" href="../product.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+    <header class="header">
+      <div class="container header-bar">
+        <a class="wordmark" href="/">SALIDA <span class="cyl">CyL</span></a>
+        <nav class="header-secondary" aria-label="Enlaces secundarios">
+          <a href="/recursos">Más formación</a>
+          <a href="/datos-abiertos">Datos abiertos</a>
+          <a href="/metodologia">Metodología</a>
+          <a href="/accesibilidad">Accesibilidad</a>
+        </nav>
+        <button
+          class="menu-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          id="menu-button"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+          Menú
+        </button>
+      </div>
+      <nav class="global-nav" aria-label="Navegación principal">
+        <div class="container">
+          <ul class="global-nav-list">
+            <li><a class="global-nav-link" href="/desde-fp">Explorar</a></li>
+            <li><a class="global-nav-link" href="/desde-oferta">Ofertas</a></li>
+            <li>
+              <a class="global-nav-link" href="/donde-estudiar"
+                >Dónde estudiar</a
+              >
+            </li>
+            <li>
+              <a class="global-nav-link" href="/comparar">Comparar estudios</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="mobile-menu" id="mobile-menu" hidden>
+        <ul class="mobile-menu-list">
+          <li><a href="/desde-fp">Explorar</a></li>
+          <li><a href="/desde-oferta">Ofertas</a></li>
+          <li><a href="/donde-estudiar">Dónde estudiar</a></li>
+          <li><a href="/comparar">Comparar estudios</a></li>
+        </ul>
+        <div class="mobile-menu-secondary">
+          <a href="/recursos">Más formación</a>
+          <a href="/datos-abiertos">Datos abiertos</a>
+          <a href="/metodologia">Metodología</a>
+          <a href="/accesibilidad">Accesibilidad</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="container">
+        <nav class="breadcrumbs" aria-label="Miga de pan">
+          <ol>
+            <li><a href="/">Inicio</a></li>
+            <li><span aria-current="page">Metodología</span></li>
+          </ol>
+        </nav>
+
+        <header class="page-header">
+          <p class="eyebrow">Cómo funciona SALIDA</p>
+          <h1 class="h1">Metodología</h1>
+          <p class="page-subcopy">
+            ¿Cómo decidimos que una FP y una profesión están relacionadas? En
+            cinco pasos, con fuentes públicas y evidencia conservada.
+          </p>
+        </header>
+
+        <section
+          class="section"
+          style="padding-top: 0"
+          aria-label="Los cinco pasos"
+        >
+          <ol class="example-flow" style="max-width: 48rem">
+            <li class="example-step">
+              <span class="example-step-icon" aria-hidden="true"
+                ><strong style="font-weight: 600">1</strong></span
+              >
+              <div>
+                <h2 class="h3" style="margin: 0">Parte de fuentes oficiales</h2>
+                <p class="relation-meta" style="margin-top: var(--space-1)">
+                  Los títulos y sus salidas vienen de TodoFP y del BOE; las
+                  ocupaciones, del catálogo CNO-11 del SEPE; los centros y las
+                  ofertas, de la Junta de Castilla y León (ECYL) y otras fuentes
+                  públicas.
+                </p>
+              </div>
+            </li>
+            <li class="example-step">
+              <span class="example-step-icon" aria-hidden="true"
+                ><strong style="font-weight: 600">2</strong></span
+              >
+              <div>
+                <h2 class="h3" style="margin: 0">
+                  Normaliza ciclos y ocupaciones
+                </h2>
+                <p class="relation-meta" style="margin-top: var(--space-1)">
+                  Unificamos nombres, familias, niveles y alias para que un
+                  mismo ciclo u ocupación aparezca siempre de la misma forma.
+                </p>
+              </div>
+            </li>
+            <li class="example-step">
+              <span class="example-step-icon" aria-hidden="true"
+                ><strong style="font-weight: 600">3</strong></span
+              >
+              <div>
+                <h2 class="h3" style="margin: 0">Revisa cada relación</h2>
+                <p class="relation-meta" style="margin-top: var(--space-1)">
+                  Cada enlace FP ↔ ocupación se comprueba contra su fuente, con
+                  cita textual y fecha de revisión. Nada se publica por pura
+                  semejanza de palabras.
+                </p>
+              </div>
+            </li>
+            <li class="example-step">
+              <span class="example-step-icon" aria-hidden="true"
+                ><strong style="font-weight: 600">4</strong></span
+              >
+              <div>
+                <h2 class="h3" style="margin: 0">Publica solo lo aprobado</h2>
+                <p class="relation-meta" style="margin-top: var(--space-1)">
+                  Publicamos dos tipos de relación: “salida oficial del título”
+                  (la ocupación figura en la fuente oficial del ciclo) y
+                  “relación revisada” (verificada con evidencia propia).
+                </p>
+              </div>
+            </li>
+            <li class="example-step">
+              <span class="example-step-icon" aria-hidden="true"
+                ><strong style="font-weight: 600">5</strong></span
+              >
+              <div>
+                <h2 class="h3" style="margin: 0">Conserva la evidencia</h2>
+                <p class="relation-meta" style="margin-top: var(--space-1)">
+                  Cada relación guarda su cita, fuente, versión de mapeo y
+                  fecha. Puedes verla en cada ficha y descargarla en datos
+                  abiertos.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </section>
+
+        <section class="section section--alt" aria-labelledby="limites-title">
+          <div class="container" style="padding-inline: 0; max-width: 48rem">
+            <h2 class="h2" id="limites-title">Límites: lo que SALIDA no es</h2>
+            <ul class="relation-list" style="margin-top: var(--space-4)">
+              <li>
+                <div class="relation-row">
+                  <div class="relation-main">
+                    <h3 class="h3">No es una bolsa de empleo</h3>
+                    <p class="relation-meta">
+                      Mostramos ofertas públicas fechadas como evidencia de la
+                      relación FP-profesión; la gestión es siempre de la fuente
+                      original.
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="relation-row">
+                  <div class="relation-main">
+                    <h3 class="h3">No garantiza matrícula ni plazas</h3>
+                    <p class="relation-meta">
+                      Los centros muestran qué ciclos publican, no el proceso de
+                      admisión.
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="relation-row">
+                  <div class="relation-main">
+                    <h3 class="h3">No infiere sin evidencia (fail-closed)</h3>
+                    <p class="relation-meta">
+                      Si no podemos comprobar una relación, lo decimos: “sin
+                      relación comprobada”, nunca “imposible” o “sin FP”.
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="relation-row">
+                  <div class="relation-main">
+                    <h3 class="h3">
+                      No da por verificadas las webs de centros
+                    </h3>
+                    <p class="relation-meta">
+                      Las URLs de centros se muestran tal como las publica la
+                      fuente; su auditoría externa está pendiente.
+                    </p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="snapshots-title">
+          <h2 class="h2" id="snapshots-title">Snapshots: copias fechadas</h2>
+          <p class="lede" style="font-size: var(--text-body); max-width: 44rem">
+            SALIDA trabaja sobre copias fechadas de los datos (snapshots), no
+            sobre datos vivos. La copia activa es del 30/08/2026; cada pantalla
+            indica la fecha que estás consultando. Las copias anteriores
+            conservan sus identificadores y hashes.
+          </p>
+          <div class="method-actions" style="margin-top: var(--space-5)">
+            <a class="button button--secondary" href="/datos-abiertos"
+              >Descargar los datos</a
+            >
+            <a class="link-action" href="/datos-abiertos"
+              >Ver hashes y provenance</a
+            >
+          </div>
+        </section>
+
+        <section
+          class="section section--alt"
+          aria-labelledby="disclosure-title"
+        >
+          <div class="container" style="padding-inline: 0; max-width: 48rem">
+            <h2 class="h2" id="disclosure-title">Sobre las imágenes</h2>
+            <p class="small" style="margin: var(--space-2) 0 0">
+              Las imágenes editoriales son generadas mediante IA y no
+              representan personas, empresas, ofertas ni centros reales.
+            </p>
+            <p class="caption" style="margin-top: var(--space-2)">
+              Fuentes: Junta de Castilla y León (ECYL) · SEPE (CNO-11 y mercado
+              de ocupaciones) · TodoFP · BOE.
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h2 class="footer-group-title">Explorar</h2>
+            <ul class="footer-group-list">
+              <li><a href="/desde-fp">Desde tu FP</a></li>
+              <li><a href="/desde-ocupacion">Desde una profesión</a></li>
+              <li><a href="/desde-oferta">Desde una oferta</a></li>
+              <li><a href="/donde-estudiar">Dónde estudiar</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="footer-group-title">Datos y método</h2>
+            <ul class="footer-group-list">
+              <li><a href="/metodologia">Metodología</a></li>
+              <li><a href="/datos-abiertos">Datos abiertos</a></li>
+              <li><a href="/comparar">Comparar estudios</a></li>
+              <li><a href="/recursos">Más formación</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="footer-group-title">Información</h2>
+            <ul class="footer-group-list">
+              <li><a href="/accesibilidad">Accesibilidad</a></li>
+              <li><a href="/para-organizaciones">Para organizaciones</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="caption">
+            SALIDA CyL — orientación profesional con datos públicos de Castilla
+            y León.
+          </p>
+          <p class="caption">
+            Prototipo estático del rediseño (no es el producto en producción).
+          </p>
+          <p class="caption">Imágenes editoriales generadas mediante IA.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../product.js"></script>
+  </body>
+</html>

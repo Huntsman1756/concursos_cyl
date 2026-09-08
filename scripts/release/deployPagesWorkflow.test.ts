@@ -108,8 +108,13 @@ describe("GitHub Pages deployment workflow", () => {
 
   it("verifies Caddy headers against the running release container", async () => {
     const workflow = await readFile(workflowPath, "utf8");
-    expect(workflow).toContain("docker build -t salida-cyl:ci .");
+    expect(workflow).toContain(
+      'docker build --build-arg RELEASE_COMMIT="${{ github.sha }}" -t salida-cyl:ci .',
+    );
     expect(workflow).toContain("CADDY_SMOKE_BASE_URL=http://127.0.0.1:18080");
+    expect(workflow).toContain(
+      'CADDY_SMOKE_EXPECTED_COMMIT="${{ github.sha }}"',
+    );
     expect(workflow).toContain("npm run release:caddy:verify");
   });
 

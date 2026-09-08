@@ -96,7 +96,7 @@ test("the public candidate manifest retains canonical SEPE evidence", async ({
   expect(sepe.coverage.notPublishedCnoCodes).toHaveLength(0);
 
   const offerEvidenceSnapshot = manifest.resourceSnapshots.offerEvidence;
-  expect(offerEvidenceSnapshot.recordCount).toBe(1058);
+  expect(offerEvidenceSnapshot.recordCount).toBe(1032);
   const offerEvidenceResponse = await request.get(
     offerEvidenceSnapshot.resourcePath,
   );
@@ -116,23 +116,23 @@ test("print media preserves closed evidence and hides coordinate details", async
     name: "Desarrollador web para servicios públicos",
   });
   await expect(card).toBeVisible();
-  await expect(
-    card.locator("details.offer-card__evidence"),
-  ).not.toHaveAttribute("open");
+  await expect(card.locator("details.info-disclosure")).not.toHaveAttribute(
+    "open",
+  );
 
   await page.emulateMedia({ media: "print" });
 
   const evidenceHeading = card
-    .locator("details.offer-card__evidence .evidence-step h4")
+    .locator("details.info-disclosure .offer-row__traceability h4")
     .first();
-  await expect(evidenceHeading).toHaveText("Por qué aparece");
+  await expect(evidenceHeading).toHaveText("Por qué aparece esta oferta");
   expect(
     await evidenceHeading.evaluate(
       (element) => element.getBoundingClientRect().height,
     ),
   ).toBeGreaterThan(0);
 
-  const evidenceSource = card.locator("details.offer-card__evidence a").first();
+  const evidenceSource = card.locator("details.info-disclosure a").first();
   await expect(evidenceSource).toHaveAttribute("href");
   expect(
     await evidenceSource.evaluate(
@@ -142,6 +142,9 @@ test("print media preserves closed evidence and hides coordinate details", async
 
   const coordinatesPage = await page.context().newPage();
   await coordinatesPage.goto("/desde-fp/IFC03S");
+  await coordinatesPage
+    .getByText("Distribución geográfica de los centros", { exact: true })
+    .click();
   await expect(
     coordinatesPage.getByRole("heading", {
       name: "Distribución de centros",

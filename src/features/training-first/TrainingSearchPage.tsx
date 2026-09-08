@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import type { TrainingProgram } from "../../../data/schemas/generated";
 import type { MappingCoverage } from "../../../data/schemas/curatedMappings";
 import {
@@ -10,31 +10,22 @@ import {
 } from "../../data/generatedDataClient";
 import {
   featuredTrainingCoverage,
+  formatProgramTitle,
   trainingLevelLabel,
 } from "../../domain/trainingPresentation";
 import { CYL_PROVINCES } from "../../domain/territory";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import { trainingDetailPath } from "../../app/routePaths";
+import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { TrainingCombobox } from "./TrainingCombobox";
-
-interface CatalogSummary {
-  programCount: number;
-  reviewedModalityCount: number;
-}
 
 export function TrainingSearchPage() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [programs, setPrograms] = useState<TrainingProgram[]>([]);
   const [confirmedProgram, setConfirmedProgram] =
     useState<TrainingProgram | null>(null);
   const [coverage, setCoverage] = useState<MappingCoverage[]>([]);
-  const [catalogSummary, setCatalogSummary] = useState<CatalogSummary | null>(
-    null,
-  );
-  const [levelFilter, setLevelFilter] = useState<TrainingProgram["level"] | "">(
-    "",
-  );
-  const [familyFilter, setFamilyFilter] = useState("");
-  const [province, setProvince] = useState("");
   const [status, setStatus] = useState<"loading" | "ready" | "failed">(
     "loading",
   );
@@ -58,13 +49,6 @@ export function TrainingSearchPage() {
         if (signal.aborted) return;
         setPrograms(resources.programs);
         setCoverage(coverage);
-        setCatalogSummary({
-          programCount: resources.programs.length,
-          reviewedModalityCount: coverage.filter(
-            (row) =>
-              row.scope === "program" && row.coverageStatus === "reviewed",
-          ).length,
-        });
         setStatus("ready");
       })
       .catch(() => {
@@ -100,6 +84,22 @@ export function TrainingSearchPage() {
     );
   }, [programs]);
 
+  const requestedLevel = searchParams.get("level") ?? "";
+  const levelFilter = levelOptions.includes(
+    requestedLevel as TrainingProgram["level"],
+  )
+    ? (requestedLevel as TrainingProgram["level"])
+    : "";
+  const requestedFamily = searchParams.get("family") ?? "";
+  const familyFilter = familyOptions.some(
+    ([familyCode]) => familyCode === requestedFamily,
+  )
+    ? requestedFamily
+    : "";
+  const requestedProvince = searchParams.get("province") ?? "";
+  const province =
+    CYL_PROVINCES.find((candidate) => candidate === requestedProvince) ?? "";
+
   const filteredPrograms = useMemo(
     () =>
       programs
@@ -133,58 +133,63 @@ export function TrainingSearchPage() {
       row.programKey === confirmedProgram?.programKey,
   );
 
+  const catalogCoverage = useMemo(() => {
+    const reviewedProgramKeys = new Set(
+      coverage
+        .filter(
+          (row): row is Extract<MappingCoverage, { scope: "program" }> =>
+            row.scope === "program" && row.coverageStatus === "reviewed",
+        )
+        .map((row) => row.programKey),
+    );
+    return {
+      programCount: programs.length,
+      reviewedProgramCount: programs.filter((program) =>
+        reviewedProgramKeys.has(program.programKey),
+      ).length,
+    };
+  }, [coverage, programs]);
+
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (confirmedProgram === null) return;
-    const query =
-      province === "" ? "" : `?province=${encodeURIComponent(province)}`;
     navigate(
-      `/desde-fp/${encodeURIComponent(confirmedProgram.programKey)}${query}`,
+      trainingDetailPath(
+        confirmedProgram.programKey,
+        confirmedProgram.programTitle,
+        province,
+      ),
     );
+  }
+
+  function updateCatalogFilter(
+    key: "level" | "family" | "province",
+    value: string,
+  ) {
+    const next = new URLSearchParams(searchParams);
+    if (value === "") next.delete(key);
+    else next.set(key, value);
+    setSearchParams(next);
   }
 
   return (
     <section
-      className="training-page"
+      className="training-page search-page training-search-page"
       aria-busy={status === "loading"}
       aria-labelledby="training-search-heading"
     >
-      <header className="training-page__header">
-        <p className="training-page__eyebrow">Desde tu formación</p>
-        <h1 id="training-search-heading">
-          Consulta salidas y ofertas relacionadas con tu FP
+      <Breadcrumbs
+        items={[{ label: "Inicio", to: "/" }, { label: "Explorar FP" }]}
+      />
+      <header className="training-page__header page-masthead">
+        <h1 className="h1" id="training-search-heading">
+          ¿En qué puedes trabajar con una FP?
         </h1>
-        <p>
-          Elige tu ciclo oficial. Verás sus salidas publicadas por TodoFP y, por
-          separado, las ocupaciones y ofertas que ya hemos podido relacionar con
-          evidencia revisada.
+        <p className="training-page__intro page-lede">
+          Elige un ciclo oficial y verás las profesiones relacionadas con él,
+          las ofertas de la copia activa y los centros donde estudiarlo.
         </p>
       </header>
-
-      {catalogSummary !== null && (
-        <section
-          className="training-catalog-note"
-          aria-label="Alcance del catálogo de FP"
-        >
-          <h2>Consulta los ciclos de la copia publicada</h2>
-          <p>
-            El selector contiene {catalogSummary.programCount} ciclos oficiales.
-            Todos muestran las salidas profesionales publicadas por TodoFP.
-          </p>
-          <p>
-            Para buscar ofertas usamos relaciones revisadas entre ciclos y
-            grupos de la Clasificación Nacional de Ocupaciones (CNO-11). Ahora
-            hay {catalogSummary.reviewedModalityCount}{" "}
-            {catalogSummary.reviewedModalityCount === 1
-              ? "ciclo o modalidad"
-              : "ciclos o modalidades"}{" "}
-            con esa relación revisada. Si falta, no mostramos ofertas dudosas.
-          </p>
-          <Link to="/metodologia#fp-catalogo">
-            Cómo funciona la cobertura de FP
-          </Link>
-        </section>
-      )}
 
       {status === "loading" && (
         <p role="status" aria-live="polite">
@@ -199,6 +204,113 @@ export function TrainingSearchPage() {
       )}
       {status === "ready" && (
         <>
+          <form className="training-search" onSubmit={submit}>
+            <div className="form-field">
+              <TrainingCombobox
+                id="training-program"
+                programs={filteredPrograms}
+                confirmedProgram={confirmedProgram}
+                onConfirm={setConfirmedProgram}
+                onClear={() => setConfirmedProgram(null)}
+                label="Ciclo de Formación Profesional"
+                hint="Busca un ciclo oficial por nombre, familia, nivel o código."
+              />
+            </div>
+            {selectedCoverage !== undefined && (
+              <p role="status" aria-live="polite">
+                {selectedCoverage.coverageStatus === "reviewed"
+                  ? `Profesiones comprobadas para este ciclo: ${selectedCoverage.approvedMappings}.`
+                  : "Verás sus salidas oficiales; esta copia no contiene una relación comprobada para buscar ofertas."}
+              </p>
+            )}
+            <details className="training-search__filters">
+              <summary>Filtrar catálogo y contexto</summary>
+              <div className="form-field">
+                <label htmlFor="training-level">Nivel</label>
+                <select
+                  id="training-level"
+                  value={levelFilter}
+                  onChange={(event) => {
+                    const nextLevel = event.target.value as
+                      TrainingProgram["level"] | "";
+                    updateCatalogFilter("level", nextLevel);
+                    if (
+                      confirmedProgram !== null &&
+                      nextLevel !== "" &&
+                      confirmedProgram.level !== nextLevel
+                    ) {
+                      setConfirmedProgram(null);
+                    }
+                  }}
+                >
+                  <option value="">Todos los niveles</option>
+                  {levelOptions.map((level) => (
+                    <option key={level} value={level}>
+                      {trainingLevelLabel(level)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-field">
+                <label htmlFor="training-family">Familia profesional</label>
+                <select
+                  id="training-family"
+                  value={familyFilter}
+                  onChange={(event) => {
+                    const nextFamily = event.target.value;
+                    updateCatalogFilter("family", nextFamily);
+                    if (
+                      confirmedProgram !== null &&
+                      nextFamily !== "" &&
+                      confirmedProgram.familyCode !== nextFamily
+                    ) {
+                      setConfirmedProgram(null);
+                    }
+                  }}
+                >
+                  <option value="">Todas las familias profesionales</option>
+                  {familyOptions.map(([familyCode, familyName]) => (
+                    <option key={familyCode} value={familyCode}>
+                      {familyName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-field">
+                <label htmlFor="training-province">
+                  Provincia para el contexto (opcional)
+                </label>
+                <p id="training-province-hint">
+                  Se usa solo para mostrar contexto provincial; no filtra los
+                  centros publicados.
+                </p>
+                <select
+                  id="training-province"
+                  aria-describedby="training-province-hint"
+                  value={province}
+                  onChange={(event) =>
+                    updateCatalogFilter("province", event.target.value)
+                  }
+                >
+                  <option value="">Toda Castilla y León</option>
+                  {CYL_PROVINCES.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </details>
+            <button
+              className="primary-button"
+              type="submit"
+              disabled={confirmedProgram === null}
+            >
+              Ver salidas y ofertas
+            </button>
+          </form>
           <section
             className="training-guided-examples"
             aria-label="Ejemplos guiados de ciclos"
@@ -214,120 +326,41 @@ export function TrainingSearchPage() {
                   <Link
                     to={`/desde-fp/${encodeURIComponent(program.programKey)}`}
                   >
-                    {program.programTitle}
+                    {formatProgramTitle(program.programTitle)}
                   </Link>
                   <span>
                     {trainingLevelLabel(program.level)} · {row.familyName}
+                    {" · "}
+                    {row.approvedMappings}{" "}
+                    {row.approvedMappings === 1
+                      ? "relación profesional revisada"
+                      : "relaciones profesionales revisadas"}
                   </span>
                 </li>
               ))}
             </ul>
           </section>
-
-          <form className="training-search" onSubmit={submit}>
-            <div className="form-field">
-              <label htmlFor="training-level">Filtrar por nivel</label>
-              <select
-                id="training-level"
-                value={levelFilter}
-                onChange={(event) => {
-                  const nextLevel = event.target.value as
-                    TrainingProgram["level"] | "";
-                  setLevelFilter(nextLevel);
-                  if (
-                    confirmedProgram !== null &&
-                    nextLevel !== "" &&
-                    confirmedProgram.level !== nextLevel
-                  ) {
-                    setConfirmedProgram(null);
-                  }
-                }}
-              >
-                <option value="">Todos los niveles</option>
-                {levelOptions.map((level) => (
-                  <option key={level} value={level}>
-                    {trainingLevelLabel(level)}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-field">
-              <label htmlFor="training-family">
-                Filtrar por familia profesional
-              </label>
-              <select
-                id="training-family"
-                value={familyFilter}
-                onChange={(event) => {
-                  const nextFamily = event.target.value;
-                  setFamilyFilter(nextFamily);
-                  if (
-                    confirmedProgram !== null &&
-                    nextFamily !== "" &&
-                    confirmedProgram.familyCode !== nextFamily
-                  ) {
-                    setConfirmedProgram(null);
-                  }
-                }}
-              >
-                <option value="">Todas las familias profesionales</option>
-                {familyOptions.map(([familyCode, familyName]) => (
-                  <option key={familyCode} value={familyCode}>
-                    {familyName}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-field">
-              <TrainingCombobox
-                id="training-program"
-                programs={filteredPrograms}
-                confirmedProgram={confirmedProgram}
-                onConfirm={setConfirmedProgram}
-                onClear={() => setConfirmedProgram(null)}
-                label="Ciclo de Formación Profesional"
-                hint="Busca un ciclo oficial por nombre, familia, nivel o código."
-              />
-            </div>
-            {selectedCoverage !== undefined && (
-              <p role="status" aria-live="polite">
-                {selectedCoverage.coverageStatus === "reviewed"
-                  ? `Relaciones revisadas con ${selectedCoverage.approvedMappings} ${selectedCoverage.approvedMappings === 1 ? "grupo" : "grupos"} de ocupación.`
-                  : "Salidas oficiales disponibles; todavía no hay una relación revisada para buscar ofertas."}
-              </p>
-            )}
-            <div className="form-field">
-              <label htmlFor="training-province">
-                Provincia para el contexto (opcional)
-              </label>
-              <p id="training-province-hint">
-                Se usa solo para mostrar contexto provincial; no filtra los
-                centros publicados.
-              </p>
-              <select
-                id="training-province"
-                aria-describedby="training-province-hint"
-                value={province}
-                onChange={(event) => setProvince(event.target.value)}
-              >
-                <option value="">Toda Castilla y León</option>
-                {CYL_PROVINCES.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button
-              className="primary-button"
-              type="submit"
-              disabled={confirmedProgram === null}
-            >
-              Ver salidas y ofertas
-            </button>
-          </form>
+          <section
+            className="training-catalog-note"
+            aria-label="Alcance del catálogo de FP"
+          >
+            <h2>Qué cubre este buscador</h2>
+            <p>
+              {catalogCoverage.programCount} ciclos oficiales;{" "}
+              {catalogCoverage.reviewedProgramCount}{" "}
+              {catalogCoverage.reviewedProgramCount === 1
+                ? "ciclo o modalidad con relaciones profesionales comprobadas"
+                : "ciclos o modalidades con relaciones profesionales comprobadas"}
+              .
+            </p>
+            <p>
+              Si no aparece una relación revisada, no mostramos ofertas por
+              inferencia: consulta las salidas oficiales y busca por texto.
+            </p>
+            <Link to="/metodologia#fp-catalogo">
+              Cómo funciona la cobertura de FP
+            </Link>
+          </section>
         </>
       )}
     </section>

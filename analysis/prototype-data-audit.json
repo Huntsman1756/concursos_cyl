@@ -1,0 +1,1330 @@
+{
+  "generatedAt": "2026-09-02T18:37:10.016Z",
+  "snapshotId": "20260830120000000-8c6c79fbd2a1",
+  "manifest": {
+    "snapshotId": "20260830120000000-8c6c79fbd2a1",
+    "qualityStatus": "passed",
+    "resourceCount": 22,
+    "resourceCounts": {
+      "centers": 229,
+      "derivedFpOccupationGraph": 264,
+      "ecylCourses": 791,
+      "educationCenterDirectory": 1741,
+      "jobOffers": 1058,
+      "mappingCoverage": 209,
+      "municipalities": 2248,
+      "occupationAliases": 35,
+      "occupations": 131,
+      "offerEvidence": 1058,
+      "officialOccupations": 502,
+      "openDataCatalog": 1,
+      "outcomeIndicators": 22170,
+      "professionalCertificates": 583,
+      "professionalProfiles": 1728,
+      "programs": 187,
+      "provincialContracts": 2331,
+      "publicEmploymentCalls": 307,
+      "publishedRequirements": 354,
+      "sepeOccupationMarket": 116,
+      "trainingOccupationLinks": 264,
+      "trainingOfferings": 1294
+    },
+    "issues": []
+  },
+  "globalOffers": {
+    "manifestJobOffersRecordCount": 1058,
+    "activeSnapshotJobOffersRecords": 1058,
+    "offerEvidenceRecords": 1058,
+    "offerEvidenceCountsOfferCount": 1058,
+    "legacyRootJobOffersRecords": 1033,
+    "legacyFileExcludedFromRuntime": true,
+    "legacyRuntimeRootFiles": [
+      "centers.json",
+      "job-offers.json",
+      "programs.json",
+      "training-offerings.json"
+    ],
+    "diffActiveVsLegacy": {
+      "onlyInActive": 522,
+      "onlyInLegacy": 497
+    },
+    "classification": "WRONG_RESOURCE",
+    "explanation": "El prototipo de ofertas globales leyó public/data/v1/job-offers.json (raíz legacy, 1033 registros, copia de una era de snapshot anterior) en lugar del recurso direccionado por el manifest activo (/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/job-offers.json, 1058 registros, sha256 decd3bcf… igual al manifest). prepareRuntimeData.ts excluye los 4 ficheros raíz legacy del runtime de producción (LEGACY_RUNTIME_ROOT_FILES), por lo que el runtime nunca serviría 1033.",
+    "pagination": {
+      "pageSize": 12,
+      "pageCount": 89,
+      "lastPageRange": "1057-1058 de 1058"
+    }
+  },
+  "reviewedOfferSemantics": {
+    "TOTAL_OFFERS": 1058,
+    "UNIQUE_REVIEWED_FP_RELATED_OFFERS": 138,
+    "OFFER_FP_RELATION_COUNT": 196,
+    "UNIQUE_PROGRAM_OCCUPATION_KEYS_WITH_REVIEWED_OFFERS": 35,
+    "PROGRAM_KEYS_WITH_REVIEWED_OFFERS": 31,
+    "OCCUPATION_IDS_WITH_REVIEWED_OFFERS": 18,
+    "UNIT": "oferta única (offerId); OFFER_FP_RELATION_COUNT cuenta relaciones oferta→(ciclo,ocupación), no ofertas",
+    "countsSidecarMatch": {
+      "offerCount": true,
+      "offersWithReviewedFpRelationship": true,
+      "reviewedRelationCount": true
+    },
+    "evidenceStatusCounts": {
+      "ambiguous_requirement": 220,
+      "alternative_vocational_route": 28,
+      "university_or_regulatory_route": 235,
+      "no_reviewed_relationship": 437,
+      "reviewed_fp_relationship": 138
+    },
+    "relationTypes": {
+      "official_output": 160,
+      "reviewed_relationship": 36
+    },
+    "reviewedAts": {
+      "2026-08-12": 35,
+      "2026-08-13": 22,
+      "2026-08-21": 18,
+      "2026-08-14": 6,
+      "2026-08-08": 97,
+      "2026-08-11": 3,
+      "2026-08-30": 5,
+      "2026-08-22": 10
+    },
+    "distinctPublishedAtMax": "2026-08-20T00:00:00.000Z"
+  },
+  "centerAggregation": {
+    "RAW_TRAINING_OFFERINGS": 1294,
+    "VALID_RESOLVED_OFFERINGS": 1294,
+    "UNIQUE_CENTER_PROGRAM_ROWS": 1293,
+    "COLLAPSED_RECORD_COUNT": 1,
+    "unresolved": {
+      "center": 0,
+      "program": 0
+    },
+    "collapsedGroups": [
+      {
+        "centerCode": "47011115",
+        "centerName": "RÍO DUERO",
+        "programKey": "AFD02M",
+        "programTitle": "Guía en el medio natural y de tiempo libre",
+        "province": "Valladolid",
+        "locality": "Valladolid",
+        "modalities": ["on_site"],
+        "teachingTypes": ["concerted", "private"],
+        "records": [
+          {
+            "offeringId": "AFD02M:47011115:on_site:concerted:private",
+            "modality": "on_site",
+            "teachingType": "concerted",
+            "centerOwnership": "private",
+            "level": "intermediate"
+          },
+          {
+            "offeringId": "AFD02M:47011115:on_site:private:private",
+            "modality": "on_site",
+            "teachingType": "private",
+            "centerOwnership": "private",
+            "level": "intermediate"
+          }
+        ]
+      }
+    ]
+  },
+  "facetCounts": {
+    "UNIT": "fila única centerCode:programKey (opción formativa)",
+    "ROWS_BY_PROVINCE": {
+      "Ávila": 85,
+      "Burgos": 202,
+      "León": 222,
+      "Palencia": 88,
+      "Salamanca": 178,
+      "Segovia": 78,
+      "Soria": 55,
+      "Valladolid": 298,
+      "Zamora": 87
+    },
+    "ROWS_BY_MODALITY": {
+      "distance": 89,
+      "on_site": 1204
+    },
+    "ROWS_BY_TEACHING_TYPE": {
+      "concerted": 257,
+      "private": 122,
+      "public": 915
+    },
+    "ROWS_BY_LEVEL": {
+      "basic": 202,
+      "higher": 582,
+      "intermediate": 465,
+      "specialization": 44
+    },
+    "ROWS_BY_FAMILY": {
+      "ADG — Administración y Gestión": 157,
+      "AFD — Actividades Físicas y Deportivas": 43,
+      "AGA — Agraria": 37,
+      "ARG — Artes Gráficas": 4,
+      "COM — Comercio y Marketing": 81,
+      "ELE — Electricidad y Electrónica": 137,
+      "ENA — Energía y Agua": 8,
+      "EOC — Edificación y Obra Civil": 18,
+      "FME — Fabricación Mecánica": 58,
+      "HOT — Hostelería y Turismo": 91,
+      "IFC — Informática y Comunicaciones": 133,
+      "IMA — Instalación y Mantenimiento": 52,
+      "IMP — Imagen Personal": 59,
+      "IMS — Imagen y Sonido": 28,
+      "INA — Industrias Alimentarias": 23,
+      "MAM — Madera, Mueble y Corcho": 17,
+      "QUI — Química": 18,
+      "SAN — Sanidad": 138,
+      "SEA — Seguridad y Medio Ambiente": 7,
+      "SSC — Servicios Socioculturales y a la Comunidad": 86,
+      "TCP — Textil, Confección y Piel": 7,
+      "TMV — Transporte y Mantenimiento de Vehículos": 91
+    },
+    "ROWS_BY_CENTER_OWNERSHIP": {
+      "agriculture": 22,
+      "education": 888,
+      "municipality": 5,
+      "private": 378
+    },
+    "UNIQUE_CENTERS_BY_PROVINCE": {
+      "UNIT": "centro único (centerCode)",
+      "Ávila": 20,
+      "Burgos": 25,
+      "León": 40,
+      "Palencia": 15,
+      "Salamanca": 38,
+      "Segovia": 14,
+      "Soria": 13,
+      "Valladolid": 49,
+      "Zamora": 15
+    },
+    "UNIQUE_CENTERS_BY_CENTER_OWNERSHIP": {
+      "UNIT": "centro único (centerCode)",
+      "agriculture": 8,
+      "education": 138,
+      "municipality": 1,
+      "private": 82
+    },
+    "multivalueNote": "Una fila puede pertenecer a varias facetas (modalidades[]/teachingTypes[]); la suma de facetas no tiene por qué igualar el total de filas."
+  },
+  "unknownNullPresentation": {
+    "offeringModalityValues": {
+      "on_site": 1205,
+      "distance": 89
+    },
+    "offeringTeachingTypeValues": {
+      "concerted": 257,
+      "public": 915,
+      "private": 122
+    },
+    "rowModalityValues": {
+      "on_site": 1204,
+      "distance": 89
+    },
+    "rowsWithoutModality": 0,
+    "rowsWithoutTeachingType": 0,
+    "modalityUnknownRowCount": 0,
+    "policy": {
+      "unknownModality": "unknown == 0 en snapshot activo → no se muestra como opción de filtro visible; soporte futuro con etiqueta «Modalidad no publicada» y filtro futuro «Sin modalidad publicada»; prohibido «Desconocida».",
+      "nullLocalityOffers": "Ofertas con locality null: presentar provincia únicamente, sin inventar localidad («localidad no publicada» no se muestra como dato)."
+    },
+    "centersWithoutWebsite": 1,
+    "offersWithoutLocality": 91
+  },
+  "screenAudit": {
+    "screens": [
+      {
+        "screen": "HOME",
+        "value": 187,
+        "label": "ciclos oficiales",
+        "sourceResource": "programs",
+        "sourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/programs.json",
+        "unit": "ciclo (programKey único)",
+        "derivation": "programs.length",
+        "prototypeValue": 187,
+        "match": true
+      },
+      {
+        "screen": "HOME",
+        "value": 138,
+        "label": "ofertas con relación FP revisada",
+        "sourceResource": "offerEvidence",
+        "sourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/offer-evidence.json",
+        "unit": "oferta única con ≥1 relación revisada",
+        "derivation": "records con relations.length>0 (offerId distinto)",
+        "prototypeValue": 138,
+        "match": true
+      },
+      {
+        "screen": "HOME",
+        "value": 229,
+        "label": "centros",
+        "sourceResource": "centers",
+        "sourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/centers.json",
+        "unit": "centro (centerCode único)",
+        "derivation": "centers.length",
+        "prototypeValue": 229,
+        "match": true
+      },
+      {
+        "screen": "FP DETAIL (ADG02S)",
+        "value": 4,
+        "label": "profesiones relacionadas",
+        "sourceResource": "derivedFpOccupationGraph",
+        "sourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/derived-fp-occupation-graph.json",
+        "unit": "relación FP↔ocupación única del ciclo (ocupaciones distintas)",
+        "derivation": "graph rows programKey=ADG02S; ocupaciones distintas: 4",
+        "prototypeValue": 4,
+        "match": true,
+        "detail": {
+          "occupations": [
+            "occupation:cno11:4111",
+            "occupation:cno11:4113",
+            "occupation:cno11:4123",
+            "occupation:cno11:4223"
+          ],
+          "types": {
+            "official_output": 4
+          }
+        }
+      },
+      {
+        "screen": "FP DETAIL (ADG02S)",
+        "value": 2,
+        "label": "ofertas con relación revisada",
+        "sourceResource": "offerEvidence",
+        "unit": "oferta única",
+        "derivation": "records con ≥1 relation.programKey=ADG02S",
+        "prototypeValue": 2,
+        "match": true,
+        "detail": {
+          "offerIds": ["1285665634571", "1285672565954"],
+          "provinces": ["Zamora", "Palencia"],
+          "publishedAt": [
+            "2026-07-23T00:00:00.000Z",
+            "2026-08-20T00:00:00.000Z"
+          ]
+        }
+      },
+      {
+        "screen": "FP DETAIL (ADG02S)",
+        "value": 45,
+        "label": "centros publican el ciclo",
+        "sourceResource": "trainingOfferings × centers × programs",
+        "unit": "fila centerCode:programKey",
+        "derivation": "filas agregadas con programKey=ADG02S",
+        "prototypeValue": 45,
+        "match": true
+      },
+      {
+        "screen": "FP DETAIL (ADG02S) · provinces",
+        "value": 9,
+        "label": "provincias con el ciclo",
+        "unit": "provincia",
+        "derivation": "provincias de las filas ADG02S",
+        "prototypeValue": 9,
+        "match": true,
+        "detail": {
+          "Ávila": 4,
+          "Burgos": 7,
+          "León": 9,
+          "Palencia": 3,
+          "Salamanca": 7,
+          "Segovia": 2,
+          "Soria": 1,
+          "Valladolid": 10,
+          "Zamora": 2
+        }
+      },
+      {
+        "screen": "OCCUPATION DETAIL (CNO 5611)",
+        "value": 1,
+        "label": "FP relacionada",
+        "sourceResource": "derivedFpOccupationGraph",
+        "unit": "ciclo (programKey) con relación revisada a la ocupación",
+        "derivation": "programKeys distintos en graph para occupation:cno11:5611",
+        "prototypeValue": 1,
+        "match": true,
+        "detail": ["SAN21"]
+      },
+      {
+        "screen": "OCCUPATION DETAIL (CNO 5611)",
+        "value": 34,
+        "label": "ofertas con relación revisada",
+        "sourceResource": "offerEvidence",
+        "unit": "oferta única",
+        "derivation": "records con ≥1 relation.occupationId=cno11:5611",
+        "prototypeValue": 34,
+        "match": true
+      },
+      {
+        "screen": "OCCUPATION DETAIL (CNO 5611)",
+        "value": 34,
+        "label": "centros donde estudiarla",
+        "sourceResource": "trainingOfferings × centers × programs",
+        "unit": "fila centerCode:programKey de los ciclos relacionados",
+        "derivation": "filas agregadas con programKey ∈ relacionados (SAN21)",
+        "prototypeValue": 34,
+        "match": true
+      },
+      {
+        "screen": "ZERO STATE (CNO 3820)",
+        "value": 2,
+        "label": "FP con relación revisada",
+        "sourceResource": "derivedFpOccupationGraph",
+        "unit": "ciclo (programKey)",
+        "derivation": "programKeys distintos en graph para occupation:cno11:3820",
+        "prototypeValue": 2,
+        "match": true,
+        "detail": ["IFC02S", "IFC02SD"]
+      },
+      {
+        "screen": "ZERO STATE (CNO 3820)",
+        "value": 0,
+        "label": "ofertas con relación comprobada",
+        "sourceResource": "offerEvidence",
+        "unit": "oferta única",
+        "derivation": "records con ≥1 relation.occupationId=cno11:3820",
+        "prototypeValue": 0,
+        "match": true
+      },
+      {
+        "screen": "GLOBAL OFFERS",
+        "value": 1058,
+        "label": "ofertas (catálogo global sin filtros)",
+        "sourceResource": "offerEvidence (+ jobOffers)",
+        "sourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/offer-evidence.json",
+        "unit": "oferta única (offerId)",
+        "derivation": "offerEvidence.records.length; coincide con jobOffers.length y manifest.recordCount",
+        "prototypeValue": 1033,
+        "match": true,
+        "correctedFromPrototype": true
+      },
+      {
+        "screen": "GLOBAL OFFERS",
+        "value": 138,
+        "label": "con FP relacionada en esta copia",
+        "sourceResource": "offerEvidence",
+        "unit": "oferta única con ≥1 relación revisada",
+        "derivation": "records con relations.length>0",
+        "prototypeValue": 138,
+        "match": true
+      },
+      {
+        "screen": "GLOBAL OFFERS · pagination",
+        "value": 89,
+        "label": "páginas (12/página); última página 1057-1058 de 1058",
+        "sourceResource": "offerEvidence",
+        "unit": "página",
+        "derivation": "ceil(1058/12)",
+        "prototypeValue": null,
+        "match": true
+      },
+      {
+        "screen": "CONTEXTUAL OFFERS (ADG02S)",
+        "value": 2,
+        "label": "ofertas relacionadas con el ciclo",
+        "sourceResource": "offerEvidence",
+        "unit": "oferta única",
+        "derivation": "records con ≥1 relation.programKey=ADG02S",
+        "prototypeValue": 2,
+        "match": true
+      },
+      {
+        "screen": "CENTERS GLOBAL",
+        "value": 1293,
+        "label": "opciones formativas (1–50 de N)",
+        "sourceResource": "trainingOfferings × centers × programs",
+        "unit": "fila única centerCode:programKey",
+        "derivation": "1294 raw → resolver centro+programa → agrupar centerCode:programKey",
+        "prototypeValue": 1293,
+        "match": true
+      },
+      {
+        "screen": "CENTERS GLOBAL",
+        "value": 229,
+        "label": "centros representados",
+        "sourceResource": "centers",
+        "unit": "centro único",
+        "derivation": "centerCode distintos en filas agregadas",
+        "prototypeValue": 229,
+        "match": true
+      },
+      {
+        "screen": "CENTERS CONTEXTUAL (ADG02S)",
+        "value": 45,
+        "label": "opciones formativas (1–45 de 45) · provincias",
+        "sourceResource": "trainingOfferings × centers × programs",
+        "unit": "fila centerCode:programKey (y conteos por provincia)",
+        "derivation": "filas ADG02S por provincia",
+        "prototypeValue": {
+          "Ávila": 4,
+          "Burgos": 7,
+          "León": 9,
+          "Palencia": 3,
+          "Salamanca": 7,
+          "Segovia": 2,
+          "Soria": 1,
+          "Valladolid": 10,
+          "Zamora": 2
+        },
+        "match": true
+      },
+      {
+        "screen": "COMPARE STUDIES · España",
+        "value": {
+          "mean": 25423,
+          "quintile_20_lower_boundary": 18872,
+          "quintile_40_lower_boundary": 22000,
+          "quintile_60_lower_boundary": 25537,
+          "quintile_80_lower_boundary": 31400
+        },
+        "label": "IFC03S · cohorte 2019-2020 · año 4 (media + cortes 20/40/60/80 %)",
+        "sourceResource": "outcomeIndicators",
+        "sourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/outcome-indicators.json",
+        "unit": "euros anuales (base de cotización), observación grupo de ciclo",
+        "derivation": "scope=spain_cycle_group, groupKey=income-group-a52688073a5aa1b1",
+        "prototypeValue": {
+          "mean": 25423,
+          "quintile_20_lower_boundary": 18872,
+          "quintile_40_lower_boundary": 22000,
+          "quintile_60_lower_boundary": 25537,
+          "quintile_80_lower_boundary": 31400
+        },
+        "match": true
+      },
+      {
+        "screen": "COMPARE STUDIES · Castilla y León",
+        "value": {
+          "mean": 22414,
+          "quintile_20_lower_boundary": 16405,
+          "quintile_40_lower_boundary": 19574,
+          "quintile_60_lower_boundary": 23035,
+          "quintile_80_lower_boundary": 28771
+        },
+        "label": "Grado Superior · cohorte 2019-2020 · año 4 (media + cortes)",
+        "sourceResource": "outcomeIndicators",
+        "unit": "euros anuales (base de cotización), observación nivel de formación CyL",
+        "derivation": "scope=castilla_leon_training_level, trainingLevel=higher, tabla ccaa_3_07",
+        "prototypeValue": {
+          "mean": 22414,
+          "quintile_20_lower_boundary": 16405,
+          "quintile_40_lower_boundary": 19574,
+          "quintile_60_lower_boundary": 23035,
+          "quintile_80_lower_boundary": 28771
+        },
+        "prototypeBeforeCorrection": {
+          "mean": 21069,
+          "quintile_20_lower_boundary": 16614,
+          "quintile_40_lower_boundary": 18968,
+          "quintile_60_lower_boundary": 21467,
+          "quintile_80_lower_boundary": 24934
+        },
+        "match": true,
+        "correctedFromPrototype": "El prototipo mostraba los valores de GRADO MEDIO (tabla ccaa_2_07, trainingLevel=intermediate) bajo el título «titulados de grado superior». Corregido a Grado Superior (ccaa_3_07).",
+        "bug": "UNIT_MIX_GRADO_MEDIO_VS_SUPERIOR (corregido)"
+      },
+      {
+        "screen": "MORE TRAINING",
+        "value": 791,
+        "label": "cursos del ECYL en la copia",
+        "sourceResource": "ecylCourses",
+        "unit": "curso (id ECYL)",
+        "derivation": "ecyl-courses.json length",
+        "prototypeValue": 791,
+        "match": true
+      },
+      {
+        "screen": "MORE TRAINING",
+        "value": 583,
+        "label": "certificados de profesionalidad",
+        "sourceResource": "professionalCertificates",
+        "unit": "certificado (código)",
+        "derivation": "professional-certificates.json length",
+        "prototypeValue": 583,
+        "match": true
+      },
+      {
+        "screen": "MORE TRAINING",
+        "value": 4,
+        "label": "convocatorias con plazo abierto (respecto a la copia 2026-08-22)",
+        "sourceResource": "publicEmploymentCalls",
+        "unit": "convocatoria",
+        "derivation": "accessType=open ∧ applicationDeadline ≥ fecha de la copia",
+        "prototypeValue": 4,
+        "match": true,
+        "detail": [
+          {
+            "id": "1285666453332",
+            "places": 18,
+            "deadline": "2026-08-24",
+            "municipality": "Valladolid"
+          },
+          {
+            "id": "1285666480084",
+            "places": 8,
+            "deadline": "2026-08-24",
+            "municipality": "Valladolid"
+          },
+          {
+            "id": "1285666447460",
+            "places": 50,
+            "deadline": "2026-08-24",
+            "municipality": "Valladolid"
+          },
+          {
+            "id": "1285666500281",
+            "places": 4,
+            "deadline": "2026-08-24",
+            "municipality": "Valladolid"
+          }
+        ]
+      },
+      {
+        "screen": "OPEN DATA",
+        "value": 22,
+        "label": "recursos publicados",
+        "sourceResource": "manifest",
+        "unit": "recurso del manifest",
+        "derivation": "Object.keys(resourceSnapshots).length",
+        "prototypeValue": 22,
+        "match": true
+      },
+      {
+        "screen": "OPEN DATA",
+        "value": 264,
+        "label": "relaciones FP ↔ ocupación",
+        "sourceResource": "derivedFpOccupationGraph",
+        "unit": "relación (programKey↔occupationId)",
+        "derivation": "derived-fp-occupation-graph.json length",
+        "prototypeValue": 264,
+        "match": true
+      },
+      {
+        "screen": "OPEN DATA",
+        "value": "88f7b7373827adad97197b00923a564fd15641615ffb2bfe7d0e2d8f0b0205a5",
+        "label": "SHA-256 del CSV del grafo",
+        "sourceResource": "derivedFpOccupationGraph (csv)",
+        "unit": "hash",
+        "derivation": "sha256 del archivo referenciado",
+        "prototypeValue": "88f7b7373827adad97197b00923a564fd15641615ffb2bfe7d0e2d8f0b0205a5",
+        "match": true
+      },
+      {
+        "screen": "METHODOLOGY (referencia)",
+        "value": "22 recursos / 116 registros SEPE",
+        "label": "recursos / registros SEPE (no visibles hoy en prototipos)",
+        "sourceResource": "manifest / sepeOccupationMarket",
+        "unit": "recurso / registro",
+        "derivation": "manifest keys; sepe-occupation-market.json",
+        "prototypeValue": "no visible",
+        "match": true
+      }
+    ],
+    "failures": []
+  },
+  "exampleAudit": {
+    "examples": [
+      {
+        "id": "home:example-adg02s",
+        "screen": "HOME",
+        "description": "Ejemplo editorial ADG02S ↔ CNO 4111 «Empleados de contabilidad» (relación oficial revisada 12/08/2026) + oferta Zamora + 45 centros",
+        "classification": "REVIEWED_RELATION_CONFIRMED",
+        "evidence": {
+          "relations": [
+            {
+              "occupationId": "occupation:cno11:4111",
+              "relationshipType": "official_output",
+              "reviewedAt": "2026-08-12"
+            }
+          ],
+          "centers": 45
+        }
+      },
+      {
+        "id": "offer:1285665634571",
+        "screen": "HOME · FP DETAIL · CONTEXTUAL OFFERS",
+        "description": "Oferta «EMPLEADOS ADMINISTRATIVOS DE CONTABILIDAD, EN GENERAL» (Zamora, 2026-07-23)",
+        "classification": "REVIEWED_RELATION_CONFIRMED",
+        "evidence": {
+          "province": "Zamora",
+          "publishedAt": "2026-07-23T00:00:00.000Z",
+          "relations": [
+            "ADG02S→occupation:cno11:4111",
+            "ADG02SD→occupation:cno11:4111"
+          ]
+        }
+      },
+      {
+        "id": "offer:1285672565954",
+        "screen": "FP DETAIL · CONTEXTUAL OFFERS",
+        "description": "Oferta Palencia relacionada con ADG02S/CNO 4111",
+        "classification": "REVIEWED_RELATION_CONFIRMED",
+        "evidence": {
+          "province": "Palencia",
+          "publishedAt": "2026-08-20T00:00:00.000Z"
+        }
+      },
+      {
+        "id": "occupation:cno11:5611↔SAN21",
+        "screen": "OCCUPATION DETAIL",
+        "description": "Relación CNO 5611 ↔ SAN21 (Auxiliares de enfermería hospitalaria ↔ Cuidados Auxiliares de Enfermería) + 34 ofertas + 34 centros",
+        "classification": "REVIEWED_RELATION_CONFIRMED",
+        "evidence": {
+          "programs": ["SAN21"],
+          "sampleOffers": [
+            {
+              "id": "1285619684957",
+              "title": "AUXILIARES DE ENFERMERÍA DE GERIATRÍA",
+              "province": "León",
+              "locality": "Noceda del Bierzo",
+              "publishedAt": "2026-03-17"
+            },
+            {
+              "id": "1285634475038",
+              "title": "AUXILIARES DE ENFERMERÍA DE GERIATRÍA",
+              "province": "León",
+              "locality": "Villaornate Y Castro",
+              "publishedAt": "2026-04-29"
+            },
+            {
+              "id": "1285637783304",
+              "title": "AUXILIARES DE ENFERMERÍA DE GERIATRÍA",
+              "province": "León",
+              "locality": "Valderas",
+              "publishedAt": "2026-05-09"
+            },
+            {
+              "id": "1285641461864",
+              "title": "AUXILIARES DE ENFERMERÍA DE GERIATRÍA",
+              "province": "Burgos",
+              "locality": "Briviesca",
+              "publishedAt": "2026-05-21"
+            },
+            {
+              "id": "1285642318120",
+              "title": "AUXILIARES DE ENFERMERÍA DE GERIATRÍA",
+              "province": "León",
+              "locality": "Mansilla de las Mulas",
+              "publishedAt": "2026-05-25"
+            }
+          ]
+        }
+      },
+      {
+        "id": "offers-global:page1",
+        "screen": "GLOBAL OFFERS",
+        "description": "Las 12 ofertas de la primera página (orden publishedAt desc, title, offerId)",
+        "classification": "REAL_SOURCE_RECORD_CONFIRMED",
+        "evidence": {
+          "items": [
+            {
+              "id": "1285672374024",
+              "title": "Administrativo/a para Ayto. de Merindad de Sotoscueva (Burgos)",
+              "province": "Burgos",
+              "publishedAt": "2026-08-20",
+              "source": "Organismo oficial",
+              "reviewed": false
+            },
+            {
+              "id": "1285672481412",
+              "title": "ASISTENTES DOMICILIARIOS",
+              "province": "Burgos",
+              "publishedAt": "2026-08-20",
+              "source": "ECYL",
+              "reviewed": true
+            },
+            {
+              "id": "1285672531656",
+              "title": "ASISTENTES, ACOMPAÑANTES DE PERSONAS",
+              "province": "Soria",
+              "publishedAt": "2026-08-20",
+              "source": "ECYL",
+              "reviewed": false
+            },
+            {
+              "id": "1285672423421",
+              "title": "AUXILIARES DE ENFERMERÍA DE GERIATRÍA",
+              "province": "Palencia",
+              "publishedAt": "2026-08-20",
+              "source": "ECYL",
+              "reviewed": true
+            },
+            {
+              "id": "1285672348519",
+              "title": "Camarero",
+              "province": "Salamanca",
+              "publishedAt": "2026-08-20",
+              "source": "Internet / Prensa",
+              "reviewed": false
+            },
+            {
+              "id": "1285672348157",
+              "title": "Carnicero/a",
+              "province": "Salamanca",
+              "publishedAt": "2026-08-20",
+              "source": "Internet / Prensa",
+              "reviewed": false
+            },
+            {
+              "id": "1285672382387",
+              "title": "CARPINTEROS EN GENERAL",
+              "province": "Burgos",
+              "publishedAt": "2026-08-20",
+              "source": "ECYL",
+              "reviewed": false
+            },
+            {
+              "id": "1285672531442",
+              "title": "COCINEROS, EN GENERAL",
+              "province": "León",
+              "publishedAt": "2026-08-20",
+              "source": "ECYL",
+              "reviewed": false
+            },
+            {
+              "id": "1285672451425",
+              "title": "CONDUCTORES DE AUTOBÚS, EN GENERAL",
+              "province": "Segovia",
+              "publishedAt": "2026-08-20",
+              "source": "ECYL",
+              "reviewed": false
+            },
+            {
+              "id": "1285672532055",
+              "title": "CONDUCTORES-OPERADORES DE EXCAVADORA (MOVIMIENTO DE TIERRAS)",
+              "province": "Soria",
+              "publishedAt": "2026-08-20",
+              "source": "ECYL",
+              "reviewed": false
+            },
+            {
+              "id": "1285672364865",
+              "title": "Coordinador/a de Cultura para Ayto de Soria",
+              "province": "Soria",
+              "publishedAt": "2026-08-20",
+              "source": "Organismo oficial",
+              "reviewed": false
+            },
+            {
+              "id": "1285672565954",
+              "title": "EMPLEADOS ADMINISTRATIVOS DE CONTABILIDAD, EN GENERAL",
+              "province": "Palencia",
+              "publishedAt": "2026-08-20",
+              "source": "ECYL",
+              "reviewed": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "centers-explorer:page1-rows",
+        "screen": "CENTERS GLOBAL",
+        "description": "Primeras 10 filas agregadas (orden provincia→localidad→centro→ciclo)",
+        "classification": "REAL_SOURCE_RECORD_CONFIRMED",
+        "evidence": {
+          "items": [
+            {
+              "key": "05009923:AFD02S",
+              "centerName": "CIFP LAS FERRERÍAS",
+              "locality": "Arenas de San Pedro",
+              "province": "Ávila",
+              "programKey": "AFD02S",
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
+              "ownership": "education"
+            },
+            {
+              "key": "05009923:ADG02S",
+              "centerName": "CIFP LAS FERRERÍAS",
+              "locality": "Arenas de San Pedro",
+              "province": "Ávila",
+              "programKey": "ADG02S",
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
+              "ownership": "education"
+            },
+            {
+              "key": "05009923:SAN21",
+              "centerName": "CIFP LAS FERRERÍAS",
+              "locality": "Arenas de San Pedro",
+              "province": "Ávila",
+              "programKey": "SAN21",
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
+              "ownership": "education"
+            },
+            {
+              "key": "05009923:ELE01B",
+              "centerName": "CIFP LAS FERRERÍAS",
+              "locality": "Arenas de San Pedro",
+              "province": "Ávila",
+              "programKey": "ELE01B",
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
+              "ownership": "education"
+            },
+            {
+              "key": "05009923:ADG01M",
+              "centerName": "CIFP LAS FERRERÍAS",
+              "locality": "Arenas de San Pedro",
+              "province": "Ávila",
+              "programKey": "ADG01M",
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
+              "ownership": "education"
+            },
+            {
+              "key": "05009923:SAN06S",
+              "centerName": "CIFP LAS FERRERÍAS",
+              "locality": "Arenas de San Pedro",
+              "province": "Ávila",
+              "programKey": "SAN06S",
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
+              "ownership": "education"
+            },
+            {
+              "key": "05009923:IMP01B",
+              "centerName": "CIFP LAS FERRERÍAS",
+              "locality": "Arenas de San Pedro",
+              "province": "Ávila",
+              "programKey": "IMP01B",
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
+              "ownership": "education"
+            },
+            {
+              "key": "05009923:IMS01M",
+              "centerName": "CIFP LAS FERRERÍAS",
+              "locality": "Arenas de San Pedro",
+              "province": "Ávila",
+              "programKey": "IMS01M",
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
+              "ownership": "education"
+            },
+            {
+              "key": "05005462:TMV01S",
+              "centerName": "IES ADAJA",
+              "locality": "Arévalo",
+              "province": "Ávila",
+              "programKey": "TMV01S",
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
+              "ownership": "education"
+            },
+            {
+              "key": "05005462:TMV01M",
+              "centerName": "IES ADAJA",
+              "locality": "Arévalo",
+              "province": "Ávila",
+              "programKey": "TMV01M",
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
+              "ownership": "education"
+            }
+          ]
+        }
+      },
+      {
+        "id": "centers-contextual:ADG02S-rows",
+        "screen": "CENTERS CONTEXTUAL",
+        "description": "Los 7 centros de ejemplo del prototipo contextual ADG02S existen como filas reales",
+        "classification": "REAL_SOURCE_RECORD_CONFIRMED",
+        "evidence": [
+          {
+            "name": "IES Eulogio Florentino Sanz",
+            "found": true,
+            "key": "05000427:ADG02S",
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"]
+          },
+          {
+            "name": "IES Alonso de Madrigal",
+            "found": true,
+            "key": "05000701:ADG02S",
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"]
+          },
+          {
+            "name": "IES Sierra del Valle",
+            "found": true,
+            "key": "05005425:ADG02S",
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"]
+          },
+          {
+            "name": "CIFP Las Ferrerías",
+            "found": true,
+            "key": "05009923:ADG02S",
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"]
+          },
+          {
+            "name": "Ntra. Sra. de la Merced y San Francisco Javier",
+            "found": true,
+            "key": "09001372:ADG02S",
+            "modalities": ["on_site"],
+            "teachingTypes": ["concerted"]
+          },
+          {
+            "name": "María Madre-Politecnos",
+            "found": true,
+            "key": "09001581:ADG02S",
+            "modalities": ["on_site"],
+            "teachingTypes": ["concerted"]
+          },
+          {
+            "name": "CIFP Instituto Técnico Industrial de Miranda",
+            "found": true,
+            "key": "09004099:ADG02S",
+            "modalities": ["on_site"],
+            "teachingTypes": ["concerted"]
+          }
+        ]
+      },
+      {
+        "id": "ecyl:1285672303296",
+        "screen": "MORE TRAINING",
+        "description": "Curso ECYL «Acreditación docente para teleformación» (Cuéllar, 60 h, 20 plazas, inicio 23/09/2026)",
+        "classification": "REAL_SOURCE_RECORD_CONFIRMED",
+        "evidence": {
+          "title": "ACREDITACIÓN DOCENTE PARA TELEFORMACIÓN: FORMADOR/A ON LINE",
+          "locality": "Cuéllar",
+          "durationHours": 60,
+          "places": 20,
+          "startDate": "2026-09-23",
+          "modality": "Teleformación"
+        }
+      },
+      {
+        "id": "ecyl:1285563516870",
+        "screen": "MORE TRAINING",
+        "description": "Curso ECYL «116_Taller de empleo 1» (Valladolid, 30 plazas, datos no publicados)",
+        "classification": "REAL_SOURCE_RECORD_CONFIRMED",
+        "evidence": {
+          "title": "116_TALLER DE EMPLEO 1",
+          "locality": "Valladolid",
+          "places": 30,
+          "startDate": null
+        }
+      },
+      {
+        "id": "cert:ADGD0108",
+        "screen": "MORE TRAINING",
+        "description": "Certificado ADGD0108 (nivel 3, 630 h, teleformación completa)",
+        "classification": "REAL_SOURCE_RECORD_CONFIRMED",
+        "evidence": {
+          "level": 3,
+          "totalHours": 630,
+          "fullyOnline": true
+        }
+      },
+      {
+        "id": "cert:IFCD0110",
+        "screen": "MORE TRAINING",
+        "description": "Certificado IFCD0110 (nivel 2, 560 h, teleformación completa)",
+        "classification": "REAL_SOURCE_RECORD_CONFIRMED",
+        "evidence": {
+          "level": 2,
+          "totalHours": 560,
+          "fullyOnline": true
+        }
+      },
+      {
+        "id": "call:1285666453332",
+        "screen": "MORE TRAINING",
+        "description": "Convocatoria 1285666453332 (18 plazas · Valladolid · plazo 2026-08-24)",
+        "classification": "REAL_SOURCE_RECORD_CONFIRMED",
+        "evidence": {
+          "places": 18,
+          "deadline": "2026-08-24",
+          "municipality": "Valladolid",
+          "accessType": "open"
+        }
+      },
+      {
+        "id": "call:1285666480084",
+        "screen": "MORE TRAINING",
+        "description": "Convocatoria 1285666480084 (8 plazas · Valladolid · plazo 2026-08-24)",
+        "classification": "REAL_SOURCE_RECORD_CONFIRMED",
+        "evidence": {
+          "places": 8,
+          "deadline": "2026-08-24",
+          "municipality": "Valladolid",
+          "accessType": "open"
+        }
+      },
+      {
+        "id": "call:1285666447460",
+        "screen": "MORE TRAINING",
+        "description": "Convocatoria 1285666447460 (50 plazas · Valladolid · plazo 2026-08-24)",
+        "classification": "REAL_SOURCE_RECORD_CONFIRMED",
+        "evidence": {
+          "places": 50,
+          "deadline": "2026-08-24",
+          "municipality": "Valladolid",
+          "accessType": "open"
+        }
+      },
+      {
+        "id": "call:1285666500281",
+        "screen": "MORE TRAINING",
+        "description": "Convocatoria 1285666500281 (4 plazas · Valladolid · plazo 2026-08-24)",
+        "classification": "REAL_SOURCE_RECORD_CONFIRMED",
+        "evidence": {
+          "places": 4,
+          "deadline": "2026-08-24",
+          "municipality": "Valladolid",
+          "accessType": "open"
+        }
+      },
+      {
+        "id": "compare:IFC03S-2019-2020-y4",
+        "screen": "COMPARE STUDIES",
+        "description": "Valores EDUCAbase visibles (España + CyL) para IFC03S, cohorte 2019-2020, año 4",
+        "classification": "PRESENTATION_ONLY_REVISED",
+        "evidence": {
+          "spain": {
+            "mean": 25423,
+            "quintile_20_lower_boundary": 18872,
+            "quintile_40_lower_boundary": 22000,
+            "quintile_60_lower_boundary": 25537,
+            "quintile_80_lower_boundary": 31400
+          },
+          "cyHigherTruth": {
+            "mean": 22414,
+            "quintile_20_lower_boundary": 16405,
+            "quintile_40_lower_boundary": 19574,
+            "quintile_60_lower_boundary": 23035,
+            "quintile_80_lower_boundary": 28771
+          },
+          "note": "España verificado; panel CyL mezcla Grado Medio → corrección aplicada en prototipo"
+        }
+      },
+      {
+        "id": "resources:page-sizes",
+        "screen": "MORE TRAINING",
+        "description": "40 primeros de 791 / 60 primeros de 583",
+        "classification": "PRESENTATION_ONLY",
+        "evidence": {
+          "note": "page size editorial, no dato de fuente"
+        }
+      },
+      {
+        "id": "compare:cortes-20-40-60-80",
+        "screen": "COMPARE STUDIES",
+        "description": "Explicación didáctica de cortes del 20/40/60/80 %",
+        "classification": "PRESENTATION_ONLY",
+        "evidence": {
+          "note": "contenido explicativo sin dato de snapshot"
+        }
+      },
+      {
+        "id": "centers-explorer:example-rows",
+        "screen": "CENTERS GLOBAL",
+        "description": "Las 10 filas de ejemplo del explorador existen como filas centerCode:programKey reales con modalidad/titularidad/tipo de centro publicados",
+        "classification": "REAL_SOURCE_RECORD_CONFIRMED",
+        "evidence": [
+          {
+            "key": "09012072:INA02M",
+            "found": true,
+            "modalities": ["on_site"],
+            "teachingTypes": ["concerted"],
+            "ownership": "private",
+            "attributesMatch": true
+          },
+          {
+            "key": "24017965:INA02M",
+            "found": true,
+            "modalities": ["on_site"],
+            "teachingTypes": ["concerted"],
+            "ownership": "private",
+            "attributesMatch": true
+          },
+          {
+            "key": "47000609:INA02M",
+            "found": true,
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"],
+            "ownership": "agriculture",
+            "attributesMatch": true
+          },
+          {
+            "key": "05009698:AFD02S",
+            "found": true,
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"],
+            "ownership": "education",
+            "attributesMatch": true
+          },
+          {
+            "key": "09001670:AFD02S",
+            "found": true,
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"],
+            "ownership": "education",
+            "attributesMatch": true
+          },
+          {
+            "key": "24006049:AFD02S",
+            "found": true,
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"],
+            "ownership": "education",
+            "attributesMatch": true
+          },
+          {
+            "key": "37006014:AFD02S",
+            "found": true,
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"],
+            "ownership": "education",
+            "attributesMatch": true
+          },
+          {
+            "key": "37013985:AFD02S",
+            "found": true,
+            "modalities": ["on_site"],
+            "teachingTypes": ["private"],
+            "ownership": "private",
+            "attributesMatch": true
+          },
+          {
+            "key": "47004135:AFD02S",
+            "found": true,
+            "modalities": ["on_site"],
+            "teachingTypes": ["private"],
+            "ownership": "private",
+            "attributesMatch": true
+          },
+          {
+            "key": "47011115:AFD02SD",
+            "found": true,
+            "modalities": ["distance"],
+            "teachingTypes": ["private"],
+            "ownership": "private",
+            "attributesMatch": true
+          }
+        ]
+      }
+    ],
+    "APPROVED_EXAMPLE_IDS": [
+      "home:example-adg02s",
+      "offer:1285665634571",
+      "offer:1285672565954",
+      "occupation:cno11:5611↔SAN21"
+    ]
+  },
+  "deterministicChecks": [
+    {
+      "name": "GLOBAL_OFFERS == source truth",
+      "status": "PASS",
+      "detail": {
+        "offerEvidence": 1058,
+        "jobOffers": 1058,
+        "manifest": 1058
+      }
+    },
+    {
+      "name": "REVIEWED_OFFERS == recalculated truth",
+      "status": "PASS",
+      "detail": {
+        "unique": 138,
+        "relations": 196
+      }
+    },
+    {
+      "name": "CENTER_RAW == source truth",
+      "status": "PASS",
+      "detail": {
+        "raw": 1294
+      }
+    },
+    {
+      "name": "CENTER_UNIQUE_ROWS == aggregation truth",
+      "status": "PASS",
+      "detail": {
+        "unique": 1293,
+        "raw": 1294,
+        "resolved": 1294
+      }
+    },
+    {
+      "name": "NO duplicate centerCode:programKey after aggregation",
+      "status": "PASS",
+      "detail": {
+        "rows": 1293
+      }
+    },
+    {
+      "name": "filter outputs subset of aggregated universe",
+      "status": "PASS",
+      "detail": {
+        "rows": 1293
+      }
+    },
+    {
+      "name": "no fabricated filter rows",
+      "status": "PASS",
+      "detail": {
+        "sumProvinces": 1293,
+        "rows": 1293
+      }
+    },
+    {
+      "name": "prototype visible totals == audit truth (post-correction)",
+      "status": "PASS",
+      "detail": "ofertas 1058, revisadas 138, filas 1293, centros 229, programas 187, recursos 22, grafo 264"
+    },
+    {
+      "name": "approved examples satisfy reviewed relationship contract",
+      "status": "PASS",
+      "detail": {
+        "approved": [
+          "home:example-adg02s",
+          "offer:1285665634571",
+          "offer:1285672565954",
+          "occupation:cno11:5611↔SAN21"
+        ]
+      }
+    },
+    {
+      "name": "manifest integrity",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "name": "offerEvidence counts consistent",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "prototype corrected: offers/global.html",
+      "status": "PASS",
+      "detail": {
+        "missing": [],
+        "forbidden": []
+      }
+    },
+    {
+      "name": "prototype corrected: centers/explorer.html",
+      "status": "PASS",
+      "detail": {
+        "missing": [],
+        "forbidden": []
+      }
+    },
+    {
+      "name": "prototype corrected: compare/index.html",
+      "status": "PASS",
+      "detail": {
+        "missing": [],
+        "forbidden": []
+      }
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import type {
 } from "../../../data/schemas/sepeOccupationMarket";
 import { loadSepeOccupationMarketResource } from "../../data/generatedDataClient";
 import { ExternalLink } from "../../components/ExternalLink";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import "./occupationMarketEvidence.css";
 
 export interface OccupationMarketEvidenceProps {
@@ -71,17 +72,6 @@ function MetricValue({ metric }: { metric: SepeOccupationMetric | undefined }) {
   return <>{formatNumber(metric?.total)}</>;
 }
 
-function MetricTrend({ metric }: { metric: SepeOccupationMetric }) {
-  return (
-    <>
-      <span>{formatPercent(metric.monthlyVariationPercent)}</span>
-      <span className="occupation-market-evidence__trend-label">mensual</span>
-      <span>{formatPercent(metric.annualVariationPercent)}</span>
-      <span className="occupation-market-evidence__trend-label">anual</span>
-    </>
-  );
-}
-
 function EvidenceSummary({ record }: { record: SepeOccupationMarket }) {
   const contracts = record.national.registeredContracts;
   const unemployment = record.national.registeredUnemployment;
@@ -91,35 +81,13 @@ function EvidenceSummary({ record }: { record: SepeOccupationMarket }) {
       aria-label="Resumen del mercado laboral"
     >
       <div>
-        <dt>Periodo</dt>
-        <dd>
-          <time dateTime={record.period + "-01"}>
-            {formatPeriod(record.period)}
-          </time>
-        </dd>
-      </div>
-      <div>
         <dt>Contratos registrados</dt>
         <dd>
           <strong>{formatNumber(contracts.total)}</strong>
           <span className="occupation-market-evidence__definition">
-            Comunicaciones administrativas de contratos al SEPE.
-          </span>
-        </dd>
-      </div>
-      <div>
-        <dt>Variación de contratos</dt>
-        <dd className="occupation-market-evidence__trend">
-          <MetricTrend metric={contracts} />
-        </dd>
-      </div>
-      <div>
-        <dt>Personas contratadas (dato administrativo)</dt>
-        <dd>
-          {formatNumber(contracts.people)}
-          <span className="occupation-market-evidence__definition">
-            Conteo administrativo publicado por el SEPE; no es un censo de
-            personas únicas ni una medida de vacantes o una predicción.
+            Comunicaciones administrativas al SEPE. Variación{" "}
+            {formatPercent(contracts.monthlyVariationPercent)} mensual y{" "}
+            {formatPercent(contracts.annualVariationPercent)} anual.
           </span>
         </dd>
       </div>
@@ -128,14 +96,20 @@ function EvidenceSummary({ record }: { record: SepeOccupationMarket }) {
         <dd>
           <strong>{formatNumber(unemployment.total)}</strong>
           <span className="occupation-market-evidence__definition">
-            Personas inscritas como demandantes en paro registrado.
+            Personas inscritas como demandantes. Variación{" "}
+            {formatPercent(unemployment.monthlyVariationPercent)} mensual y{" "}
+            {formatPercent(unemployment.annualVariationPercent)} anual.
           </span>
         </dd>
       </div>
       <div>
-        <dt>Variación del paro</dt>
-        <dd className="occupation-market-evidence__trend">
-          <MetricTrend metric={unemployment} />
+        <dt>Personas contratadas</dt>
+        <dd>
+          <strong>{formatNumber(contracts.people)}</strong>
+          <span className="occupation-market-evidence__definition">
+            Conteo administrativo del SEPE: no es un censo de personas únicas ni
+            una previsión.
+          </span>
         </dd>
       </div>
     </dl>
@@ -150,6 +124,10 @@ function EvidenceCoverage({
   const { coverage } = resource;
   return (
     <div className="occupation-market-evidence__coverage">
+      <p>
+        Ámbito de las cifras: <strong>España</strong>. El desglose de Castilla y
+        León está disponible por provincia.
+      </p>
       <p>
         Periodo consultado: <strong>{formatPeriod(resource.period)}</strong>.
       </p>
@@ -237,21 +215,23 @@ export function OccupationMarketEvidence({
       aria-busy={state.status === "loading"}
     >
       <header className="occupation-market-evidence__header">
-        <p className="occupation-market-evidence__eyebrow">Evidencia oficial</p>
         <h2 id="occupation-market-evidence-title">
           Mercado laboral de esta ocupación
         </h2>
       </header>
       <p className="occupation-market-evidence__intro">
-        Registros oficiales del SEPE para CNO-11 {cnoCode}. Incluyen contratos
-        registrados y paro registrado. Las personas contratadas son un conteo
-        administrativo publicado por el SEPE; no es un censo de personas únicas,
-        una medida de vacantes ni una predicción individual.
+        Registros oficiales del SEPE para CNO-11 {cnoCode}: contratos y paro
+        registrados en el periodo consultado. Son datos administrativos, no una
+        medida de vacantes, salarios ni una predicción individual.
       </p>
       {state.status === "loading" && (
-        <p role="status" aria-live="polite">
-          Cargando datos del mercado laboral…
-        </p>
+        <div aria-busy="true">
+          <LoadingSkeleton
+            status="Cargando datos del mercado laboral…"
+            layout="results"
+            className="occupation-market-evidence__loading"
+          />
+        </div>
       )}
       {state.status === "unavailable" && (
         <p role="status" aria-live="polite">
@@ -287,10 +267,10 @@ export function OccupationMarketEvidence({
         <>
           <EvidenceCoverage resource={state.resource} />
           <EvidenceSummary record={state.record} />
-          <h3 className="occupation-market-evidence__section-label">
-            Distribución provincial
-          </h3>
-          <ProvinceTable record={state.record} />
+          <details className="occupation-market-evidence__province-details">
+            <summary>Ver contratos y paro por provincia</summary>
+            <ProvinceTable record={state.record} />
+          </details>
           <div className="occupation-market-evidence__provenance">
             <p>
               <ExternalLink href={state.record.source.url}>

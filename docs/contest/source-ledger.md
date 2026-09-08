@@ -1,5 +1,7 @@
 # Contest source ledger
 
+The released candidate is `v2026.09.04-candidate.10` over commit `4b67443c4cb1b29347eef38d751eb4f8d02cb2a9`, deployed and verified at the public root below; `docs/contest/release-evidence.json` records the observed deployment and public verification.
+
 This ledger keeps source evidence separate from claims about the application. URLs below are copied from the repository source contracts and methodology, not inferred from a search result.
 
 | Evidence boundary                           | Official source                                                                                                                                                             | Repository contract                                                                          |

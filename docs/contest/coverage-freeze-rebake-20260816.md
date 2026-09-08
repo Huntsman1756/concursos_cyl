@@ -1,5 +1,7 @@
 # Coverage freeze rebake — 2026-08-16
 
+> HISTÓRICO / SUPERSEDED: esta rebake conserva una iteración anterior y no describe el candidato activo. Consulta `coverage-freeze.json` para la identidad vigente.
+
 Commit base de esta entrega: `8cc99c79b434c970d32d52794eb1158a5cc47ebb`
 
 Este archivo documenta la regeneración del freeze de cobertura (`coverage-freeze.json`)

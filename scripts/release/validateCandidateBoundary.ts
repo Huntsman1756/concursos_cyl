@@ -5,10 +5,7 @@ import { join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { TextDecoder } from "node:util";
 
-import {
-  GeneratedManifestSchema,
-  type GeneratedManifestActivationProvenance,
-} from "../../data/schemas/generated";
+import { GeneratedManifestSchema } from "../../data/schemas/generated";
 import {
   assertCandidateResourceSet,
   assertCanonicalSepeCandidateResource,
@@ -18,7 +15,8 @@ import {
 } from "../../data/schemas/candidateResourceAllowlist";
 import { GENERATED_RESOURCE_KEYS } from "../../data/schemas/generatedResourceCatalog";
 import { OfferEvidenceResourceSchema } from "../../data/schemas/offerEvidence";
-import { loadRuntimeSnapshotRetention } from "./runtimeSnapshotRetention";
+import { OpenDataCatalogResourceSchema } from "../../data/schemas/openData";
+import { shouldCopyRuntimeCandidate } from "./prepareRuntimeData";
 
 export interface CandidateBoundaryOptions {
   rootDir: string;
@@ -74,8 +72,6 @@ type ResourceSnapshot = {
 };
 
 type CandidateManifest = {
-  snapshotId?: string;
-  activationProvenance?: GeneratedManifestActivationProvenance;
   resourceSnapshots: Record<string, ResourceSnapshot>;
 };
 
@@ -632,15 +628,9 @@ function parseCandidateManifest(
 ): CandidateManifest {
   const parsed = GeneratedManifestSchema.safeParse(value);
   if (!parsed.success) {
-    const details = parsed.error.issues
-      .map(({ path, message }) => `${path.join(".")}: ${message}`)
-      .join("; ");
-    throw new Error(
-      `${label} failed generated manifest schema validation: ${details}`,
-      {
-        cause: parsed.error,
-      },
-    );
+    throw new Error(`${label} failed generated manifest schema validation.`, {
+      cause: parsed.error,
+    });
   }
   return parsed.data as CandidateManifest;
 }
@@ -714,21 +704,9 @@ function parseResourceSnapshot(
 function parseResourceSnapshotMap(
   value: unknown,
   label: string,
-  acceptedResourceKeySets: readonly (readonly string[])[] = [
-    CANDIDATE_RESOURCE_KEYS,
-  ],
 ): Record<string, ResourceSnapshot> {
   const record = asRecord(value, label);
-  const keys = Object.keys(record);
-  if (
-    !acceptedResourceKeySets.some(
-      (expectedKeys) =>
-        expectedKeys.length === keys.length &&
-        expectedKeys.every((key) => keys.includes(key)),
-    )
-  ) {
-    throw new Error(`${label} contains an incomplete resource snapshot map.`);
-  }
+  assertCandidateResourceSet(Object.keys(record));
   return Object.fromEntries(
     Object.entries(record).map(([key, snapshot]) => [
       key,
@@ -757,71 +735,29 @@ function compareResourceSnapshots(
   }
 }
 
-function compareManifestActivation(
-  expected: CandidateManifest,
-  actual: CandidateManifest,
-  label: string,
-): void {
-  if (expected.snapshotId !== actual.snapshotId) {
-    throw new Error(`${label} snapshotId differs from public manifest.`);
-  }
-  if (
-    JSON.stringify(expected.activationProvenance ?? null) !==
-    JSON.stringify(actual.activationProvenance ?? null)
-  ) {
-    throw new Error(
-      `${label} activationProvenance differs from public manifest.`,
-    );
-  }
-}
-
-function assertResourceKeysArray(
-  value: unknown,
-  label: string,
-  acceptedResourceKeySets: readonly (readonly string[])[] = [
-    CANDIDATE_RESOURCE_KEYS,
-  ],
-): string[] {
+function assertResourceKeysArray(value: unknown, label: string): string[] {
   if (!Array.isArray(value) || value.some((key) => typeof key !== "string")) {
     throw new Error(`${label} must be an array of resource keys.`);
   }
   const resourceKeys = value as string[];
-  if (
-    !acceptedResourceKeySets.some(
-      (expectedKeys) =>
-        expectedKeys.length === resourceKeys.length &&
-        expectedKeys.every((key) => resourceKeys.includes(key)),
-    )
-  ) {
-    throw new Error(`${label} contains an incomplete resource key set.`);
-  }
+  assertCandidateResourceSet(resourceKeys);
   return resourceKeys;
 }
 
 function extractApplicableResourceEvidence(
   value: unknown,
   label: string,
-  historicalResourceKeys?: readonly string[],
 ): CandidateResourceEvidence | null {
   if (Array.isArray(value)) return null;
   const record = asRecord(value, label);
   const keyCandidates: string[][] = [];
   const snapshotCandidates: Array<Record<string, ResourceSnapshot>> = [];
-  const acceptedResourceKeySets = historicalResourceKeys
-    ? [CANDIDATE_RESOURCE_KEYS, historicalResourceKeys]
-    : [CANDIDATE_RESOURCE_KEYS];
   const addSnapshots = (snapshots: unknown, snapshotsLabel: string): void => {
-    const parsed = parseResourceSnapshotMap(
-      snapshots,
-      snapshotsLabel,
-      acceptedResourceKeySets,
-    );
+    const parsed = parseResourceSnapshotMap(snapshots, snapshotsLabel);
     snapshotCandidates.push(parsed);
   };
   const addKeys = (keys: unknown, keysLabel: string): void => {
-    keyCandidates.push(
-      assertResourceKeysArray(keys, keysLabel, acceptedResourceKeySets),
-    );
+    keyCandidates.push(assertResourceKeysArray(keys, keysLabel));
   };
 
   if (hasOwn(record, "resourceSnapshots")) {
@@ -873,7 +809,6 @@ function assertEvidenceManifestIdentity(
   expectedSnapshotId: string,
   expectedSha256: string,
   required: boolean,
-  historicalIdentity?: { snapshotId: string; sha256: string },
 ): void {
   if (Array.isArray(value)) {
     if (required) {
@@ -889,61 +824,21 @@ function assertEvidenceManifestIdentity(
     return;
   }
   const manifest = asRecord(record.manifest, `${label}.manifest`);
-  const isActiveIdentity =
-    manifest.snapshotId === expectedSnapshotId &&
-    manifest.sha256 === expectedSha256;
-  const isHistoricalIdentity =
-    historicalIdentity !== undefined &&
-    manifest.snapshotId === historicalIdentity.snapshotId &&
-    manifest.sha256 === historicalIdentity.sha256;
-  if (!isActiveIdentity && !isHistoricalIdentity) {
+  if (
+    typeof manifest.snapshotId !== "string" ||
+    manifest.snapshotId !== expectedSnapshotId
+  ) {
     throw new Error(
-      `${label}.manifest snapshotId/sha256 identity must match the active candidate or its immutable source snapshot.`,
+      `${label}.manifest.snapshotId must match the public manifest.`,
     );
   }
-}
-
-function compareHistoricalResourceSnapshots(
-  manifest: CandidateManifest,
-  actual: Record<string, ResourceSnapshot>,
-  label: string,
-): void {
-  const provenance = manifest.activationProvenance;
-  if (provenance === undefined) {
-    throw new Error(`${label} cannot use a historical resource snapshot map.`);
-  }
-  const keys = provenance.sourceResourceKeys;
   if (
-    Object.keys(actual).length !== keys.length ||
-    keys.some((key) => !Object.prototype.hasOwnProperty.call(actual, key))
+    typeof manifest.sha256 !== "string" ||
+    manifest.sha256 !== expectedSha256
   ) {
-    throw new Error(`${label} historical resource snapshot map is incomplete.`);
-  }
-  for (const key of keys) {
-    const expectedSnapshot = manifest.resourceSnapshots[key];
-    const actualSnapshot = actual[key];
-    if (expectedSnapshot === undefined || actualSnapshot === undefined) {
-      throw new Error(
-        `${label} historical resource snapshot ${key} is missing.`,
-      );
-    }
-    const fileName = expectedSnapshot.resourcePath.split("/").at(-1);
-    const expectedPath = `/data/v1/snapshots/${provenance.sourceSnapshotId}/${fileName}`;
-    if (
-      actualSnapshot.resourcePath !== expectedPath ||
-      actualSnapshot.sha256 !== expectedSnapshot.sha256 ||
-      actualSnapshot.recordCount !== expectedSnapshot.recordCount
-    ) {
-      const differingField =
-        actualSnapshot.resourcePath !== expectedPath
-          ? "resourcePath"
-          : actualSnapshot.sha256 !== expectedSnapshot.sha256
-            ? "sha256"
-            : "recordCount";
-      throw new Error(
-        `${label} historical resource snapshot ${key} ${differingField} differs from the immutable source snapshot.`,
-      );
-    }
+    throw new Error(
+      `${label}.manifest.sha256 must match the public manifest bytes.`,
+    );
   }
 }
 
@@ -1079,6 +974,27 @@ async function validateResourceSnapshots(
         `${label} resource ${key} record count does not match its manifest snapshot.`,
       );
     }
+    if (key === "openDataCatalog") {
+      const [catalog] = OpenDataCatalogResourceSchema.parse(value);
+      if (catalog === undefined) {
+        throw new Error(`${label} open-data catalog is empty.`);
+      }
+      const csvFile = await readRegularFile(
+        rootDir,
+        manifestResourceFilePath(
+          rootDir,
+          catalog.csvResourcePath,
+          publicRoot,
+          `${label} open-data CSV`,
+        ),
+        `${label} open-data CSV`,
+      );
+      if (hashBytes(csvFile.bytes) !== catalog.csvSha256) {
+        throw new Error(
+          `${label} open-data CSV hash does not match its catalog.`,
+        );
+      }
+    }
     if (key === "sepeOccupationMarket") sepeRecordCount = recordCount;
   }
   return { sepeRecordCount };
@@ -1120,15 +1036,13 @@ async function compareBundleDataTree(
     sourceManifest,
     "Candidate manifest",
   );
-  const retainedSnapshotIds = new Set([
-    activeSnapshotId,
-    ...loadRuntimeSnapshotRetention(rootDir).runtimeSnapshotIds,
-  ]);
+  const activePrefix = `snapshots/${activeSnapshotId}/`;
   const expectedPaths = new Set(
     [...publicPaths].filter(
       (path) =>
-        !path.startsWith("snapshots/") ||
-        retainedSnapshotIds.has(path.split("/")[1] ?? ""),
+        path.startsWith(activePrefix) ||
+        (!path.startsWith("snapshots/") &&
+          shouldCopyRuntimeCandidate(`v1/${path}`)),
     ),
   );
   const missing = [...expectedPaths].filter((path) => !bundlePaths.has(path));
@@ -1178,11 +1092,6 @@ async function validateBundle(
   );
   const parsedBundleManifest = parseCandidateManifest(
     parseJson(bundleManifest.bytes, "Candidate bundle manifest"),
-    "Candidate bundle manifest",
-  );
-  compareManifestActivation(
-    sourceManifest,
-    parsedBundleManifest,
     "Candidate bundle manifest",
   );
   compareResourceSnapshots(
@@ -1331,42 +1240,17 @@ export async function validateCandidateBoundary(
       const resourceEvidence = extractApplicableResourceEvidence(
         value,
         documentPath,
-        sourceManifest.activationProvenance?.sourceResourceKeys,
       );
       if (resourceEvidence !== null) {
         if (resourceEvidence.resourceKeys) {
-          assertResourceKeysArray(
-            resourceEvidence.resourceKeys,
-            `${documentPath}.resourceKeys`,
-            sourceManifest.activationProvenance
-              ? [
-                  CANDIDATE_RESOURCE_KEYS,
-                  sourceManifest.activationProvenance.sourceResourceKeys,
-                ]
-              : [CANDIDATE_RESOURCE_KEYS],
-          );
+          assertCandidateResourceSet(resourceEvidence.resourceKeys);
         }
         for (const snapshots of resourceEvidence.resourceSnapshots) {
-          const usesHistoricalSourceKeys =
-            sourceManifest.activationProvenance !== undefined &&
-            Object.keys(snapshots).length ===
-              sourceManifest.activationProvenance.sourceResourceKeys.length &&
-            sourceManifest.activationProvenance.sourceResourceKeys.every(
-              (key) => Object.prototype.hasOwnProperty.call(snapshots, key),
-            );
-          if (usesHistoricalSourceKeys) {
-            compareHistoricalResourceSnapshots(
-              sourceManifest,
-              snapshots,
-              `Candidate document ${documentPath}`,
-            );
-          } else {
-            compareResourceSnapshots(
-              sourceManifest.resourceSnapshots,
-              snapshots,
-              `Candidate document ${documentPath}`,
-            );
-          }
+          compareResourceSnapshots(
+            sourceManifest.resourceSnapshots,
+            snapshots,
+            `Candidate document ${documentPath}`,
+          );
         }
         if (
           resourceEvidence.resourceKeys &&
@@ -1384,12 +1268,6 @@ export async function validateCandidateBoundary(
         publicManifestSha256,
         REQUIRED_EVIDENCE_DOCUMENTS.has(documentPath) ||
           resourceEvidence !== null,
-        sourceManifest.activationProvenance === undefined
-          ? undefined
-          : {
-              snapshotId: sourceManifest.activationProvenance.sourceSnapshotId,
-              sha256: sourceManifest.activationProvenance.sourceManifestSha256,
-            },
       );
       if (documentPath === "docs/contest/coverage-freeze.json") {
         assertCoverageFreezeResourceEvidence(resourceEvidence, documentPath);

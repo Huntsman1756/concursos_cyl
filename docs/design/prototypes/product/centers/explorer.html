@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dónde estudiar — SALIDA CyL · prototipo</title>
+    <link rel="stylesheet" href="../product.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+    <header class="header">
+      <div class="container header-bar">
+        <a class="wordmark" href="/">SALIDA <span class="cyl">CyL</span></a>
+        <nav class="header-secondary" aria-label="Enlaces secundarios">
+          <a href="/recursos">Más formación</a>
+          <a href="/datos-abiertos">Datos abiertos</a>
+          <a href="/metodologia">Metodología</a>
+          <a href="/accesibilidad">Accesibilidad</a>
+        </nav>
+        <button
+          class="menu-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          id="menu-button"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+          Menú
+        </button>
+      </div>
+      <nav class="global-nav" aria-label="Navegación principal">
+        <div class="container">
+          <ul class="global-nav-list">
+            <li><a class="global-nav-link" href="/desde-fp">Explorar</a></li>
+            <li><a class="global-nav-link" href="/desde-oferta">Ofertas</a></li>
+            <li>
+              <a
+                class="global-nav-link"
+                href="/donde-estudiar"
+                aria-current="page"
+                >Dónde estudiar</a
+              >
+            </li>
+            <li>
+              <a class="global-nav-link" href="/comparar">Comparar estudios</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="mobile-menu" id="mobile-menu" hidden>
+        <ul class="mobile-menu-list">
+          <li><a href="/desde-fp">Explorar</a></li>
+          <li><a href="/desde-oferta">Ofertas</a></li>
+          <li><a href="/donde-estudiar">Dónde estudiar</a></li>
+          <li><a href="/comparar">Comparar estudios</a></li>
+        </ul>
+        <div class="mobile-menu-secondary">
+          <a href="/recursos">Más formación</a>
+          <a href="/datos-abiertos">Datos abiertos</a>
+          <a href="/metodologia">Metodología</a>
+          <a href="/accesibilidad">Accesibilidad</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="centers-title">
+        <div
+          class="container hero-grid"
+          style="min-height: 0; padding-block: var(--space-6)"
+        >
+          <div>
+            <nav
+              class="breadcrumbs"
+              style="padding-block: 0"
+              aria-label="Miga de pan"
+            >
+              <ol>
+                <li><a href="/">Inicio</a></li>
+                <li><span aria-current="page">Dónde estudiar</span></li>
+              </ol>
+            </nav>
+            <p class="eyebrow" style="margin-top: var(--space-4)">
+              Oferta formativa publicada
+            </p>
+            <h1 class="h1" id="centers-title">Dónde estudiar</h1>
+            <p class="page-subcopy">
+              La oferta de ciclos de FP publicada en la copia actual de la Junta
+              de Castilla y León: qué centros imparten cada ciclo, en qué
+              modalidad y con qué titularidad. No incluye información de
+              matrícula ni de plazas.
+            </p>
+          </div>
+          <div
+            class="hero-stage"
+            style="
+              aspect-ratio: var(--editorial-ratio-wide);
+              border-radius: var(--radius-medium);
+            "
+          >
+            <picture>
+              <source
+                type="image/avif"
+                srcset="
+                  ../../../../../public/images/editorial/centers-vocational-training-640.avif 640w,
+                  ../../../../../public/images/editorial/centers-vocational-training-960.avif 960w
+                "
+                sizes="(min-width: 1080px) 45vw, calc(100vw - 2 * var(--grid-gutter))"
+              />
+              <source
+                type="image/webp"
+                srcset="
+                  ../../../../../public/images/editorial/centers-vocational-training-640.webp 640w,
+                  ../../../../../public/images/editorial/centers-vocational-training-960.webp 960w
+                "
+                sizes="(min-width: 1080px) 45vw, calc(100vw - 2 * var(--grid-gutter))"
+              />
+              <img
+                src="../../../../../public/images/editorial/centers-vocational-training-640.avif"
+                alt="Estudiantes de un ciclo de FP montando un prototipo electrónico en un aula-taller."
+                width="640"
+                height="360"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </picture>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="section"
+        style="padding-top: var(--space-5)"
+        aria-label="Explorador de centros"
+      >
+        <div class="container">
+          <button
+            class="sheet-button"
+            type="button"
+            data-sheet-button
+            aria-expanded="false"
+            aria-controls="filters"
+          >
+            Filtros
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+            </svg>
+          </button>
+          <form
+            class="filter-bar"
+            id="filters"
+            data-sheet
+            action="/donde-estudiar"
+            method="get"
+          >
+            <div class="filter-field filter-grow">
+              <label for="q">Buscar centro o ciclo</label>
+              <input
+                type="search"
+                id="q"
+                name="query"
+                placeholder="Ej.: CIFP, Administración y Finanzas"
+              />
+            </div>
+            <div class="filter-field">
+              <label for="prov">Provincia</label>
+              <select id="prov" name="province">
+                <option>Todas</option>
+                <option>Ávila</option>
+                <option>Burgos</option>
+                <option>León</option>
+                <option>Palencia</option>
+                <option>Salamanca</option>
+                <option>Segovia</option>
+                <option>Soria</option>
+                <option>Valladolid</option>
+                <option>Zamora</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="mod">Modalidad</label>
+              <select id="mod" name="modality">
+                <option>Todas</option>
+                <option>Presencial</option>
+                <option>A distancia</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="tit">Titularidad</label>
+              <select id="tit" name="titularidad">
+                <option>Todas</option>
+                <option>Pública</option>
+                <option>Concertada</option>
+                <option>Privada</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="more">Más filtros</label>
+              <select id="more" name="more">
+                <option>Nivel · Familia · Tipo de centro</option>
+                <option>Nivel: Grado Básico</option>
+                <option>Nivel: Grado Medio</option>
+                <option>Nivel: Grado Superior</option>
+                <option>Nivel: Especialización</option>
+                <option>Tipo de centro: Centro educativo</option>
+                <option>Tipo de centro: Centro municipal</option>
+                <option>Tipo de centro: Centro agrario</option>
+                <option>Tipo de centro: Centro privado</option>
+              </select>
+            </div>
+            <div class="filter-sheet-actions">
+              <button class="button button--primary" type="submit">
+                Aplicar
+              </button>
+              <a class="button button--secondary" href="/donde-estudiar"
+                >Quitar todo</a
+              >
+            </div>
+          </form>
+
+          <div class="result-meta">
+            <p class="result-count" style="margin: 0">
+              1–50 de 1293 opciones formativas
+            </p>
+            <p class="caption" style="margin: 0">229 centros representados</p>
+            <a
+              class="link-action"
+              href="/donde-estudiar"
+              style="min-height: auto; font-size: var(--text-small)"
+              >Quitar filtros</a
+            >
+          </div>
+
+          <div class="table-scroll">
+            <table class="result-table">
+              <thead>
+                <tr>
+                  <th scope="col">Centro</th>
+                  <th scope="col">Localidad</th>
+                  <th scope="col">Ciclo</th>
+                  <th scope="col">Modalidad</th>
+                  <th scope="col">Titularidad</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong><a href="#">CIFP San Gabriel</a></strong
+                    ><span class="cell-sub">Centro privado</span>
+                  </td>
+                  <td>La Aguilera · Burgos</td>
+                  <td>Aceites de Oliva y Vinos · Grado Medio</td>
+                  <td>Presencial</td>
+                  <td>Concertada</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/formacion/INA02M">Ver ciclo</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><a href="#">La Inmaculada</a></strong
+                    ><span class="cell-sub">Centro privado</span>
+                  </td>
+                  <td>Camponaraya · León</td>
+                  <td>Aceites de Oliva y Vinos · Grado Medio</td>
+                  <td>Presencial</td>
+                  <td>Concertada</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/formacion/INA02M">Ver ciclo</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong
+                      ><a href="#"
+                        >CIFP San Rafael de la Santa Espina</a
+                      ></strong
+                    ><span class="cell-sub">Centro agrario</span>
+                  </td>
+                  <td>Castromonte · Valladolid</td>
+                  <td>Aceites de Oliva y Vinos · Grado Medio</td>
+                  <td>Presencial</td>
+                  <td>Pública</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/formacion/INA02M">Ver ciclo</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><a href="#">CIFP de Ávila</a></strong
+                    ><span class="cell-sub">Centro educativo</span>
+                  </td>
+                  <td>Ávila · Ávila</td>
+                  <td>Acondicionamiento Físico · Grado Superior</td>
+                  <td>Presencial</td>
+                  <td>Pública</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/formacion/AFD02S">Ver ciclo</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><a href="#">IES Conde Diego Porcelos</a></strong
+                    ><span class="cell-sub">Centro educativo</span>
+                  </td>
+                  <td>Burgos · Burgos</td>
+                  <td>Acondicionamiento Físico · Grado Superior</td>
+                  <td>Presencial</td>
+                  <td>Pública</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/formacion/AFD02S">Ver ciclo</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><a href="#">IES Ordoño II</a></strong
+                    ><span class="cell-sub">Centro educativo</span>
+                  </td>
+                  <td>León · León</td>
+                  <td>Acondicionamiento Físico · Grado Superior</td>
+                  <td>Presencial</td>
+                  <td>Pública</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/formacion/AFD02S">Ver ciclo</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><a href="#">IES Mateo Hernández</a></strong
+                    ><span class="cell-sub">Centro educativo</span>
+                  </td>
+                  <td>Salamanca · Salamanca</td>
+                  <td>Acondicionamiento Físico · Grado Superior</td>
+                  <td>Presencial</td>
+                  <td>Pública</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/formacion/AFD02S">Ver ciclo</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><a href="#">ESYDE Salamanca</a></strong
+                    ><span class="cell-sub">Centro privado</span>
+                  </td>
+                  <td>Salamanca · Salamanca</td>
+                  <td>Acondicionamiento Físico · Grado Superior</td>
+                  <td>Presencial</td>
+                  <td>Privada</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/formacion/AFD02S">Ver ciclo</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><a href="#">Nuestra Señora del Rosario</a></strong
+                    ><span class="cell-sub">Centro privado</span>
+                  </td>
+                  <td>Valladolid · Valladolid</td>
+                  <td>Acondicionamiento Físico · Grado Superior</td>
+                  <td>Presencial</td>
+                  <td>Privada</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/formacion/AFD02S">Ver ciclo</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><a href="#">Río Duero</a></strong
+                    ><span class="cell-sub">Centro privado</span>
+                  </td>
+                  <td>Valladolid · Valladolid</td>
+                  <td>Acondicionamiento Físico (distancia) · Grado Superior</td>
+                  <td>A distancia</td>
+                  <td>Privada</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/formacion/AFD02SD">Ver ciclo</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <ul class="rcard-list">
+            <li>
+              <article class="rcard">
+                <div class="rcard-field">
+                  <p class="rcard-label">Centro</p>
+                  <p class="rcard-value"><strong>CIFP San Gabriel</strong></p>
+                  <p class="rcard-sub">Centro privado</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Localidad</p>
+                  <p class="rcard-value">La Aguilera · Burgos</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Ciclo</p>
+                  <p class="rcard-value">Aceites de Oliva y Vinos</p>
+                  <p class="rcard-sub">Grado Medio</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Modalidad</p>
+                  <p class="rcard-value">Presencial</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Titularidad</p>
+                  <p class="rcard-value">Concertada</p>
+                </div>
+                <div class="rcard-actions">
+                  <a
+                    class="link-action"
+                    href="/formacion/INA02M"
+                    style="min-height: auto"
+                    >Ver ciclo</a
+                  >
+                  <a class="link-action" href="#" style="min-height: auto"
+                    >Cómo llegar</a
+                  >
+                </div>
+              </article>
+            </li>
+            <li>
+              <article class="rcard">
+                <div class="rcard-field">
+                  <p class="rcard-label">Centro</p>
+                  <p class="rcard-value"><strong>Río Duero</strong></p>
+                  <p class="rcard-sub">Centro privado</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Localidad</p>
+                  <p class="rcard-value">Valladolid · Valladolid</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Ciclo</p>
+                  <p class="rcard-value">
+                    Acondicionamiento Físico (distancia)
+                  </p>
+                  <p class="rcard-sub">Grado Superior</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Modalidad</p>
+                  <p class="rcard-value">A distancia</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Titularidad</p>
+                  <p class="rcard-value">Privada</p>
+                </div>
+                <div class="rcard-actions">
+                  <a
+                    class="link-action"
+                    href="/formacion/AFD02SD"
+                    style="min-height: auto"
+                    >Ver ciclo</a
+                  >
+                  <a class="link-action" href="#" style="min-height: auto"
+                    >Cómo llegar</a
+                  >
+                </div>
+              </article>
+            </li>
+          </ul>
+
+          <nav class="pagination" aria-label="Paginación de centros">
+            <a
+              class="button button--secondary button--disabled"
+              href="#"
+              aria-disabled="true"
+              >Anterior</a
+            >
+            <span class="range">1–50 de 1293</span>
+            <a class="button button--secondary" href="/donde-estudiar?page=2"
+              >Siguiente</a
+            >
+          </nav>
+
+          <p class="caption">
+            Las URLs de los centros se muestran tal como las publica la fuente;
+            el CTA solo aparece con disponibilidad e identidad verificadas en la
+            auditoría de enlaces del 02/09/2026 (201 de 228 centros con web). Si
+            un centro no publica modalidad, aparece como “Modalidad no
+            publicada”.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h2 class="footer-group-title">Explorar</h2>
+            <ul class="footer-group-list">
+              <li><a href="/desde-fp">Desde tu FP</a></li>
+              <li><a href="/desde-ocupacion">Desde una profesión</a></li>
+              <li><a href="/desde-oferta">Desde una oferta</a></li>
+              <li><a href="/donde-estudiar">Dónde estudiar</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="footer-group-title">Datos y método</h2>
+            <ul class="footer-group-list">
+              <li><a href="/metodologia">Metodología</a></li>
+              <li><a href="/datos-abiertos">Datos abiertos</a></li>
+              <li><a href="/comparar">Comparar estudios</a></li>
+              <li><a href="/recursos">Más formación</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="footer-group-title">Información</h2>
+            <ul class="footer-group-list">
+              <li><a href="/accesibilidad">Accesibilidad</a></li>
+              <li><a href="/para-organizaciones">Para organizaciones</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="caption">
+            SALIDA CyL — orientación profesional con datos públicos de Castilla
+            y León.
+          </p>
+          <p class="caption">
+            Prototipo estático del rediseño (no es el producto en producción).
+          </p>
+          <p class="caption">Imágenes editoriales generadas mediante IA.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../product.js"></script>
+  </body>
+</html>

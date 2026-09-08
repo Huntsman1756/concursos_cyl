@@ -12,6 +12,9 @@ import {
   resolveGeneratedAssetPath,
 } from "../../data/generatedDataClient";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import { longDate } from "../../domain/displayFormat";
+import { Breadcrumbs } from "../../components/Breadcrumbs";
+import { PageEyebrow } from "../../components/PageEyebrow";
 import { SourceMethodCard } from "./SourceMethodCard";
 import "./methodology.css";
 
@@ -149,8 +152,8 @@ function tableLinks(tableIds: readonly EducabaseIncomeTableId[]) {
       tableId,
       label:
         source.trainingLevel === "intermediate"
-          ? "Grado Medio"
-          : "Grado Superior",
+          ? "grado medio"
+          : "grado superior",
       catalogUrl: source.catalogUrl,
       csvUrl: source.csvUrl,
       pxUrl: source.pxUrl,
@@ -159,12 +162,7 @@ function tableLinks(tableIds: readonly EducabaseIncomeTableId[]) {
 }
 
 function formattedDate(timestamp: string): string {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(timestamp));
+  return longDate(timestamp);
 }
 
 function countLabel(count: number, singular: string, plural: string): string {
@@ -179,7 +177,7 @@ function RegionalDatasetInventory({ state }: { state: ManifestState }) {
     >
       <div className="regional-dataset-inventory__heading">
         <div>
-          <p className="methodology-page__eyebrow">Datos regionales en uso</p>
+          <PageEyebrow>Datos regionales en uso</PageEyebrow>
           <h2 id="regional-datasets-heading">
             {JCYL_DATASETS.length} datasets de la Junta
           </h2>
@@ -309,6 +307,11 @@ function TrainingCatalogProvenance({ state }: { state: TrainingCatalogState }) {
         .
       </p>
       <p>
+        El buscador «Dónde estudiar» agrupa en una sola fila las opciones que
+        comparten centro y ciclo; su contador cuenta combinaciones de centro y
+        ciclo, por eso puede ser menor que el de opciones de centro y modalidad.
+      </p>
+      <p>
         Identificador técnico del catálogo (SHA-256):{" "}
         <code>{state.snapshot.sha256.slice(0, 12)}…</code>
       </p>
@@ -377,19 +380,49 @@ export function MethodologyPage() {
   const provenance = <Provenance state={evidence} />;
   return (
     <section className="methodology-page" aria-labelledby="methodology-heading">
-      <header className="methodology-page__intro">
-        <p className="methodology-page__eyebrow">Transparencia de los datos</p>
-        <h1 id="methodology-heading">Metodología y fuentes</h1>
-        <p>
+      <Breadcrumbs
+        items={[
+          { label: "Inicio", to: "/" },
+          { label: "Metodología y fuentes" },
+        ]}
+      />
+      <header className="page-masthead methodology-page__intro">
+        <PageEyebrow>Transparencia de los datos</PageEyebrow>
+        <h1 className="h1" id="methodology-heading">
+          Metodología y fuentes
+        </h1>
+        <p className="page-lede">
           Explicamos qué aporta cada fuente, cuándo la consultamos y qué no
           permite concluir.
         </p>
       </header>
 
+      <aside
+        className="methodology-ai-disclosure"
+        aria-label="Uso de imágenes editoriales"
+      >
+        <p>
+          Las imágenes editoriales son generadas mediante IA y no representan
+          personas, empresas, ofertas ni centros reales.
+        </p>
+      </aside>
+
       <RegionalDatasetInventory state={manifestState} />
+
+      <aside aria-label="Alcance del recurso de evidencia de ofertas">
+        <p>
+          Además de las fuentes oficiales, elaboramos un recurso propio de
+          evidencia sobre las ofertas: extrae los requisitos que cada
+          convocatoria publica y los relaciona con ciclos de FP revisados, y es
+          lo que usan las páginas de ofertas. No se ofrece todavía como descarga
+          independiente; su definición técnica completa está documentada en el
+          repositorio abierto del proyecto.
+        </p>
+      </aside>
 
       <div className="source-method-grid">
         <SourceMethodCard
+          className="methodology-statistics-card"
           title="Referencia por ciclo o grupo en España"
           contributes={
             <p>
@@ -409,11 +442,12 @@ export function MethodologyPage() {
           tables={tableLinks(NATIONAL_TABLES)}
         />
         <SourceMethodCard
+          className="methodology-statistics-card"
           title="Referencia por nivel en Castilla y León"
           contributes={
             <p>
-              La misma base de cotización, agrupada para todo Grado Medio o todo
-              Grado Superior en Castilla y León. La comunidad corresponde al
+              La misma base de cotización, agrupada para todo grado medio o todo
+              grado superior en Castilla y León. La comunidad corresponde al
               centro donde se obtuvo la titulación.
             </p>
           }
@@ -426,7 +460,7 @@ export function MethodologyPage() {
           provenance={provenance}
           tables={tableLinks(REGIONAL_TABLES)}
         />
-        <article className="source-method-card">
+        <article className="source-method-card methodology-complementary-card">
           <h2>Formación complementaria de Castilla y León</h2>
           <section>
             <h3>Qué aporta</h3>
@@ -497,8 +531,8 @@ export function MethodologyPage() {
           <section>
             <h3>Qué no permite afirmar</h3>
             <p>
-              TodoFP aporta salidas profesionales literales para los 187 ciclos
-              del catálogo. Las mostramos como perfiles formativos oficiales,
+              TodoFP aporta salidas profesionales literales para los ciclos del
+              catálogo. Las mostramos como perfiles formativos oficiales,
               separadas de las relaciones revisadas con ocupaciones y de las
               ofertas actuales. Solo buscamos ofertas cuando esa relación está
               revisada. Si falta, significa «relación no revisada», no «sin
@@ -522,7 +556,7 @@ export function MethodologyPage() {
             </p>
           </section>
         </article>
-        <article className="source-method-card">
+        <article className="source-method-card methodology-derived-card">
           <h2>Dataset derivado abierto</h2>
           <section>
             <h3>Qué aporta</h3>
@@ -534,8 +568,9 @@ export function MethodologyPage() {
           <section>
             <h3>Qué no permite afirmar</h3>
             <p>
-              Solo contiene relaciones revisadas. Una ausencia expresa cobertura
-              pendiente, no incompatibilidad entre un ciclo y una ocupación.
+              Solo contiene relaciones revisadas. Una ausencia indica que esta
+              copia no documenta esa relación; no permite concluir
+              compatibilidad ni incompatibilidad entre un ciclo y una ocupación.
             </p>
           </section>
           <section>

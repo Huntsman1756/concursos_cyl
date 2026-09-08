@@ -4,8 +4,12 @@ import { join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { GeneratedManifestSchema } from "../../data/schemas/generated";
-import { isGenericImmutableGeneratedResourcePath } from "../../data/schemas/generatedResourceCatalog";
+import {
+  isGenericImmutableGeneratedResourcePath,
+  isImmutableDerivedFpOccupationGraphCsvPath,
+} from "../../data/schemas/generatedResourceCatalog";
 import { OfferEvidenceResourceSchema } from "../../data/schemas/offerEvidence";
+import { OpenDataCatalogResourceSchema } from "../../data/schemas/openData";
 import { adaptSepeOccupationMarketResource } from "../../data/schemas/sepeOccupationMarket";
 
 /** Release limits for generated public data copied into the deployable artifact. */
@@ -83,7 +87,10 @@ async function collectDistributionFiles(
 }
 
 function resourceFilePath(distDirectory: string, resourcePath: string): string {
-  if (!isGenericImmutableGeneratedResourcePath(resourcePath)) {
+  if (
+    !isGenericImmutableGeneratedResourcePath(resourcePath) &&
+    !isImmutableDerivedFpOccupationGraphCsvPath(resourcePath)
+  ) {
     throw new Error(
       `Manifest resource path is not immutable and same-origin: ${resourcePath}.`,
     );
@@ -166,21 +173,21 @@ async function verifyManifestResources(
       );
     }
     let recordCount: number | "non-array";
-    if (key === "offerEvidence") {
-      try {
-        recordCount = OfferEvidenceResourceSchema.parse(value).records.length;
-      } catch (error) {
-        throw new Error(
-          `Manifest resource ${key} failed offer-evidence resource schema validation: ${snapshot.resourcePath}.`,
-          { cause: error },
-        );
-      }
-    } else if (key === "sepeOccupationMarket") {
+    if (key === "sepeOccupationMarket") {
       try {
         recordCount = adaptSepeOccupationMarketResource(value).records.length;
       } catch (error) {
         throw new Error(
           `Manifest resource ${key} failed SEPE resource schema validation: ${snapshot.resourcePath}.`,
+          { cause: error },
+        );
+      }
+    } else if (key === "offerEvidence") {
+      try {
+        recordCount = OfferEvidenceResourceSchema.parse(value).records.length;
+      } catch (error) {
+        throw new Error(
+          `Manifest resource ${key} failed offer evidence schema validation: ${snapshot.resourcePath}.`,
           { cause: error },
         );
       }
@@ -191,6 +198,29 @@ async function verifyManifestResources(
       throw new Error(
         `Manifest resource ${key} record count mismatch: expected ${snapshot.recordCount}, got ${recordCount}.`,
       );
+    }
+
+    if (key === "openDataCatalog") {
+      const [catalog] = OpenDataCatalogResourceSchema.parse(value);
+      if (catalog === undefined) {
+        throw new Error("Deployable open-data catalog is empty.");
+      }
+      let csvBytes: Buffer;
+      try {
+        csvBytes = await readFile(
+          resourceFilePath(distDirectory, catalog.csvResourcePath),
+        );
+      } catch (error) {
+        throw new Error(
+          `Deployable open-data CSV is missing: ${catalog.csvResourcePath}.`,
+          { cause: error },
+        );
+      }
+      if (sha256(csvBytes) !== catalog.csvSha256) {
+        throw new Error(
+          `Deployable open-data CSV hash does not match its catalog: ${catalog.csvResourcePath}.`,
+        );
+      }
     }
 
     verifiedResourceBytes += bytes.byteLength;

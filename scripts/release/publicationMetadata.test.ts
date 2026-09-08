@@ -56,7 +56,7 @@ function metadataFixture(
     description: DESCRIPTION,
     socialImageUrl: `${CANONICAL_URL}salida-cyl-social.png`,
     faviconUrl: "/salida-cyl-icon.png",
-    themeColor: "#7f1734",
+    themeColor: "#102a43",
     ...overrides,
   };
 }
@@ -70,7 +70,7 @@ describe("publication metadata", () => {
         description: DESCRIPTION,
         socialImageUrl: `${FIXTURE_CANONICAL_URL}salida-cyl-social.png`,
         faviconUrl: "/salida-cyl-icon.png",
-        themeColor: "#7f1734",
+        themeColor: "#102a43",
       });
     });
   });
@@ -103,7 +103,7 @@ describe("publication metadata", () => {
     expect(result).toContain(
       `<link rel="icon" type="image/png" href="/salida-cyl-icon.png">`,
     );
-    expect(result).toContain(`<meta name="theme-color" content="#7f1734">`);
+    expect(result).toContain(`<meta name="theme-color" content="#102a43">`);
 
     const ownedFields = [
       "<title>",
@@ -251,7 +251,7 @@ describe("publication metadata", () => {
       `<meta name="twitter:description" content="${DESCRIPTION}">`,
       `<meta name="twitter:image" content="${CANONICAL_URL}salida-cyl-social.png">`,
       '<link rel="icon" type="image/png" href="/salida-cyl-icon.png">',
-      '<meta name="theme-color" content="#7f1734">',
+      '<meta name="theme-color" content="#102a43">',
     ]) {
       expect(transformed).toContain(declaration);
     }

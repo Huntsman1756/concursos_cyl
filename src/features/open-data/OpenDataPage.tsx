@@ -13,6 +13,7 @@ import {
   resolveGeneratedAssetPath,
 } from "../../data/generatedDataClient";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import { PageEyebrow } from "../../components/PageEyebrow";
 import "./openData.css";
 
 type OpenDataState =
@@ -90,7 +91,7 @@ export function OpenDataPage() {
         role="alert"
         aria-labelledby="open-data-error-heading"
       >
-        <h1 id="open-data-error-heading">
+        <h1 className="h1" id="open-data-error-heading">
           No hemos podido comprobar los datos abiertos
         </h1>
         <p>La aplicación sigue disponible. Prueba de nuevo más tarde.</p>
@@ -100,7 +101,9 @@ export function OpenDataPage() {
   if (state.status === "historical") {
     return (
       <section className="status-panel" aria-labelledby="open-data-heading">
-        <h1 id="open-data-heading">Datos abiertos de SALIDA CyL</h1>
+        <h1 className="h1" id="open-data-heading">
+          Datos abiertos de SALIDA CyL
+        </h1>
         <p>Esta copia histórica todavía no contiene el dataset derivado.</p>
         <Link to="/metodologia">Consultar metodología y fuentes</Link>
       </section>
@@ -115,21 +118,14 @@ export function OpenDataPage() {
         { resourcePath: string; sha256: string }
       >
   ).derivedFpOccupationGraph;
-  const offerEvidenceSnapshot = (
-    state.manifest
-      .resourceSnapshots as typeof state.manifest.resourceSnapshots &
-      Record<
-        "offerEvidence",
-        { resourcePath: string; recordCount: number } | undefined
-      >
-  ).offerEvidence;
-
   return (
     <article className="open-data-page" aria-labelledby="open-data-heading">
-      <header className="open-data-page__intro">
-        <p className="open-data-page__eyebrow">Reutilización pública</p>
-        <h1 id="open-data-heading">Datos abiertos de SALIDA CyL</h1>
-        <p>
+      <header className="page-masthead open-data-page__intro">
+        <PageEyebrow>Reutilización pública</PageEyebrow>
+        <h1 className="h1" id="open-data-heading">
+          Datos abiertos de SALIDA CyL
+        </h1>
+        <p className="page-lede">
           Descarga las relaciones FP↔ocupación que utiliza el producto, con su
           clasificación CNO-11 y la fuente que respalda cada enlace.
         </p>
@@ -150,11 +146,11 @@ export function OpenDataPage() {
             <dd>{state.rows.length}</dd>
           </div>
           <div>
-            <dt>Ciclos</dt>
+            <dt>Ciclos en el grafo</dt>
             <dd>{summary?.programs}</dd>
           </div>
           <div>
-            <dt>Ocupaciones CNO-11</dt>
+            <dt>Ocupaciones CNO-11 en el grafo</dt>
             <dd>{summary?.occupations}</dd>
           </div>
           <div>
@@ -202,45 +198,6 @@ export function OpenDataPage() {
         </dl>
       </section>
 
-      {offerEvidenceSnapshot === undefined ? null : (
-        <section
-          className="open-data-release"
-          aria-labelledby="offer-evidence-title"
-        >
-          <div className="open-data-release__heading">
-            <div>
-              <p>Dataset candidato de expansión</p>
-              <h2 id="offer-evidence-title">
-                Ofertas: requisito, relación y acción
-              </h2>
-            </div>
-            <p>
-              Base inmutable:{" "}
-              {state.manifest.resourceSnapshots.jobOffers.recordCount} ofertas
-            </p>
-          </div>
-          <p>
-            Incluye la cita literal, una categoría conservadora, el estado de
-            evidencia, la relación FP solo cuando está revisada y un siguiente
-            paso con fuente. No contiene empleadores privados ni predicciones.
-          </p>
-          <div className="open-data-release__downloads">
-            <a
-              className="primary-button"
-              href={resolveGeneratedAssetPath(
-                offerEvidenceSnapshot.resourcePath,
-              )}
-              download
-            >
-              Descargar dataset JSON
-            </a>
-            <Link className="secondary-button" to="/desde-oferta">
-              Explorar las ofertas
-            </Link>
-          </div>
-        </section>
-      )}
-
       <section className="open-data-page__scope" aria-labelledby="scope-title">
         <h2 id="scope-title">Qué contiene</h2>
         <p>
@@ -248,8 +205,9 @@ export function OpenDataPage() {
           familia profesional, tipo de relación, cita, URL y fecha de revisión.
         </p>
         <p>
-          Solo se publican relaciones revisadas. La ausencia de una relación no
-          significa que sea imposible: señala que todavía no está validada.
+          Solo se publican relaciones revisadas. La ausencia de una relación
+          indica que esta copia no la documenta; no permite concluir que exista
+          ni que sea imposible.
         </p>
         <p>
           <Link to="/metodologia">Ver fuentes, proceso y limitaciones</Link>

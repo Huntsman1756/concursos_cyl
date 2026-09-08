@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { JSX, KeyboardEvent } from "react";
 import type { TrainingProgram } from "../../../data/schemas/generated";
-import { trainingLevelLabel } from "../../domain/trainingPresentation";
+import {
+  trainingLevelLabel,
+  formatProgramTitle,
+} from "../../domain/trainingPresentation";
 import "./TrainingCombobox.css";
 
 export interface TrainingComboboxProps {
@@ -83,7 +86,7 @@ export function TrainingCombobox({
     pendingLocalClearForKey.current = null;
     setConfirmedProgramKey(nextProgramKey);
     if (preservesLocalQuery) return;
-    setQuery(nextProgramTitle);
+    setQuery(formatProgramTitle(nextProgramTitle));
     setOpen(false);
     setActiveIndex(-1);
   }, [confirmedProgram?.programKey, confirmedProgram?.programTitle]);
@@ -106,7 +109,7 @@ export function TrainingCombobox({
   }
 
   function selectProgram(program: TrainingProgram): void {
-    setQuery(program.programTitle);
+    setQuery(formatProgramTitle(program.programTitle));
     setConfirmedProgramKey(program.programKey);
     pendingLocalClearForKey.current = null;
     setOpen(false);
@@ -196,10 +199,12 @@ export function TrainingCombobox({
               aria-selected={activeIndex === resultIndex}
               className="training-combobox__option"
               onMouseDown={(event) => event.preventDefault()}
-              onMouseEnter={() => setActiveIndex(resultIndex)}
+              onPointerMove={(event) => {
+                if (event.pointerType === "mouse") setActiveIndex(resultIndex);
+              }}
               onClick={() => selectProgram(program)}
             >
-              <span>{program.programTitle}</span>
+              <span>{formatProgramTitle(program.programTitle)}</span>
               <small>
                 {trainingLevelLabel(program.level)} · {program.familyName} ·{" "}
                 {program.programKey}

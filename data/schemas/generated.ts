@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 import {
+  GENERATED_RESOURCE_KEY_PATTERN,
   GENERATED_RESOURCE_CATALOG,
   GENERATED_FOUNDATION_RESOURCE_KEYS,
-  GENERATED_RESOURCE_KEY_PATTERN,
   GENERATED_SNAPSHOT_ID_PATTERN,
   generatedResourceFileNameForKey,
   isImmutableGeneratedResourceFilePath,
@@ -547,11 +547,11 @@ export type ReconciliationAnomaly = z.infer<typeof ReconciliationAnomalySchema>;
 export type GeneratedQualityReport = z.infer<
   typeof GeneratedQualityReportSchema
 >;
-export type JobOffer = z.infer<typeof JobOfferSchema>;
-export type GeneratedManifest = z.infer<typeof GeneratedManifestSchema>;
 export type GeneratedManifestActivationProvenance = z.infer<
   typeof GeneratedManifestActivationProvenanceSchema
 >;
+export type JobOffer = z.infer<typeof JobOfferSchema>;
+export type GeneratedManifest = z.infer<typeof GeneratedManifestSchema>;
 export type LoadableGeneratedManifest = z.infer<
   typeof LoadableGeneratedManifestSchema
 >;

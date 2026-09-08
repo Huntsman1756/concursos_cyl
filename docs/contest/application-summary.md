@@ -6,11 +6,11 @@ Candidatura al [X Concurso de Datos Abiertos de Castilla y León](https://datosa
 
 ## Problema y audiencia
 
-SALIDA CyL ayuda a personas de Castilla y León a explorar opciones de formación profesional y sus relaciones ocupacionales revisadas con fuentes identificadas. La aplicación reúne una consulta formativa, una exploración de ofertas relacionadas y una comparación separada de referencias oficiales de ingresos de titulados.
+SALIDA CyL permite explorar qué ocupaciones se relacionan con una FP, dónde estudiarla y qué ofertas de una instantánea fechada se conectan mediante evidencia revisada. Se dirige a estudiantes, personas que buscan empleo, familias y profesionales de orientación. Los enlaces oficiales permiten contrastar la información antes de decidir una matrícula o candidatura.
 
 ## Solución
 
-La interfaz permite elegir directamente cualquiera de los 187 ciclos de FP o filtrar los 502 grupos primarios de la CNO-11. Expone por separado el catálogo oficial completo y la cobertura parcial de relaciones FP–ocupación revisadas, incluidas las relaciones con ofertas, las revisadas sin coincidencias y las todavía no validadas. La metodología explica el origen de cada dato y los límites de interpretación.
+La interfaz permite explorar 187 claves de programa de FP, incluidas modalidades, o los 502 grupos primarios de la CNO-11. Por ejemplo, desde Cuidados Auxiliares de Enfermería se pueden consultar ocupaciones relacionadas y centros de estudio, revisar las ofertas vinculadas y abrir sus fuentes. También permite comenzar por una profesión o una oferta.
 
 SALIDA CyL conecta FP y ocupación en ambos sentidos con evidencia verificable. Integra ocho datasets del Portal de Datos Abiertos de la Junta de Castilla y León, todos visibles en la ficha o en las rutas de apoyo.
 
@@ -18,17 +18,17 @@ El grafo revisado se devuelve a la comunidad como dataset derivado descargable e
 
 ## Cobertura congelada
 
-- Instantánea publicada: `20260822085631889-fc9bf2ba23f9`.
+- Instantánea publicada: `20260908044344059-f92da75832e9`.
 - Grupos primarios CNO-11 consultables: **502**.
 - **113 cualificaciones distintas**.
-- Claves de modalidad públicas: **130** (ADG01B, ADG01M, ADG01MD, ADG01S, ADG02S, ADG02SD, AFD01S, AFD01SD, AFD02M, AFD02S, AFD02SD, AGA01B, AGA01M, AGA01S, AGA02M, AGA02S, AGA03B, AGA03M, AGA03S, AGA04M, ARG01M, COM01B, COM01E, COM01M, COM02E, COM02M, COM02S, COM02SD, COM03S, COM04S, COM04SD, ELE01B, ELE01E, ELE01M, ELE01S, ELE02B, ELE02M, ELE02S, ELE03S, ELE04S, ELE05S, ENA02S, ENA03S, ENA04S, EOC01B, EOC01M, EOC02M, EOC02S, FME01B, FME01E, FME01M, FME01S, FME02B, FME02M, FME02S, FME03S, HOT01B, HOT01M, HOT01S, HOT02M, HOT02S, HOT03S, HOT04S, HOT05S, IFC01B, IFC01MD, IFC01S, IFC01SD, IFC02B, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA01M, IMA02M, IMA02S, IMA03M, IMA03S, IMP01B, IMP01M, IMP01S, IMP02M, IMP02MD, IMP02S, IMS01E, IMS01S, IMS04S, INA01S, INA02M, INA02S, INA03M, MAM01B, MAM01M, MAM02M, QUI01E, QUI01M, QUI01S, QUI02M, SAN01S, SAN01SD, SAN02M, SAN02S, SAN04S, SAN07S, SAN07SD, SAN08S, SAN08SD, SAN09S, SAN09SD, SAN21, SEA01M, SEA01MD, SEA03S, SSC01M, SSC01S, SSC01SD, SSC02S, SSC03S, SSC03SD, SSC04S, SSC05S, SSC06S, TCP02B, TMV01B, TMV01M, TMV01S, TMV02M, TMV03E, TMV03M, TMV05M).
+- **130 de 187 claves de programa** tienen alguna relación aprobada (69,5 %). Incluyen modalidades; no son titulaciones distintas.
 - Relaciones ocupacionales aprobadas: **264**.
 - Alias aprobados: **35**.
-- **133 de las 1.058 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
-- Relaciones revisadas sin oferta alcanzada: **231**.
+- **128 de las 1.032 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
+- Relaciones revisadas sin oferta alcanzada: **230**.
 - Programas diferidos por evidencia insuficiente: ninguno.
 
-Las claves de modalidad se informan aparte de las identidades de cualificación. Una relación revisada sin coincidencia no se convierte en una afirmación sobre la ausencia de oportunidades; un programa diferido permanece fuera de las afirmaciones revisadas.
+Las cifras describen cobertura de datos, no impacto medido ni todo el mercado laboral. Una relación revisada sin coincidencia no significa ausencia de oportunidades. Las fechas de descarga, publicación y generación se distinguen en [la revisión de fuentes](verification-20260908.md). El inventario completo de claves permanece en [la evidencia técnica](technical-evidence.md).
 
 ## Acceso
 

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "deployedCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+  "startedAt": "2026-09-08T05:47:26.721Z",
+  "finishedAt": "2026-09-08T05:49:29.829Z",
+  "file": "demo-20260908.webm",
+  "mode": "silent explanatory walkthrough with Spanish captions",
+  "captionOverlayOnly": true,
+  "securityVerification": false,
+  "scenes": [
+    {
+      "route": "/",
+      "caption": "1 · Elegir formación exige conectar estudios, profesiones, centros y ofertas. SALIDA reúne esas consultas."
+    },
+    {
+      "route": "/desde-fp/SAN21",
+      "caption": "2 · Partimos de una FP: Cuidados Auxiliares de Enfermería. Sus relaciones ocupacionales conservan fuentes revisadas."
+    },
+    {
+      "route": "/desde-fp/SAN21/ofertas",
+      "caption": "3 · Las ofertas pertenecen a una descarga fechada. Antes de solicitar una, hay que comprobar su vigencia en la fuente oficial."
+    },
+    {
+      "route": "/formacion/SAN21",
+      "caption": "4 · El siguiente paso: localizar centros donde se imparte el ciclo y consultar su información oficial."
+    },
+    {
+      "route": "/desde-ocupacion/occupation%3Acno11%3A3820",
+      "caption": "5 · Una ausencia de ofertas vinculadas no significa que no existan oportunidades. La aplicación muestra sus límites."
+    },
+    {
+      "route": "/datos-abiertos",
+      "caption": "6 · El grafo se devuelve en JSON y CSV: 130 de 187 claves de programa con relaciones revisadas. Cobertura, no inserción laboral medida."
+    },
+    {
+      "route": "/candidatura.html",
+      "caption": "7 · La candidatura explica problema, utilidad, fuentes y límites. La memoria PDF se puede descargar desde esta página."
+    }
+  ],
+  "pageErrors": []
+}

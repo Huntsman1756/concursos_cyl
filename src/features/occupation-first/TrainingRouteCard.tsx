@@ -6,7 +6,11 @@ import type {
 } from "../../../data/schemas/generated";
 import type { TrainingOccupationLink } from "../../../data/schemas/curatedMappings";
 import { EvidenceDisclosure } from "../../components/EvidenceDisclosure";
-import { trainingLevelLabel } from "../../domain/trainingPresentation";
+import { contextualCentersPath } from "../../app/routePaths";
+import {
+  formatProgramTitle,
+  trainingLevelLabel,
+} from "../../domain/trainingPresentation";
 
 type Offering = LegacyTrainingOffering | TrainingOffering;
 
@@ -14,20 +18,6 @@ interface TrainingRouteCardProps {
   link: TrainingOccupationLink;
   program: TrainingProgram;
   offerings: Offering[];
-}
-
-const modalityLabels: Record<Offering["modality"], string> = {
-  on_site: "Presencial",
-  distance: "A distancia",
-  mixed: "Mixta",
-  unknown: "Modalidad no publicada",
-};
-
-function joined(values: string[]): string {
-  return new Intl.ListFormat("es-ES", {
-    style: "long",
-    type: "conjunction",
-  }).format(values);
 }
 
 function uniqueSorted(values: string[]): string[] {
@@ -45,60 +35,50 @@ export function TrainingRouteCard({
   const provinces = uniqueSorted(
     offerings.map((offering) => offering.province),
   );
-  const modalities = uniqueSorted(
-    offerings.map((offering) => modalityLabels[offering.modality]),
-  );
+  const centerCodes = new Set(offerings.map((offering) => offering.centerCode));
+  const programTitle = formatProgramTitle(program.programTitle);
   return (
-    <article className="training-route-card" data-testid="training-route-card">
-      <header>
-        <p className="relationship-label">
-          {officialOutput ? "Salida profesional oficial" : "Relación revisada"}
+    <article
+      className="route-card"
+      data-testid="training-route-card"
+      aria-label={programTitle}
+    >
+      <div className="route-card__info">
+        <h3 className="route-card__title">
+          <Link to={`/desde-fp/${encodeURIComponent(program.programKey)}`}>
+            {programTitle}
+          </Link>
+        </h3>
+        <p className="route-card__meta">
+          {trainingLevelLabel(program.level)}
+          <span className="route-card__code"> · {program.programKey}</span>
         </p>
-        <h3>{program.programTitle}</h3>
-        <p>
-          {trainingLevelLabel(program.level)} · {program.programKey}
+        <p className="route-card__relationship">
+          {officialOutput
+            ? "El perfil oficial del ciclo incluye esta salida profesional."
+            : "Relación comprobada por competencias compartidas antes de publicarse."}
         </p>
-      </header>
-      <div className="training-route-card__body">
+      </div>
+      <div className="route-card__side">
+        <p className="route-card__availability">
+          {centerCodes.size === 0
+            ? "Sin centros publicados en esta copia"
+            : `${centerCodes.size} ${centerCodes.size === 1 ? "centro" : "centros"} · ${provinces.length} ${provinces.length === 1 ? "provincia" : "provincias"}`}
+        </p>
+        <Link
+          className="route-card__cta"
+          to={contextualCentersPath(program.programKey)}
+        >
+          Ver dónde estudiarlo
+        </Link>
         <EvidenceDisclosure
           quote={link.sourceQuote}
           sourceUrl={link.sourceUrl}
           reviewedAt={link.reviewedAt}
           mappingVersion={link.mappingVersion}
+          label={`Fuente y revisión de la relación con ${program.programTitle}`}
+          trigger="Fuente y revisión"
         />
-        <div className="route-availability">
-          <h4>Centros formativos en Castilla y León</h4>
-          {offerings.length === 0 ? (
-            <p>
-              No hay centros publicados para este ciclo en esta instantánea.
-            </p>
-          ) : (
-            <>
-              <p>
-                {offerings.length}{" "}
-                {offerings.length === 1
-                  ? "opción de centro y modalidad publicada"
-                  : "opciones de centro y modalidad publicadas"}
-              </p>
-              <dl>
-                <div>
-                  <dt>Provincias</dt>
-                  <dd>{joined(provinces)}</dd>
-                </div>
-                <div>
-                  <dt>Modalidades</dt>
-                  <dd>{joined(modalities)}</dd>
-                </div>
-              </dl>
-            </>
-          )}
-        </div>
-        <Link
-          className="primary-button route-card-link"
-          to={`/formacion/${encodeURIComponent(program.programKey)}`}
-        >
-          Ver dónde estudiarlo
-        </Link>
       </div>
     </article>
   );

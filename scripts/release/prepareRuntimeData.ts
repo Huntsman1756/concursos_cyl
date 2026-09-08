@@ -31,6 +31,12 @@ const SNAPSHOT_PATH_MARKER = "/data/v1/snapshots/";
 const SNAPSHOT_PATH_MARKER_ENCODED =
   /(?:%2f|\/)data(?:%2f|\/)v1(?:%2f|\/)snapshots(?:%2f|\/)/iu;
 const SAFE_RESOURCE_FILENAME = /^[A-Za-z0-9][A-Za-z0-9._-]*$/u;
+const LEGACY_RUNTIME_ROOT_FILES = new Set([
+  "centers.json",
+  "job-offers.json",
+  "programs.json",
+  "training-offerings.json",
+]);
 
 export interface PrepareRuntimeDataOptions {
   root: string;
@@ -94,7 +100,12 @@ async function assertDistinctPaths(
 
 export function shouldCopyRuntimeCandidate(relativeCandidate: string): boolean {
   const components = relativeCandidate.split(/[\\/]+/u).filter(Boolean);
-  return !(components[0] === "v1" && components[1] === "snapshots");
+  if (components[0] === "v1" && components[1] === "snapshots") return false;
+  return !(
+    components.length === 2 &&
+    components[0] === "v1" &&
+    LEGACY_RUNTIME_ROOT_FILES.has(components[1]!)
+  );
 }
 
 async function assertSafeTree(

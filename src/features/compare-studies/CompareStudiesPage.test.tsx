@@ -285,15 +285,22 @@ describe("CompareStudiesPage", () => {
     ).toBeVisible();
     await user.click(await screen.findByRole("radio", { name: "Grado medio" }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 1" }));
+    // The picker participates in normal page flow: further options arrive via
+    // progressive disclosure, not an inner scrollbar.
+    await user.click(screen.getByRole("button", { name: /Mostrar más/u }));
+    await user.click(screen.getByRole("button", { name: /Mostrar más/u }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 2" }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 3" }));
 
     expect(
       screen.getByRole("heading", { level: 1, name: "Ingresos observados" }),
     ).toBeVisible();
-    expect(
-      screen.getByRole("list", { name: "Pasos de la comparación" }),
-    ).toHaveTextContent("1Nivel2Ciclos3Cohorte4Año");
+    // Progress is communicated by the numbered section headers, not by a
+    // circle stepper: all remaining controls are visible at once.
+    expect(screen.getByText("1. Nivel de formación")).toBeVisible();
+    expect(screen.getByText("2. Ciclos o grupos oficiales")).toBeVisible();
+    expect(screen.getByText("3. Cohorte de titulación")).toBeVisible();
+    expect(screen.getByText("4. Año tras titularse")).toBeVisible();
     expect(
       screen.getByText("No es una predicción salarial personal."),
     ).toBeVisible();
@@ -320,7 +327,7 @@ describe("CompareStudiesPage", () => {
     ).toBeVisible();
     expect(
       screen.getByText(
-        "Mostramos ambas referencias por separado porque la fuente consultada no publica ingresos por ciclo concreto en Castilla y León; solo ofrece una referencia conjunta para Grado Medio o Grado Superior.",
+        "Mostramos ambas referencias por separado porque la fuente consultada no publica ingresos por ciclo concreto en Castilla y León; solo ofrece una referencia conjunta para grado medio o grado superior.",
       ),
     ).toBeVisible();
     expect(screen.getAllByText(/Base de cotización anualizada/u)).toHaveLength(
@@ -366,9 +373,7 @@ describe("CompareStudiesPage", () => {
     cleanup();
     installData({ stale: true });
     renderPage();
-    expect(await screen.findByRole("status")).toHaveTextContent(
-      /última copia disponible/i,
-    );
+    expect(await screen.findByText(/última copia disponible/iu)).toBeVisible();
   });
 
   it("disables years outside the selected observation window", async () => {
@@ -455,6 +460,27 @@ describe("CompareStudiesPage", () => {
     expect(
       screen.queryByRole("region", { name: "Evidencia seleccionada" }),
     ).not.toBeInTheDocument();
+  });
+
+  it("keeps the list order stable when a group is selected", async () => {
+    installData();
+    const user = userEvent.setup();
+    renderPage();
+
+    await user.click(await screen.findByRole("radio", { name: "Grado medio" }));
+
+    const orderBefore = screen
+      .getAllByRole("checkbox")
+      .map((checkbox) => checkbox.closest("label")?.textContent ?? "");
+    expect(orderBefore.length).toBeGreaterThan(1);
+
+    await user.click(screen.getByRole("checkbox", { name: "Grupo medio 1" }));
+
+    const orderAfter = screen
+      .getAllByRole("checkbox")
+      .map((checkbox) => checkbox.closest("label")?.textContent ?? "");
+    // Selecting a group must not move it to the front of the list.
+    expect(orderAfter).toEqual(orderBefore);
   });
 
   it("filters official groups without hiding a selected group or ignoring diacritics", async () => {

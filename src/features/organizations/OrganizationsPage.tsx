@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { useRouteReady } from "../../app/RouteReadyContext";
+import "../accessibility/accessibility.css";
 import "./organizations.css";
 
 export function OrganizationsPage() {
@@ -13,7 +14,9 @@ export function OrganizationsPage() {
     >
       <header className="support-page-intro">
         <p className="support-page-intro__eyebrow">Reutilización profesional</p>
-        <h1 id="organizations-heading">Para centros y administraciones</h1>
+        <h1 className="h1" id="organizations-heading">
+          Para centros y administraciones
+        </h1>
         <p>
           Una base común para orientar con evidencia, preparar sesiones y
           detectar dónde todavía faltan relaciones verificadas entre formación y
@@ -102,7 +105,8 @@ export function OrganizationsPage() {
         <p>
           El producto ayuda a preparar decisiones, pero no sustituye la atención
           de un orientador ni acredita acceso a una ocupación. Una relación
-          ausente significa que aún no está revisada, no que sea imposible.
+          ausente indica que esta copia no la documenta; no permite concluir que
+          exista ni que sea imposible.
         </p>
         <Link to="/metodologia">Ver fuentes, método y limitaciones</Link>
       </section>

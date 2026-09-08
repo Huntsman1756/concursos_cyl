@@ -1,13 +1,15 @@
 .accessibility-page,
 .organizations-page {
   display: grid;
-  gap: var(--space-8);
-  max-width: 72rem;
+  gap: var(--space-6);
+  max-width: 64rem;
   margin: 0 auto;
 }
 
 .support-page-intro {
-  max-width: 52rem;
+  max-width: var(--reading-max);
+  margin-inline: auto;
+  text-align: center;
 }
 
 .support-page-intro__eyebrow,
@@ -16,15 +18,20 @@
   margin: 0 0 var(--space-2);
   color: var(--color-primary);
   font-size: 0.82rem;
-  font-weight: 750;
+  font-weight: var(--type-eyebrow-weight);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
+/* Interior pages share one desktop H1 scale (see .page-masthead .h1). */
 .support-page-intro h1 {
+  display: block;
   margin: 0;
-  font-size: clamp(2.2rem, 5vw, 4rem);
-  line-height: 1.02;
+  color: var(--color-text);
+  font-size: var(--type-page-title);
+  font-weight: var(--type-page-title-weight);
+  line-height: var(--text-h1-line-height);
+  letter-spacing: var(--text-h1-tracking);
   text-wrap: balance;
 }
 
@@ -37,7 +44,7 @@
 .accessibility-status {
   display: grid;
   grid-template-columns: minmax(15rem, 0.9fr) minmax(0, 1.5fr);
-  gap: var(--space-8);
+  gap: var(--space-5);
   padding-block: var(--space-6);
   border-block: 1px solid var(--color-border);
 }
@@ -69,7 +76,7 @@
 }
 
 .accessibility-measures dt {
-  font-weight: 750;
+  font-weight: 600;
 }
 
 .accessibility-measures dd {

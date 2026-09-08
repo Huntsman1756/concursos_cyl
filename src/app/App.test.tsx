@@ -12,20 +12,24 @@ import { Link, MemoryRouter, useLocation, useNavigate } from "react-router-dom";
 import { App } from "./App";
 import { AppShell } from "./AppShell";
 
-const primaryNavigationLabels = [
-  "Inicio",
-  "Desde FP",
-  "Desde ocupación",
-  "Desde oferta",
+const desktopNavigationLabels = [
+  "Explorar",
+  "Ofertas",
+  "Dónde estudiar",
   "Comparar estudios",
+];
+
+const secondaryNavigationLabels = [
   "Más formación",
+  "Datos abiertos",
   "Metodología",
+  "Accesibilidad",
 ];
 
 function getMobileNavigation() {
-  const navigation = document.getElementById("mobile-primary-navigation");
+  const navigation = document.getElementById("mobile-menu");
   if (!(navigation instanceof HTMLElement)) {
-    throw new Error("Expected the mobile primary navigation to be rendered.");
+    throw new Error("Expected the mobile menu to be rendered.");
   }
   return navigation;
 }
@@ -59,27 +63,33 @@ function NavigationProbe() {
 }
 
 describe("App", () => {
-  it("presents the three approved starting-point choices", () => {
+  it("presents the three starting-point journeys", () => {
     render(
       <MemoryRouter>
         <App />
       </MemoryRouter>,
     );
     expect(
-      screen.getByRole("region", { name: "¿Desde dónde empiezas?" }),
+      screen.getByRole("heading", {
+        level: 1,
+        name: "Tu FP, tus salidas profesionales y dónde dar el siguiente paso.",
+      }),
     ).toBeVisible();
+    const tablist = screen.getByRole("tablist", {
+      name: "Elige tu punto de partida",
+    });
     expect(
-      screen.getByRole("radio", { name: /Tengo un título de FP/u }),
-    ).toBeChecked();
+      within(tablist).getByRole("tab", { name: "Tengo una FP" }),
+    ).toHaveAttribute("aria-selected", "true");
     expect(
-      screen.getByRole("radio", { name: /Tengo una ocupación en mente/u }),
-    ).not.toBeChecked();
+      within(tablist).getByRole("tab", { name: "Busco una profesión" }),
+    ).toHaveAttribute("aria-selected", "false");
     expect(
-      screen.getByRole("radio", { name: /Estoy mirando una oferta/u }),
-    ).not.toBeChecked();
+      within(tablist).getByRole("tab", { name: "Estoy mirando una oferta" }),
+    ).toHaveAttribute("aria-selected", "false");
   });
 
-  it("uses the compact product shell and identifies the project independently", () => {
+  it("uses the SALIDA shell and identifies the project independently", () => {
     cleanup();
     render(
       <MemoryRouter initialEntries={["/"]}>
@@ -90,72 +100,56 @@ describe("App", () => {
     );
 
     expect(screen.getByRole("link", { name: "SALIDA CyL" })).toBeVisible();
-    expect(screen.getByText("FP y empleo con datos públicos")).toBeVisible();
+    const principalNavigation = screen.getByRole("navigation", {
+      name: "Navegación principal",
+    });
     expect(
-      within(
-        screen.getByRole("navigation", { name: "Principal" }),
-      ).getAllByRole("link"),
-    ).toHaveLength(7);
-    expect(screen.getByRole("link", { name: "Inicio" })).toHaveAttribute(
-      "aria-current",
-      "page",
-    );
+      [
+        ...principalNavigation.querySelectorAll(
+          ":scope > .container > ul > li > a",
+        ),
+      ].map((link) => link.textContent),
+    ).toEqual(desktopNavigationLabels);
+    // On Home no primary destination is active: Explorar points at /desde-fp.
     expect(
-      screen.getByRole("link", { name: "Comparar estudios" }),
-    ).toHaveAttribute("href", "/comparar");
-    expect(screen.getByRole("link", { name: "Más formación" })).toHaveAttribute(
-      "href",
-      "/recursos",
-    );
+      within(principalNavigation).getByRole("link", { name: "Explorar" }),
+    ).not.toHaveAttribute("aria-current");
+    const secondaryNavigation = screen.getByRole("navigation", {
+      name: "Enlaces secundarios",
+    });
     expect(
-      within(screen.getByRole("navigation", { name: "Principal" })).getByRole(
-        "link",
-        { name: "Metodología" },
+      [...secondaryNavigation.querySelectorAll(":scope > a")].map(
+        (link) => link.textContent,
       ),
-    ).toHaveAttribute("href", "/metodologia");
+    ).toEqual(secondaryNavigationLabels);
     expect(
       screen.queryByRole("link", { name: "Datos verificables" }),
     ).not.toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: "Datos abiertos" }),
-    ).toHaveAttribute("href", "/datos-abiertos");
-    expect(
-      screen.getByRole("link", { name: "Para organizaciones" }),
-    ).toHaveAttribute("href", "/para-organizaciones");
-    expect(screen.getByRole("link", { name: "Accesibilidad" })).toHaveAttribute(
-      "href",
-      "/accesibilidad",
-    );
-    expect(
       screen.getByRole("main", { name: "Contenido principal" }),
     ).toBeVisible();
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
-      /Proyecto independiente basado en datos públicos/i,
+      /orientación profesional con datos públicos/i,
     );
-    expect(
-      screen.getByText(
-        "Desarrollado para el X Concurso de Datos Abiertos de Castilla y León en la categoría Productos y Servicios.",
-      ),
-    ).toBeVisible();
   });
 
   it.each([
     ["/", "Inicio · SALIDA CyL"],
-    ["/desde-fp", "Desde FP · SALIDA CyL"],
-    ["/desde-fp/IFC03S", "Resultados desde FP · SALIDA CyL"],
+    ["/desde-fp", "Explorar FP · SALIDA CyL"],
+    ["/desde-fp/IFC03S", "Ficha de FP · SALIDA CyL"],
     ["/formacion/IFC03S", "Dónde estudiar · SALIDA CyL"],
-    ["/desde-ocupacion", "Desde ocupación · SALIDA CyL"],
+    ["/desde-oferta", "Ofertas de empleo · SALIDA CyL"],
+    ["/desde-ocupacion", "Buscar ocupación · SALIDA CyL"],
     [
       "/desde-ocupacion/occupation%3Acno11%3A2713",
-      "Resultados desde ocupación · SALIDA CyL",
+      "Ficha de profesión · SALIDA CyL",
     ],
-    ["/desde-oferta", "Desde oferta · SALIDA CyL"],
     ["/comparar", "Comparar estudios · SALIDA CyL"],
     ["/recursos", "Más formación · SALIDA CyL"],
     ["/datos-abiertos", "Datos abiertos · SALIDA CyL"],
     ["/accesibilidad", "Accesibilidad · SALIDA CyL"],
     ["/para-organizaciones", "Para organizaciones · SALIDA CyL"],
-    ["/metodologia", "Metodología y fuentes · SALIDA CyL"],
+    ["/metodologia", "Metodología · SALIDA CyL"],
     ["/no-existe", "Página no encontrada · SALIDA CyL"],
   ])("sets a route-specific document title for %s", (pathname, title) => {
     cleanup();
@@ -187,7 +181,7 @@ describe("App", () => {
       }),
     );
 
-    expect(document.title).toBe("Metodología y fuentes · SALIDA CyL");
+    expect(document.title).toBe("Metodología · SALIDA CyL");
   });
 
   it("announces static routes and repeats the announcement after returning", async () => {
@@ -249,7 +243,7 @@ describe("App", () => {
     expect(screen.queryByText(/Empleo e ingresos/u)).not.toBeInTheDocument();
   });
 
-  it("renders the closed mobile disclosure with the exact primary destinations", () => {
+  it("renders the closed mobile disclosure with the exact destinations", () => {
     cleanup();
     render(
       <MemoryRouter initialEntries={["/"]}>
@@ -259,30 +253,25 @@ describe("App", () => {
       </MemoryRouter>,
     );
 
-    const button = screen.getByRole("button", {
-      name: "Abrir menú principal",
-    });
+    const button = screen.getByRole("button", { name: "Menú" });
     const mobileNavigation = getMobileNavigation();
     const desktopNavigation = screen.getByRole("navigation", {
-      name: "Principal",
+      name: "Navegación principal",
     });
 
     expect(button).toHaveAttribute("type", "button");
     expect(button).toHaveAttribute("aria-expanded", "false");
-    expect(button).toHaveAttribute(
-      "aria-controls",
-      "mobile-primary-navigation",
-    );
+    expect(button).toHaveAttribute("aria-controls", "mobile-menu");
     expect(mobileNavigation).toHaveAttribute("hidden");
     expect(within(mobileNavigation).queryAllByRole("link")).toHaveLength(0);
     expect(
       within(desktopNavigation)
         .getAllByRole("link")
         .map((link) => link.textContent),
-    ).toEqual(primaryNavigationLabels);
+    ).toEqual(desktopNavigationLabels);
   });
 
-  it("opens the seven-link mobile navigation and restores focus after Escape", async () => {
+  it("opens the mobile navigation and restores focus after Escape", async () => {
     cleanup();
     const user = userEvent.setup();
     render(
@@ -293,31 +282,22 @@ describe("App", () => {
       </MemoryRouter>,
     );
 
-    const button = screen.getByRole("button", {
-      name: "Abrir menú principal",
-    });
+    const button = screen.getByRole("button", { name: "Menú" });
     await user.click(button);
     const focusSpy = vi.spyOn(button, "focus");
 
-    const mobileNavigation = screen.getByRole("navigation", {
-      name: "Principal móvil",
-    });
-    expect(button).toHaveAccessibleName("Cerrar menú principal");
+    const mobileNavigation = getMobileNavigation();
     expect(button).toHaveAttribute("aria-expanded", "true");
     expect(mobileNavigation).not.toHaveAttribute("hidden");
     expect(
       within(mobileNavigation)
         .getAllByRole("link")
         .map((link) => link.textContent),
-    ).toEqual(primaryNavigationLabels);
-    expect(
-      within(mobileNavigation).getByRole("link", { name: "Inicio" }),
-    ).toHaveAttribute("aria-current", "page");
+    ).toEqual([...desktopNavigationLabels, ...secondaryNavigationLabels]);
 
     await user.keyboard("{Escape}");
 
     expect(focusSpy).toHaveBeenCalledTimes(1);
-    expect(button).toHaveAccessibleName("Abrir menú principal");
     expect(button).toHaveAttribute("aria-expanded", "false");
     expect(mobileNavigation).toHaveAttribute("hidden");
     expect(button).toHaveFocus();
@@ -334,22 +314,19 @@ describe("App", () => {
       </MemoryRouter>,
     );
 
-    const button = screen.getByRole("button", {
-      name: "Abrir menú principal",
-    });
+    const button = screen.getByRole("button", { name: "Menú" });
     await user.click(button);
     const focusSpy = vi.spyOn(button, "focus");
 
     await user.click(
-      within(
-        screen.getByRole("navigation", { name: "Principal móvil" }),
-      ).getByRole("link", { name: "Metodología" }),
+      within(getMobileNavigation()).getByRole("link", { name: "Metodología" }),
     );
 
     expect(focusSpy).not.toHaveBeenCalled();
-    expect(
-      screen.getByRole("button", { name: "Abrir menú principal" }),
-    ).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByRole("button", { name: "Menú" })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    );
     expect(getMobileNavigation()).toHaveAttribute("hidden");
     expect(document.activeElement).not.toBe(button);
   });
@@ -374,20 +351,32 @@ describe("App", () => {
     };
     const expectMenuClosedWithFocusOn = (trigger: HTMLElement) => {
       const disclosure = screen.getByRole("button", {
-        name: "Abrir menú principal",
+        name: "Menú",
       });
       expect(disclosure).toHaveAttribute("aria-expanded", "false");
       expect(getMobileNavigation()).toHaveAttribute("hidden");
       expect(document.activeElement).toBe(trigger);
       expect(document.activeElement).not.toBe(disclosure);
     };
-    const openMenu = async () => {
-      await user.click(
-        screen.getByRole("button", { name: "Abrir menú principal" }),
+    // Navigating to a different pathname moves focus to the main landmark so
+    // keyboard users are never left on a control from the previous page.
+    const expectMenuClosedWithFocusOnMain = () => {
+      const disclosure = screen.getByRole("button", {
+        name: "Menú",
+      });
+      expect(disclosure).toHaveAttribute("aria-expanded", "false");
+      expect(getMobileNavigation()).toHaveAttribute("hidden");
+      expect(document.activeElement).toBe(
+        screen.getByRole("main", { name: "Contenido principal" }),
       );
-      expect(
-        screen.getByRole("button", { name: "Cerrar menú principal" }),
-      ).toHaveAttribute("aria-expanded", "true");
+      expect(document.activeElement).not.toBe(disclosure);
+    };
+    const openMenu = async () => {
+      await user.click(screen.getByRole("button", { name: "Menú" }));
+      expect(screen.getByRole("button", { name: "Menú" })).toHaveAttribute(
+        "aria-expanded",
+        "true",
+      );
     };
     const pathnameButton = screen.getByRole("button", {
       name: "Cambiar pathname",
@@ -401,12 +390,13 @@ describe("App", () => {
 
     await openMenu();
     await user.click(pathnameButton);
-    await waitFor(() => expectMenuClosedWithFocusOn(pathnameButton));
+    await waitFor(() => expectMenuClosedWithFocusOnMain());
     expectLocation("/metodologia", "", "");
 
     await openMenu();
     await user.click(queryButton);
-    await waitFor(() => expectMenuClosedWithFocusOn(queryButton));
+    // /metodologia -> /?tab=coverage is a pathname change: focus moves to main.
+    await waitFor(() => expectMenuClosedWithFocusOnMain());
     expectLocation("/", "?tab=coverage", "");
 
     await openMenu();
@@ -442,7 +432,7 @@ describe("App", () => {
     );
 
     const button = screen.getByRole("button", {
-      name: "Abrir menú principal",
+      name: "Menú",
     });
     expect(
       addEventListenerSpy.mock.calls.filter(([type]) => type === "keydown"),
@@ -495,7 +485,7 @@ describe("App", () => {
       );
 
       const button = screen.getByRole("button", {
-        name: "Abrir menú principal",
+        name: "Menú",
       });
       await user.click(button);
       expect(button).toHaveAttribute("aria-expanded", "true");

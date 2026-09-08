@@ -1,0 +1,279 @@
+{
+  "generatedFrom": "scripts\\assets\\editorial-assets.config.json",
+  "outputDirectory": "public\\images\\editorial",
+  "totalBytes": 1568030,
+  "files": [
+    {
+      "name": "centers-vocational-training-1280.avif",
+      "slug": "centers-vocational-training",
+      "format": "avif",
+      "width": 1280,
+      "height": 720,
+      "bytes": 54211
+    },
+    {
+      "name": "centers-vocational-training-1280.webp",
+      "slug": "centers-vocational-training",
+      "format": "webp",
+      "width": 1280,
+      "height": 720,
+      "bytes": 60716
+    },
+    {
+      "name": "centers-vocational-training-1600.avif",
+      "slug": "centers-vocational-training",
+      "format": "avif",
+      "width": 1600,
+      "height": 900,
+      "bytes": 72371
+    },
+    {
+      "name": "centers-vocational-training-1600.webp",
+      "slug": "centers-vocational-training",
+      "format": "webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 78472
+    },
+    {
+      "name": "centers-vocational-training-640.avif",
+      "slug": "centers-vocational-training",
+      "format": "avif",
+      "width": 640,
+      "height": 360,
+      "bytes": 21060
+    },
+    {
+      "name": "centers-vocational-training-640.webp",
+      "slug": "centers-vocational-training",
+      "format": "webp",
+      "width": 640,
+      "height": 360,
+      "bytes": 25706
+    },
+    {
+      "name": "centers-vocational-training-960.avif",
+      "slug": "centers-vocational-training",
+      "format": "avif",
+      "width": 960,
+      "height": 540,
+      "bytes": 36780
+    },
+    {
+      "name": "centers-vocational-training-960.webp",
+      "slug": "centers-vocational-training",
+      "format": "webp",
+      "width": 960,
+      "height": 540,
+      "bytes": 42596
+    },
+    {
+      "name": "hero-career-guidance-1280.avif",
+      "slug": "hero-career-guidance",
+      "format": "avif",
+      "width": 1280,
+      "height": 853,
+      "bytes": 49191
+    },
+    {
+      "name": "hero-career-guidance-1280.webp",
+      "slug": "hero-career-guidance",
+      "format": "webp",
+      "width": 1280,
+      "height": 853,
+      "bytes": 49026
+    },
+    {
+      "name": "hero-career-guidance-1536.avif",
+      "slug": "hero-career-guidance",
+      "format": "avif",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 63668
+    },
+    {
+      "name": "hero-career-guidance-1536.webp",
+      "slug": "hero-career-guidance",
+      "format": "webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 62290
+    },
+    {
+      "name": "hero-career-guidance-640.avif",
+      "slug": "hero-career-guidance",
+      "format": "avif",
+      "width": 640,
+      "height": 427,
+      "bytes": 18396
+    },
+    {
+      "name": "hero-career-guidance-640.webp",
+      "slug": "hero-career-guidance",
+      "format": "webp",
+      "width": 640,
+      "height": 427,
+      "bytes": 19774
+    },
+    {
+      "name": "hero-career-guidance-960.avif",
+      "slug": "hero-career-guidance",
+      "format": "avif",
+      "width": 960,
+      "height": 640,
+      "bytes": 32384
+    },
+    {
+      "name": "hero-career-guidance-960.webp",
+      "slug": "hero-career-guidance",
+      "format": "webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 33728
+    },
+    {
+      "name": "path-occupation-1280.avif",
+      "slug": "path-occupation",
+      "format": "avif",
+      "width": 1280,
+      "height": 960,
+      "bytes": 91228
+    },
+    {
+      "name": "path-occupation-1280.webp",
+      "slug": "path-occupation",
+      "format": "webp",
+      "width": 1280,
+      "height": 960,
+      "bytes": 95796
+    },
+    {
+      "name": "path-occupation-640.avif",
+      "slug": "path-occupation",
+      "format": "avif",
+      "width": 640,
+      "height": 480,
+      "bytes": 33903
+    },
+    {
+      "name": "path-occupation-640.webp",
+      "slug": "path-occupation",
+      "format": "webp",
+      "width": 640,
+      "height": 480,
+      "bytes": 38674
+    },
+    {
+      "name": "path-occupation-960.avif",
+      "slug": "path-occupation",
+      "format": "avif",
+      "width": 960,
+      "height": 720,
+      "bytes": 61180
+    },
+    {
+      "name": "path-occupation-960.webp",
+      "slug": "path-occupation",
+      "format": "webp",
+      "width": 960,
+      "height": 720,
+      "bytes": 67300
+    },
+    {
+      "name": "path-offer-1280.avif",
+      "slug": "path-offer",
+      "format": "avif",
+      "width": 1280,
+      "height": 960,
+      "bytes": 53035
+    },
+    {
+      "name": "path-offer-1280.webp",
+      "slug": "path-offer",
+      "format": "webp",
+      "width": 1280,
+      "height": 960,
+      "bytes": 57290
+    },
+    {
+      "name": "path-offer-640.avif",
+      "slug": "path-offer",
+      "format": "avif",
+      "width": 640,
+      "height": 480,
+      "bytes": 20370
+    },
+    {
+      "name": "path-offer-640.webp",
+      "slug": "path-offer",
+      "format": "webp",
+      "width": 640,
+      "height": 480,
+      "bytes": 23656
+    },
+    {
+      "name": "path-offer-960.avif",
+      "slug": "path-offer",
+      "format": "avif",
+      "width": 960,
+      "height": 720,
+      "bytes": 35629
+    },
+    {
+      "name": "path-offer-960.webp",
+      "slug": "path-offer",
+      "format": "webp",
+      "width": 960,
+      "height": 720,
+      "bytes": 40064
+    },
+    {
+      "name": "path-training-1280.avif",
+      "slug": "path-training",
+      "format": "avif",
+      "width": 1280,
+      "height": 960,
+      "bytes": 53460
+    },
+    {
+      "name": "path-training-1280.webp",
+      "slug": "path-training",
+      "format": "webp",
+      "width": 1280,
+      "height": 960,
+      "bytes": 54880
+    },
+    {
+      "name": "path-training-640.avif",
+      "slug": "path-training",
+      "format": "avif",
+      "width": 640,
+      "height": 480,
+      "bytes": 21690
+    },
+    {
+      "name": "path-training-640.webp",
+      "slug": "path-training",
+      "format": "webp",
+      "width": 640,
+      "height": 480,
+      "bytes": 24010
+    },
+    {
+      "name": "path-training-960.avif",
+      "slug": "path-training",
+      "format": "avif",
+      "width": 960,
+      "height": 720,
+      "bytes": 36660
+    },
+    {
+      "name": "path-training-960.webp",
+      "slug": "path-training",
+      "format": "webp",
+      "width": 960,
+      "height": 720,
+      "bytes": 38836
+    }
+  ]
+}

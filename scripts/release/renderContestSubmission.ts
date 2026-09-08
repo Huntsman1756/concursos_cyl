@@ -32,6 +32,7 @@ export type ContestDeploymentEvidence = {
   capturesAreCurrent: boolean;
   releaseGatesVerified?: boolean;
   releaseTag?: string | null;
+  deploymentMethod?: "workflow" | "script" | null;
   versionJsonUrl?: string | null;
   versionJsonCommitSha?: string | null;
   versionJsonSchemaVersion?: string | null;
@@ -63,7 +64,6 @@ const DOCUMENT_NAMES = [
 ] as const;
 const OUTPUT_DIRECTORY = path.join("docs", "contest");
 const ROOT_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
-const FALLBACK_URL = "https://huntsman1756.github.io/concursos_cyl/";
 const CONTEST_URL =
   "https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html";
 const REGISTRATION_URL =
@@ -130,11 +130,11 @@ Candidatura al [X Concurso de Datos Abiertos de Castilla y León](${CONTEST_URL}
 
 ## Problema y audiencia
 
-SALIDA CyL ayuda a personas de Castilla y León a explorar opciones de formación profesional y sus relaciones ocupacionales revisadas con fuentes identificadas. La aplicación reúne una consulta formativa, una exploración de ofertas relacionadas y una comparación separada de referencias oficiales de ingresos de titulados.
+SALIDA CyL permite explorar qué ocupaciones se relacionan con una FP, dónde estudiarla y qué ofertas de una instantánea fechada se conectan mediante evidencia revisada. Se dirige a estudiantes, personas que buscan empleo, familias y profesionales de orientación. Los enlaces oficiales permiten contrastar la información antes de decidir una matrícula o candidatura.
 
 ## Solución
 
-La interfaz permite elegir directamente cualquiera de los ${freeze.manifest.resourceSnapshots.programs.recordCount} ciclos de FP o filtrar los ${freeze.manifest.resourceSnapshots.officialOccupations.recordCount} grupos primarios de la CNO-11. Expone por separado el catálogo oficial completo y la cobertura parcial de relaciones FP–ocupación revisadas, incluidas las relaciones con ofertas, las revisadas sin coincidencias y las todavía no validadas. La metodología explica el origen de cada dato y los límites de interpretación.
+La interfaz permite explorar ${freeze.manifest.resourceSnapshots.programs.recordCount} claves de programa de FP, incluidas modalidades, o los ${freeze.manifest.resourceSnapshots.officialOccupations.recordCount} grupos primarios de la CNO-11. Por ejemplo, desde Cuidados Auxiliares de Enfermería se pueden consultar ocupaciones relacionadas y centros de estudio, revisar las ofertas vinculadas y abrir sus fuentes. También permite comenzar por una profesión o una oferta.
 
 SALIDA CyL conecta FP y ocupación en ambos sentidos con evidencia verificable. Integra ocho datasets del Portal de Datos Abiertos de la Junta de Castilla y León, todos visibles en la ficha o en las rutas de apoyo.
 
@@ -145,14 +145,14 @@ El grafo revisado se devuelve a la comunidad como dataset derivado descargable e
 - Instantánea publicada: \`${freeze.manifest.snapshotId}\`.
 - Grupos primarios CNO-11 consultables: **${freeze.manifest.resourceSnapshots.officialOccupations.recordCount}**.
 - **${coverage.distinctQualificationCount} cualificaciones distintas**.
-- Claves de modalidad públicas: **${coverage.modalityKeyCount}** (${list(coverage.modalityKeys)}).
+- **${coverage.modalityKeyCount} de ${freeze.manifest.resourceSnapshots.programs.recordCount} claves de programa** tienen alguna relación aprobada (${((coverage.modalityKeyCount / freeze.manifest.resourceSnapshots.programs.recordCount) * 100).toLocaleString("es-ES", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %). Incluyen modalidades; no son titulaciones distintas.
 - Relaciones ocupacionales aprobadas: **${coverage.approvedRelationCount}**.
 - Alias aprobados: **${coverage.approvedAliasCount}**.
 - **${offers.matchedOfferCount} de las ${spanishInteger(freeze.manifest.resourceSnapshots.jobOffers.recordCount)} ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
 - Relaciones revisadas sin oferta alcanzada: **${coverage.zeroReviewedRelationCount}**.
 - Programas diferidos por evidencia insuficiente: ${deferredPrograms}.
 
-Las claves de modalidad se informan aparte de las identidades de cualificación. Una relación revisada sin coincidencia no se convierte en una afirmación sobre la ausencia de oportunidades; un programa diferido permanece fuera de las afirmaciones revisadas.
+Las cifras describen cobertura de datos, no impacto medido ni todo el mercado laboral. Una relación revisada sin coincidencia no significa ausencia de oportunidades. Las fechas de descarga, publicación y generación se distinguen en [la revisión de fuentes](verification-20260908.md). El inventario completo de claves permanece en [la evidencia técnica](technical-evidence.md).
 
 ## Acceso
 
@@ -177,11 +177,17 @@ function renderTechnicalEvidence(
   const workflowRun =
     deployment.status === "verified" && deployment.workflowRunId !== null
       ? `\`${deployment.workflowRunId}\``
-      : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
+      : deployment.status === "verified" &&
+          deployment.deploymentMethod === "script"
+        ? "no aplica (despliegue por script VPS, sin GitHub Actions)"
+        : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
   const deploymentNote =
     deployment.status === "verified" && deployment.verifiedAt !== null
       ? candidatePlan === undefined
-        ? `El release público se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
+        ? deployment.workflowRunId === null &&
+          deployment.deploymentMethod === "script"
+          ? `El release público se verificó con el commit ${deploymentCommit} el ${deployment.verifiedAt}; el despliegue se ejecutó con el script de release del VPS y el \`version.json\` público declara ese mismo commit.`
+          : `El release público se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
         : `La baseline funcional publicada se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
       : "Estos dos campos no se inventan antes de ejecutar y verificar el release.";
   const reproducibilityIntro =
@@ -255,7 +261,7 @@ npm run analysis:pilot:report:check
 npm exec -- tsx scripts/release/validateContestFreeze.ts
 \`\`\`
 
-La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manifest.resourceSnapshots).length} recursos, los conjuntos de relaciones y la ausencia de cambios en las rutas de frontera congelada (${CONTEST_FREEZE_SOURCE_PATHS.map((sourcePath) => `\`${sourcePath}\``).join(", ")}) desde el commit fuente. Las rutas de UI, búsqueda y print quedan fuera de esta frontera y no se presentan como parte del freeze.
+La recomputación automatizada confirmó el manifest, sus ${Object.keys(freeze.manifest.resourceSnapshots).length} recursos, los conjuntos de relaciones y la ausencia de cambios en las rutas de frontera congelada (${CONTEST_FREEZE_SOURCE_PATHS.map((sourcePath) => `\`${sourcePath}\``).join(", ")}) desde el commit fuente. Las rutas de UI, búsqueda y print quedan fuera de esta frontera y no se presentan como parte del freeze.
 
 ## ${candidatePlan === undefined ? "Despliegue" : "Baseline funcional verificada"}
 
@@ -263,6 +269,7 @@ La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manif
 - ${candidatePlan === undefined ? "Commit desplegado" : "Commit de baseline desplegado"}: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
 ${releaseTraceability}${versionJsonTraceability}
+- Identidad del producto: el commit desplegado registrado arriba es el commit de producto; los commits posteriores de documentación de candidatura no lo sustituyen ni reescriben \`version.json\`.
 
 ${deploymentNote}
 
@@ -304,7 +311,7 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 
 ## Producto y release
 
-Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. Solo recuerda en \`localStorage\` la preferencia no sensible del modo de búsqueda («desde FP» o «desde ocupación»). ${visualVerificationStatus}
+Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. No guarda preferencias en almacenamiento local. Los filtros y términos presentes en la URL pueden quedar en el historial del navegador. ${visualVerificationStatus}
 
 El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra ${freeze.coverage.distinctQualificationCount} cualificaciones distintas y deja ${freeze.coverage.deferredProgramCount} programas diferidos. ${releaseStatus}
 
@@ -324,15 +331,21 @@ function renderSubmissionChecklist(
   const workflowRun =
     deployment.status === "verified" && deployment.workflowRunId !== null
       ? `\`${deployment.workflowRunId}\``
-      : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
+      : deployment.status === "verified" &&
+          deployment.deploymentMethod === "script"
+        ? "no aplica (despliegue por script VPS, sin GitHub Actions)"
+        : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
+  const deploymentGate =
+    deployment.status === "verified"
+      ? deployment.workflowRunId === null &&
+        deployment.deploymentMethod === "script"
+        ? "- [x] Registrar el commit desplegado y la verificación pública observados (despliegue por script VPS, sin run de GitHub Actions)."
+        : "- [x] Rellenar el commit desplegado y el run del workflow con datos observados."
+      : "- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.";
   const releaseGate =
     (deployment.releaseGatesVerified ?? deployment.status === "verified")
       ? "- [x] Ejecutar los gates de release y verificar la aplicación pública."
       : "- [ ] Ejecutar los gates de release y verificar la aplicación pública.";
-  const deploymentGate =
-    deployment.status === "verified"
-      ? "- [x] Rellenar el commit desplegado y el run del workflow con datos observados."
-      : "- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.";
   const releaseTraceability =
     deployment.releaseTag === null || deployment.releaseTag === undefined
       ? ""
@@ -440,19 +453,21 @@ function renderSubmissionChecklist(
 ## ${candidatePlan === undefined ? "Campos técnicos" : "Baseline funcional verificada"}
 
 - URL raíz a presentar: [${ROOT_URL}](${ROOT_URL})
-- Fallback verificada: [${FALLBACK_URL}](${FALLBACK_URL})
+- El estado del respaldo GitHub Pages se registra por separado en [verification-20260908.md](verification-20260908.md).
 - Commit fuente del freeze: \`${freeze.sourceCommitSha}\`.
 - Snapshot: \`${freeze.manifest.snapshotId}\`.
 - ${candidatePlan === undefined ? "Commit desplegado" : "Commit de baseline desplegado"}: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
-${releaseTraceability}${versionJsonTraceability}- Evidencia visual: ${visualEvidenceLine}
+${releaseTraceability}${versionJsonTraceability}- Identidad del producto: el commit desplegado registrado arriba es el commit de producto; esta documentación de candidatura vive en una rama documental posterior y no forma parte del commit desplegado.
+
+- Evidencia visual: ${visualEvidenceLine}
 
 ${renderTemporalReleaseStatus(candidatePlan)}
 
 ## Evidencia visual y gate final
 
 ${automatedCaptureGate}
-- [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
+- [ ] Capturar y revisar visualmente los recorridos de la versión final en un navegador disponible, en escritorio y móvil; registrar versión, fecha y límites de la comprobación.
 - [ ] Revisar la aplicación pública de la ${publicReviewLabel} en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
 - [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; ${captureInventoryLine}
 ${releaseGate}
@@ -463,7 +478,7 @@ ${figuresConfirmationGate}
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
 
-Cualquier cambio posterior debe seguir el flujo rama de trabajo → PR → checks → revisión/aprobación → merge a \`main\` → GitHub Pages.
+Antes de publicar cambios posteriores, ejecutar las comprobaciones pertinentes, revisar el diff y verificar el despliegue contra su commit. La observación pública más reciente se registra en [verification-20260908.md](verification-20260908.md); los registros históricos no garantizan el estado actual.
 `;
 }
 
@@ -504,9 +519,14 @@ function loadContestDeploymentEvidence(
   }
 
   const parsed = JSON.parse(fs.readFileSync(releaseEvidencePath, "utf8")) as {
+    schemaVersion?: number;
     deployment?: Partial<ContestDeploymentEvidence>;
     captureProductCommitSha?: string;
     candidatePlan?: ContestCandidatePlan;
+    releaseDisposition?: {
+      occurred?: boolean;
+      method?: "workflow" | "script";
+    };
     manifest?: { snapshotId?: unknown };
     localGates?: {
       evidenceManifest?: { captureCount?: unknown };
@@ -519,6 +539,10 @@ function loadContestDeploymentEvidence(
   ) {
     throw new Error("release-evidence.json has an invalid deployment record");
   }
+  const scriptDeployment =
+    parsed.schemaVersion === 2 &&
+    parsed.releaseDisposition?.occurred === true &&
+    parsed.releaseDisposition.method === "script";
 
   // Read captureCount from localGates.evidenceManifest.captureCount
   let captureCount: number | null = null;
@@ -568,6 +592,7 @@ function loadContestDeploymentEvidence(
     capturesAreCurrent,
     releaseGatesVerified: strictEvidence.status === "verified",
     releaseTag: deployment.releaseTag ?? null,
+    deploymentMethod: scriptDeployment ? "script" : null,
     versionJsonUrl: deployment.versionJsonUrl ?? null,
     versionJsonCommitSha: deployment.versionJsonCommitSha ?? null,
     versionJsonSchemaVersion: deployment.versionJsonSchemaVersion ?? null,
@@ -578,13 +603,15 @@ function loadContestDeploymentEvidence(
     evidence.status === "verified" &&
     (evidence.commitSha === null ||
       !/^[a-f0-9]{40}$/u.test(evidence.commitSha) ||
-      evidence.workflowRunId === null ||
-      evidence.verifiedAt === null)
+      evidence.verifiedAt === null ||
+      (!scriptDeployment && evidence.workflowRunId === null))
   ) {
     throw new Error("verified deployment evidence is incomplete");
   }
   return evidence;
 }
+
+export { loadContestDeploymentEvidence };
 
 export function validateRenderedContestSubmission(
   documents: ContestSubmissionDocuments,

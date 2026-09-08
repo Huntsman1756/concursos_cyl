@@ -2,24 +2,6 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 import { currentManifestFixture } from "../fixtures/generatedManifest";
 
-async function chooseTrainingProgram(
-  page: Page,
-  label: string,
-  query: string,
-): Promise<void> {
-  const combobox = page.getByRole("combobox", { name: label });
-  await combobox.fill(query);
-  const option = page.locator(`[role="option"][id$="-option-${query}"]`);
-  await expect(option).toBeVisible();
-  const expectedValue = (await option.locator("span").innerText()).trim();
-  await expect(option).toHaveAttribute("aria-selected", "false");
-  await combobox.press("ArrowDown");
-  await expect(option).toHaveAttribute("aria-selected", "true");
-  await combobox.press("Enter");
-  await expect(combobox).toHaveValue(expectedValue);
-  await expect(combobox).toHaveAttribute("aria-expanded", "false");
-}
-
 async function expectStrictAxe(page: Page): Promise<void> {
   const { violations } = await new AxeBuilder({ page }).analyze();
   expect(violations, JSON.stringify(violations, null, 2)).toEqual([]);
@@ -36,44 +18,112 @@ async function expectNoHorizontalOverflow(page: Page): Promise<void> {
   expect(overflow.document).toBeLessThanOrEqual(1);
 }
 
+type HomePathImageDiagnostic = {
+  currentSrc: string;
+  naturalWidth: number;
+  naturalHeight: number;
+  complete: boolean;
+  alt: string;
+  display: string;
+  visibility: string;
+  opacity: string;
+  box: { width: number; height: number };
+  picturePresent: boolean;
+  imagePresent: boolean;
+};
+
+const HOME_PATH_ASSETS = [
+  "path-training",
+  "path-occupation",
+  "path-offer",
+] as const;
+
+async function expectHomePathImages(
+  page: Page,
+  imageResponses: Map<string, number>,
+): Promise<void> {
+  const paths = page.locator(".paths-grid .path");
+  await expect(paths).toHaveCount(HOME_PATH_ASSETS.length);
+  await page.locator(".paths-grid").scrollIntoViewIfNeeded();
+  await page.evaluate(async () => {
+    const step = Math.max(window.innerHeight - 64, 1);
+    const maxY = Math.max(
+      document.documentElement.scrollHeight - window.innerHeight,
+      0,
+    );
+    for (let y = 0; y <= maxY; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+    window.scrollTo(0, 0);
+  });
+
+  const diagnostics: HomePathImageDiagnostic[] = await paths.evaluateAll(
+    (cards) =>
+      cards.map((card) => {
+        const picture = card.querySelector("picture");
+        const image = card.querySelector("img");
+        const style = image === null ? null : getComputedStyle(image);
+        const box = image?.getBoundingClientRect();
+        return {
+          currentSrc: image?.currentSrc ?? "",
+          naturalWidth: image?.naturalWidth ?? 0,
+          naturalHeight: image?.naturalHeight ?? 0,
+          complete: image?.complete ?? false,
+          alt: image?.alt ?? "",
+          display: style?.display ?? "",
+          visibility: style?.visibility ?? "",
+          opacity: style?.opacity ?? "",
+          box: { width: box?.width ?? 0, height: box?.height ?? 0 },
+          picturePresent: picture !== null,
+          imagePresent: image !== null,
+        };
+      }),
+  );
+
+  expect(diagnostics).toHaveLength(HOME_PATH_ASSETS.length);
+  diagnostics.forEach((diagnostic, index) => {
+    const asset = HOME_PATH_ASSETS[index];
+    expect(diagnostic.picturePresent).toBe(true);
+    expect(diagnostic.imagePresent).toBe(true);
+    expect(diagnostic.currentSrc).toMatch(
+      new RegExp(`/images/editorial/${asset}-\\d+\\.(?:avif|webp)$`, "u"),
+    );
+    expect(imageResponses.get(diagnostic.currentSrc)).toBe(200);
+    expect(diagnostic.naturalWidth).toBeGreaterThan(0);
+    expect(diagnostic.naturalHeight).toBeGreaterThan(0);
+    expect(diagnostic.complete).toBe(true);
+    expect(diagnostic.alt.trim()).not.toBe("");
+    expect(diagnostic.display).not.toBe("none");
+    expect(diagnostic.visibility).not.toBe("hidden");
+    expect(Number(diagnostic.opacity)).toBeGreaterThan(0);
+    expect(diagnostic.box.width).toBeGreaterThan(0);
+    expect(diagnostic.box.height).toBeGreaterThan(0);
+  });
+}
+
+async function chooseFirstResult(page: Page, query: string): Promise<Locator> {
+  const combobox = page.getByRole("combobox", {
+    name: "Busca tu ciclo",
+  });
+  await combobox.fill(query);
+  const option = page.getByRole("option").filter({ hasText: query }).first();
+  await expect(option).toBeVisible();
+  return option;
+}
+
 async function expectHomeReadyForLayout(page: Page): Promise<void> {
   await expect(
-    page.getByRole("region", { name: "Cobertura revisada" }),
-  ).toHaveAttribute("aria-busy", "false");
-  await expect(
-    page
-      .getByRole("list", { name: "Ciclos revisados destacados" })
-      .getByRole("listitem"),
-  ).toHaveCount(3);
+    page.getByRole("combobox", {
+      name: "Busca tu ciclo",
+    }),
+  ).toBeVisible();
   const freshness = page.getByRole("region", {
     name: "Fecha de relaciones revisadas",
   });
   await expect(freshness).toHaveAttribute("aria-busy", "false");
   await expect(freshness.locator("time")).toBeVisible();
-  await expect(
-    page.getByRole("combobox", { name: "Título de Formación Profesional" }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("button", {
-      name: "Ver ocupaciones con relación revisada",
-    }),
-  ).toHaveCount(1);
-}
-
-async function expectWithinViewport(
-  page: Page,
-  target: Locator,
-): Promise<void> {
-  await target.scrollIntoViewIfNeeded();
-  const viewport = page.viewportSize();
-  const box = await target.boundingBox();
-  expect(viewport).not.toBeNull();
-  expect(box).not.toBeNull();
-  if (viewport === null || box === null) return;
-  expect(box.x).toBeGreaterThanOrEqual(-1);
-  expect(box.y).toBeGreaterThanOrEqual(-1);
-  expect(box.x + box.width).toBeLessThanOrEqual(viewport.width + 1);
-  expect(box.y + box.height).toBeLessThanOrEqual(viewport.height + 1);
+  await expect(page.locator(".example-cta a")).toHaveCount(1);
 }
 
 const legacySnapshot = {
@@ -99,9 +149,19 @@ const staleLegacyManifest = {
   },
 } as const;
 
-test("home exposes one chosen journey, navigation, freshness, and no automated accessibility violations", async ({
+test("home exposes three clear intents, navigation, freshness, and no automated accessibility violations", async ({
   page,
-}, testInfo) => {
+}) => {
+  const imageResponses = new Map<string, number>();
+  page.on("response", (response) => {
+    if (
+      /\/images\/editorial\/path-(?:training|occupation|offer)-\d+\.(?:avif|webp)$/u.test(
+        response.url(),
+      )
+    ) {
+      imageResponses.set(response.url(), response.status());
+    }
+  });
   const manifestResponsePromise = page.waitForResponse((response) =>
     response.url().endsWith("/data/v1/manifest.json"),
   );
@@ -111,37 +171,17 @@ test("home exposes one chosen journey, navigation, freshness, and no automated a
     typeof currentManifestFixture
   >;
 
-  if (testInfo.project.name === "chromium-mobile") {
-    await expect(
-      page.getByRole("button", { name: "Abrir menú principal" }),
-    ).toBeVisible();
-    await expect(page.locator("#mobile-primary-navigation")).toHaveAttribute(
-      "hidden",
-    );
-  } else {
-    await expect(page.locator(".site-nav--desktop")).toBeVisible();
-    await expect(
-      page.locator(".site-nav--desktop").getByRole("link"),
-    ).toHaveText([
-      "Inicio",
-      "Desde FP",
-      "Desde ocupación",
-      "Desde oferta",
-      "Comparar estudios",
-      "Más formación",
-      "Metodología",
-    ]);
-  }
-
-  const startingPoint = page.getByRole("group", {
-    name: "¿Desde dónde empiezas?",
-  });
-  await expect(startingPoint.getByRole("radio")).toHaveCount(3);
   await expect(
-    page.getByRole("button", {
-      name: "Ver ocupaciones con relación revisada",
+    page.getByRole("heading", {
+      name: "Tu FP, tus salidas profesionales y dónde dar el siguiente paso.",
     }),
-  ).toHaveCount(1);
+  ).toBeVisible();
+  const combobox = page.getByRole("combobox", {
+    name: "Busca tu ciclo",
+  });
+  await expect(combobox).toBeVisible();
+  await expect(combobox).toHaveAttribute("aria-autocomplete", "list");
+
   const mappingSnapshot = manifest.resourceSnapshots.mappingCoverage;
   const expectedDateTime =
     mappingSnapshot.sourceUpdatedAt ?? mappingSnapshot.snapshotFetchedAt;
@@ -152,26 +192,88 @@ test("home exposes one chosen journey, navigation, freshness, and no automated a
     "datetime",
     expectedDateTime,
   );
+  const expectedDate = new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(expectedDateTime));
+  const expectedDateKind =
+    mappingSnapshot.sourceUpdatedAt === null
+      ? "copia consultada el"
+      : "fuente actualizada el";
   await expect(freshness).toContainText(
-    `Relaciones revisadas: copia del ${new Intl.DateTimeFormat("es-ES", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      timeZone: "UTC",
-    }).format(new Date(expectedDateTime))}`,
+    `Relaciones revisadas · ${expectedDateKind} ${expectedDate}`,
   );
-  await expect(
-    page.getByText(
-      "Ejemplos de ciclos con relaciones revisadas; no es el catálogo completo.",
-    ),
-  ).toBeVisible();
-  await expectWithinViewport(
-    page,
-    freshness.getByText(/Relaciones revisadas: copia del/u),
-  );
-  await expectWithinViewport(page, freshness.locator("time"));
+  await expect(page.locator(".example-cta a")).toHaveCount(1);
+  await expectHomePathImages(page, imageResponses);
   await expectNoHorizontalOverflow(page);
   await expectStrictAxe(page);
+});
+
+test("the three-intent home reaches FP and occupation routes after official confirmation", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const combobox = page.getByRole("combobox", {
+    name: "Busca tu ciclo",
+  });
+
+  await combobox.fill("IFC03S");
+  const fpOption = page.locator('[role="option"][id$="-option-IFC03S"]');
+  await expect(fpOption).toBeVisible();
+  await fpOption.click();
+  await page.getByRole("button", { name: "Ver mis salidas" }).click();
+  await expect(page).toHaveURL(/\/desde-fp\/IFC03S\?query=/u);
+  await expect(
+    page.getByRole("heading", { name: /Desarrollo de Aplicaciones Web/iu }),
+  ).toBeVisible();
+  await expectStrictAxe(page);
+
+  await page.getByRole("link", { name: "SALIDA CyL" }).click();
+  await page.getByRole("tab", { name: "Busco una profesión" }).click();
+  const universityCombobox = page.getByRole("combobox", {
+    name: "Busca una profesión",
+  });
+  await universityCombobox.fill("Programación web");
+  await page
+    .getByRole("option", {
+      name: /Analistas, programadores y diseñadores web y multimedia/iu,
+    })
+    .click();
+  await page.getByRole("button", { name: "Buscar profesión" }).click();
+  await expect(page).toHaveURL(
+    /\/desde-ocupacion\/occupation%3Acno11%3A2713\?query=/u,
+  );
+  await expect(
+    page.getByRole("heading", {
+      name: /Analistas, programadores y diseñadores web y multimedia/iu,
+    }),
+  ).toBeVisible();
+  await expectNoHorizontalOverflow(page);
+});
+
+test("home search requires an official option selection and never free-routes", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const combobox = page.getByRole("combobox", {
+    name: "Busca tu ciclo",
+  });
+  await combobox.fill("texto inventado");
+  await expect(
+    page.getByText("No encontramos un ciclo oficial con ese nombre."),
+  ).toBeVisible();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/\/$/u);
+  await expectStrictAxe(page);
+
+  await chooseFirstResult(page, "IFC03S");
+  await page.keyboard.press("ArrowDown");
+  await expect(combobox).toHaveAttribute("aria-activedescendant", /.+/u);
+  await page.keyboard.press("Enter");
+  await page.getByRole("button", { name: "Ver mis salidas" }).click();
+  await expect(page).toHaveURL(/\/desde-fp\/IFC03S\?query=/u);
 });
 
 test("the initial ready-state focus does not outline the whole page", async ({
@@ -190,204 +292,236 @@ test("the initial ready-state focus does not outline the whole page", async ({
     .toBe("none");
 });
 
-test("the keyboard focus indicator is visible and opaque", async ({ page }) => {
+test("the keyboard focus indicator is visible and opaque on the search control", async ({
+  page,
+}) => {
   await page.goto("/");
-  const submit = page.getByRole("button", {
-    name: "Ver ocupaciones con relación revisada",
+  const combobox = page.getByRole("combobox", {
+    name: "Busca tu ciclo",
   });
-  await chooseTrainingProgram(
-    page,
-    "Título de Formación Profesional",
-    "IFC03S",
-  );
-  await expect(submit).toBeEnabled();
   for (let index = 0; index < 20; index += 1) {
     if (
-      await submit.evaluate((element) => element === document.activeElement)
+      await combobox.evaluate((element) => element === document.activeElement)
     ) {
       break;
     }
     await page.keyboard.press("Tab");
   }
-  await expect(submit).toBeFocused();
-
+  await expect(combobox).toBeFocused();
   await expect
     .poll(() =>
-      submit.evaluate((element) => getComputedStyle(element).boxShadow),
+      combobox.evaluate((element) => getComputedStyle(element).boxShadow),
     )
     .not.toBe("none");
-  const focusStyle = await submit.evaluate((element) => {
-    const style = getComputedStyle(element);
-    const rect = element.getBoundingClientRect();
-    return {
-      boxShadow: style.boxShadow,
-      height: rect.height,
-      opacity: style.opacity,
-      visibility: style.visibility,
-      width: rect.width,
-    };
-  });
-  expect(focusStyle.boxShadow).not.toMatch(
-    /transparent|rgba?\([^)]*,\s*0(?:\.0+)?\s*\)/iu,
-  );
-  expect(focusStyle.width).toBeGreaterThan(0);
-  expect(focusStyle.height).toBeGreaterThan(0);
-  expect(focusStyle.opacity).not.toBe("0");
-  expect(focusStyle.visibility).not.toBe("hidden");
 });
 
-test("the single search reaches both routes one mode at a time", async ({
+test("switching home intent tabs keeps the hero image and following content stable", async ({
   page,
-}) => {
+}, testInfo) => {
+  const isDesktop = testInfo.project.name !== "chromium-mobile";
+  await page.setViewportSize(
+    isDesktop ? { width: 1267, height: 1044 } : { width: 390, height: 844 },
+  );
   await page.goto("/");
+  await expectHomeReadyForLayout(page);
+  await page.evaluate(() => document.fonts.ready);
 
-  await chooseTrainingProgram(
-    page,
-    "Título de Formación Profesional",
-    "IFC03S",
-  );
-  await page
-    .getByRole("button", {
-      name: "Ver ocupaciones con relación revisada",
-    })
-    .click();
-  await expect(page).toHaveURL(/\/desde-fp\/IFC03S$/u);
-  await expect(
-    page.getByRole("heading", {
-      name: "Desarrollo de Aplicaciones Web",
-    }),
-  ).toBeVisible();
-  await expectStrictAxe(page);
+  const heroImage = page.locator(".hero-stage img");
 
-  await page.getByRole("link", { name: "SALIDA CyL" }).click();
-  await page
-    .getByRole("radio", { name: /Tengo una ocupación en mente/iu })
-    .check();
-  await expectStrictAxe(page);
-  const occupationSearch = page.getByRole("combobox", {
-    name: "Ocupación que te interesa",
-  });
-  await occupationSearch.fill("Programación web");
-  await expectStrictAxe(page);
-  await page
-    .getByRole("option", {
-      name: /Analistas, programadores y diseñadores web y multimedia/iu,
-    })
-    .click();
-  await expectStrictAxe(page);
-  await page
-    .getByRole("button", { name: "Ver FP con relación revisada" })
-    .click();
-  await expect(page).toHaveURL(
-    /\/desde-ocupacion\/occupation%3Acno11%3A2713$/u,
-  );
-  await expect(
-    page.getByRole("heading", {
-      name: /Analistas, programadores y diseñadores web y multimedia/iu,
-    }),
-  ).toBeVisible();
-  await expectStrictAxe(page);
-  await expectNoHorizontalOverflow(page);
+  const measurements: Array<{
+    imageWidth: number;
+    imageHeight: number;
+    sectionTop: number;
+  }> = [];
+  for (const tabName of [
+    "Tengo una FP",
+    "Busco una profesión",
+    "Estoy mirando una oferta",
+  ]) {
+    await page.getByRole("tab", { name: tabName }).click();
+    await expect(heroImage).toBeVisible();
+    const measurement = await page.evaluate(() => {
+      const image = document.querySelector<HTMLElement>(".hero-stage img");
+      const section = document.querySelector<HTMLElement>(
+        '[aria-labelledby="paths-title"]',
+      );
+      const imageBox = image?.getBoundingClientRect();
+      const sectionBox = section?.getBoundingClientRect();
+      return {
+        imageWidth: Math.round(imageBox?.width ?? 0),
+        imageHeight: Math.round(imageBox?.height ?? 0),
+        sectionTop: Math.round((sectionBox?.top ?? 0) + window.scrollY),
+      };
+    });
+    expect(measurement.imageWidth).toBeGreaterThan(0);
+    expect(measurement.imageHeight).toBeGreaterThan(0);
+    measurements.push(measurement);
+  }
+
+  expect(
+    new Set(measurements.map((m) => `${m.imageWidth}x${m.imageHeight}`)).size,
+  ).toBe(1);
+  expect(new Set(measurements.map((m) => m.sectionTop)).size).toBe(1);
 });
 
-test("home FP search requires official keyboard confirmation", async ({
+test("the complete Spanish home copy fits without horizontal overflow", async ({
   page,
-}) => {
+}, testInfo) => {
+  await page.goto("/");
+  await expectHomeReadyForLayout(page);
+
+  const overflow = await page.evaluate(() => ({
+    body: document.body.scrollWidth - document.body.clientWidth,
+    document:
+      document.documentElement.scrollWidth -
+      document.documentElement.clientWidth,
+  }));
+  expect(overflow.body).toBeLessThanOrEqual(1);
+  expect(overflow.document).toBeLessThanOrEqual(1);
+
+  if (testInfo.project.name === "chromium-mobile") {
+    const menuButton = page.getByRole("button", {
+      name: "Menú",
+    });
+    const box = await menuButton.boundingBox();
+    expect(box?.width ?? 0).toBeGreaterThanOrEqual(44);
+    expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
+  }
+});
+
+test("the home copy fits at the narrow mobile widths", async ({ page }) => {
+  for (const width of [320, 360, 390]) {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/");
+    await expectHomeReadyForLayout(page);
+    await expect(
+      page.getByRole("heading", {
+        name: "Tu FP, tus salidas profesionales y dónde dar el siguiente paso.",
+      }),
+    ).toBeVisible();
+    const overflow = await page.evaluate(() => ({
+      body: document.body.scrollWidth - document.body.clientWidth,
+      document:
+        document.documentElement.scrollWidth -
+        document.documentElement.clientWidth,
+    }));
+    expect(overflow.body, `body overflow at ${width}px`).toBeLessThanOrEqual(1);
+    expect(
+      overflow.document,
+      `document overflow at ${width}px`,
+    ).toBeLessThanOrEqual(1);
+  }
+});
+
+test("a stale legacy manifest keeps navigation and names the last update", async ({
+  page,
+}, testInfo) => {
+  await page.route("**/data/v1/manifest.json", (route) =>
+    route.fulfill({ json: staleLegacyManifest }),
+  );
   await page.goto("/");
 
-  const combobox = page.getByRole("combobox", {
-    name: "Título de Formación Profesional",
+  const freshness = page.getByRole("region", {
+    name: "Fecha de ofertas laborales",
   });
-  const submit = page.getByRole("button", {
-    name: "Ver ocupaciones con relación revisada",
-  });
-
-  await combobox.fill("texto inventado");
-  await expect(submit).toBeDisabled();
+  await expect(freshness).toContainText(
+    "Ofertas laborales · fuente actualizada el 31 de julio de 2026",
+  );
+  await expect(freshness.locator("time")).toHaveAttribute(
+    "datetime",
+    "2026-07-31T00:00:00.000Z",
+  );
   await expect(
-    page.getByText("No encontramos un ciclo oficial con ese nombre."),
+    page.getByText("Mostramos la última copia disponible."),
   ).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "Imprimir esta orientación" }),
+    page.getByText(/datos actuales|datos al día|ofertas actuales/iu),
   ).toHaveCount(0);
-  await expectStrictAxe(page);
 
-  await chooseTrainingProgram(
-    page,
-    "Título de Formación Profesional",
-    "IFC03S",
-  );
-  await expect(submit).toBeEnabled();
-  await expectStrictAxe(page);
+  if (testInfo.project.name === "chromium-mobile") {
+    await page.getByRole("button", { name: "Menú" }).click();
+    await page
+      .locator("#mobile-menu")
+      .getByRole("link", { name: "Comparar estudios" })
+      .click();
+  } else {
+    await page
+      .locator(".global-nav-list")
+      .getByRole("link", { name: "Comparar estudios" })
+      .click();
+  }
+  await expect(page).toHaveURL(/\/comparar$/u);
 });
 
-test("the training-first journey keeps the live zero-match snapshot honest and accessible", async ({
+test("the skip link moves keyboard focus to the main content", async ({
   page,
+  browserName,
 }) => {
-  const manifestResponsePromise = page.waitForResponse((response) =>
-    response.url().endsWith("/data/v1/manifest.json"),
+  test.skip(
+    browserName === "webkit",
+    "WebKit keyboard focus follows the host Safari full-keyboard-access preference.",
   );
-  await page.goto("/desde-fp");
-  const manifestResponse = await manifestResponsePromise;
-  const manifest = (await manifestResponse.json()) as ReturnType<
-    typeof currentManifestFixture
-  >;
-
-  const programSelect = page.getByLabel("Ciclo de Formación Profesional");
-  await expect(programSelect).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "Ver salidas y ofertas" }),
-  ).toBeDisabled();
-  await chooseTrainingProgram(page, "Ciclo de Formación Profesional", "IFC03S");
-  await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
-
-  await expect(page).toHaveURL(/\/desde-fp\/IFC03S$/u);
-  await expect(
-    page.getByRole("heading", { name: "Desarrollo de Aplicaciones Web" }),
-  ).toBeVisible();
-  const jobSnapshot = manifest.resourceSnapshots.jobOffers;
-  const expectedDate = new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(
-    new Date(jobSnapshot.sourceUpdatedAt ?? jobSnapshot.snapshotFetchedAt),
-  );
-  await expect(
-    page.getByText(
-      `0 ofertas con correspondencia validada en la copia de datos del ${expectedDate}.`,
-    ),
-  ).toBeVisible();
-  await expect(page.getByText(/compatibilidad|porcentaje|%/iu)).toHaveCount(0);
-
-  await expectNoHorizontalOverflow(page);
-  await expectStrictAxe(page);
+  await page.goto("/");
+  const main = page.locator("main#main-content");
+  await expect(main).toBeFocused();
+  const skipLink = page.getByRole("link", { name: "Saltar al contenido" });
+  await skipLink.focus();
+  await expect(skipLink).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(main).toBeFocused();
 });
 
-test("the regulated training route uses official offerings and centers", async ({
+test("SPA navigation preserves the focused control while content becomes ready", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/");
+  if (testInfo.project.name === "chromium-mobile") {
+    await page.getByRole("button", { name: "Menú" }).click();
+    const mobileLink = page
+      .locator("#mobile-menu")
+      .getByRole("link", { name: "Explorar" });
+    await mobileLink.click();
+    await expect(page).toHaveURL(/\/desde-fp$/u);
+  } else {
+    const fpLink = page
+      .locator(".global-nav-list")
+      .getByRole("link", { name: "Explorar" });
+    await fpLink.click();
+    await expect(page).toHaveURL(/\/desde-fp$/u);
+  }
+  await expect(
+    page.getByRole("status", { name: "Contenido listo" }),
+  ).toBeAttached();
+});
+
+test("loading freshness is visible before a delayed current manifest prioritizes its source date", async ({
   page,
 }) => {
-  await page.goto("/formacion/IFC03S");
-
-  await expect(
-    page.getByRole("heading", {
-      name: /Dónde estudiar Desarrollo de Aplicaciones WEB/iu,
-    }),
-  ).toBeVisible();
-  await expect(
-    page.getByText(/Grado superior · Código oficial IFC03S/),
-  ).toBeVisible();
-  const centers = page.getByRole("list", {
-    name: "Centros que imparten el ciclo",
+  let releaseManifest!: () => void;
+  const manifestDelay = new Promise<void>((resolve) => {
+    releaseManifest = resolve;
   });
-  await expect(centers.getByRole("listitem").first()).toBeVisible();
-  await expect(
-    centers.getByRole("link", { name: /Web del centro/ }).first(),
-  ).toHaveAttribute("target", "_blank");
+  await page.route("**/data/v1/manifest.json", async (route) => {
+    await manifestDelay;
+    await route.fulfill({ json: currentManifestFixture() });
+  });
 
-  await expectNoHorizontalOverflow(page);
-  await expectStrictAxe(page);
+  await page.goto("/");
+  const freshness = page.getByRole("region", {
+    name: "Fecha de relaciones revisadas",
+  });
+  await expect(freshness).toHaveAttribute("aria-busy", "true");
+  await expect(freshness.getByText("Comprobando fecha…")).toBeVisible();
+
+  releaseManifest();
+  await expect(freshness).toHaveAttribute("aria-busy", "false");
+  await expect(freshness.locator("time")).toHaveAttribute(
+    "datetime",
+    "2026-07-31T00:00:00.000Z",
+  );
+  await expect(freshness).toContainText(
+    "Relaciones revisadas · fuente actualizada el 31 de julio de 2026",
+  );
 });
 
 test("each remaining public route has distinct destination content", async ({
@@ -428,309 +562,4 @@ test("each remaining public route has distinct destination content", async ({
       ).toBeVisible();
     }
   }
-});
-
-test("loading freshness is visible before a delayed current manifest prioritizes its source date", async ({
-  page,
-}) => {
-  let releaseManifest!: () => void;
-  const manifestDelay = new Promise<void>((resolve) => {
-    releaseManifest = resolve;
-  });
-  await page.route("**/data/v1/manifest.json", async (route) => {
-    await manifestDelay;
-    await route.fulfill({ json: currentManifestFixture() });
-  });
-
-  await page.goto("/");
-  const freshness = page.getByRole("region", {
-    name: "Fecha de relaciones revisadas",
-  });
-  await expect(freshness).toHaveAttribute("aria-busy", "true");
-  await expect(freshness.getByText("Comprobando fecha…")).toBeVisible();
-
-  releaseManifest();
-  await expect(freshness).toHaveAttribute("aria-busy", "false");
-  await expect(freshness.locator("time")).toHaveAttribute(
-    "datetime",
-    "2026-07-31T00:00:00.000Z",
-  );
-  await expect(freshness).toContainText(
-    "Relaciones revisadas: copia del 31/07/2026",
-  );
-});
-
-test("a current manifest falls back to the fetched timestamp and formats its UTC date", async ({
-  page,
-}) => {
-  const fetchedAt = "2026-08-01T23:30:00.000Z";
-  await page.route("**/data/v1/manifest.json", (route) =>
-    route.fulfill({
-      json: currentManifestFixture({
-        sourceUpdatedAt: null,
-        snapshotFetchedAt: fetchedAt,
-      }),
-    }),
-  );
-  await page.goto("/");
-
-  const freshness = page.getByRole("region", {
-    name: "Fecha de relaciones revisadas",
-  });
-  await expect(freshness.locator("time")).toHaveAttribute(
-    "datetime",
-    fetchedAt,
-  );
-  await expect(freshness).toContainText(
-    "Relaciones revisadas: copia del 01/08/2026",
-  );
-});
-
-test("the skip link moves keyboard focus to the main content", async ({
-  page,
-  browserName,
-}) => {
-  test.skip(
-    browserName === "webkit",
-    "WebKit keyboard focus follows the host Safari full-keyboard-access preference.",
-  );
-  await page.goto("/");
-
-  await expect(
-    page.getByRole("status", { name: "Contenido listo" }),
-  ).toBeAttached();
-  const main = page.locator("main#main-content");
-  await expect(main).toBeFocused();
-  const skipLink = page.getByRole("link", { name: "Saltar al contenido" });
-  await expect(skipLink).toHaveAttribute("href", "#main-content");
-  await skipLink.focus();
-  await expect(skipLink).toBeFocused();
-  await page.keyboard.press("Enter");
-  await expect(main).toBeFocused();
-});
-
-test("SPA navigation preserves the focused control while content becomes ready", async ({
-  page,
-}, testInfo) => {
-  await page.goto("/");
-
-  if (testInfo.project.name === "chromium-mobile") {
-    await page.getByRole("button", { name: "Abrir menú principal" }).click();
-    const mobileLink = page
-      .locator("#mobile-primary-navigation")
-      .getByRole("link", { name: "Desde FP" });
-    await mobileLink.click();
-    await expect(page).toHaveURL(/\/desde-fp$/u);
-    await expect(page.locator("#mobile-primary-navigation")).toHaveAttribute(
-      "hidden",
-    );
-  } else {
-    const fpLink = page.locator(".site-nav--desktop").getByRole("link", {
-      name: "Desde FP",
-    });
-    await fpLink.click();
-    await expect(page).toHaveURL(/\/desde-fp$/u);
-  }
-  await expect(
-    page.getByRole("status", { name: "Contenido listo" }),
-  ).toBeAttached();
-  if (testInfo.project.name === "chromium-mobile") {
-    await expect(page.locator("main#main-content")).toBeFocused();
-    await expect(
-      page.getByRole("button", { name: "Abrir menú principal" }),
-    ).not.toBeFocused();
-  } else {
-    await expect(
-      page.locator(".site-nav--desktop").getByRole("link", {
-        name: "Desde FP",
-      }),
-    ).toBeFocused();
-  }
-});
-
-test("a validated stale legacy manifest keeps navigation and names the last update", async ({
-  page,
-}, testInfo) => {
-  await page.route("**/data/v1/manifest.json", (route) =>
-    route.fulfill({ json: staleLegacyManifest }),
-  );
-  await page.goto("/");
-
-  const freshness = page.getByRole("region", {
-    name: "Fecha de ofertas laborales",
-  });
-  await expect(freshness).toContainText(
-    "Ofertas laborales: copia del 31/07/2026",
-  );
-  await expect(freshness.locator("time")).toHaveAttribute(
-    "datetime",
-    "2026-07-31T00:00:00.000Z",
-  );
-  await expect(
-    page.getByText("Mostramos la última copia disponible."),
-  ).toBeVisible();
-  await expect(
-    page.getByText(/datos actuales|datos al día|ofertas actuales/iu),
-  ).toHaveCount(0);
-
-  if (testInfo.project.name === "chromium-mobile") {
-    await page.getByRole("button", { name: "Abrir menú principal" }).click();
-    await page
-      .locator("#mobile-primary-navigation")
-      .getByRole("link", { name: "Comparar estudios" })
-      .click();
-  } else {
-    await page
-      .locator(".site-nav--desktop")
-      .getByRole("link", { name: "Comparar estudios" })
-      .click();
-  }
-  await expect(page).toHaveURL(/\/comparar$/u);
-  await expect(
-    page.getByRole("heading", { name: "Ingresos observados" }),
-  ).toBeVisible();
-  await expect(
-    page.getByText(
-      "Los datos de comparación no están disponibles en esta versión.",
-    ),
-  ).toBeVisible();
-});
-
-test("the complete Spanish home copy fits without horizontal overflow", async ({
-  page,
-}, testInfo) => {
-  await page.goto("/");
-  await expectHomeReadyForLayout(page);
-
-  const viewport = page.viewportSize();
-  expect(viewport).not.toBeNull();
-  if (testInfo.project.name === "chromium-mobile") {
-    expect(viewport).toEqual({ width: 360, height: 800 });
-  }
-
-  await expect(
-    page.getByRole("heading", {
-      name: /Elige desde dónde empiezas\./i,
-    }),
-  ).toBeVisible();
-  await expect(
-    page.getByText("Relaciones revisadas", { exact: true }),
-  ).toBeVisible();
-
-  const overflow = await page.evaluate(() => ({
-    body: document.body.scrollWidth - document.body.clientWidth,
-    document:
-      document.documentElement.scrollWidth -
-      document.documentElement.clientWidth,
-  }));
-  expect(overflow.body).toBeLessThanOrEqual(1);
-  expect(overflow.document).toBeLessThanOrEqual(1);
-
-  if (testInfo.project.name === "chromium-mobile") {
-    await expect(page.locator("#mobile-primary-navigation")).toHaveAttribute(
-      "hidden",
-    );
-    const mobileAnchors = page.locator("#mobile-primary-navigation a");
-    await expect(mobileAnchors).toHaveCount(7);
-    expect(
-      await mobileAnchors.evaluateAll((anchors) =>
-        anchors.every((anchor) => anchor.getClientRects().length === 0),
-      ),
-    ).toBe(true);
-    expect(
-      await page
-        .locator("#mobile-primary-navigation")
-        .evaluate((navigation) => navigation.contains(document.activeElement)),
-    ).toBe(false);
-    const menuButton = page.getByRole("button", {
-      name: "Abrir menú principal",
-    });
-    const menuButtonBox = await menuButton.boundingBox();
-    expect(menuButtonBox?.width ?? 0).toBeGreaterThanOrEqual(44);
-    expect(menuButtonBox?.height ?? 0).toBeGreaterThanOrEqual(44);
-  }
-});
-
-test("the home copy fits at the narrow mobile widths", async ({ page }) => {
-  for (const width of [320, 360, 390]) {
-    await page.setViewportSize({ width, height: 800 });
-    await page.goto("/");
-    await expectHomeReadyForLayout(page);
-    await expect(
-      page.getByRole("heading", {
-        name: /Elige desde dónde empiezas\./i,
-      }),
-    ).toBeVisible();
-
-    const overflow = await page.evaluate(() => ({
-      body: document.body.scrollWidth - document.body.clientWidth,
-      document:
-        document.documentElement.scrollWidth -
-        document.documentElement.clientWidth,
-    }));
-    expect(overflow.body, `body overflow at ${width}px`).toBeLessThanOrEqual(1);
-    expect(
-      overflow.document,
-      `document overflow at ${width}px`,
-    ).toBeLessThanOrEqual(1);
-  }
-});
-
-test("reviewed programs and the single search module keep stable responsive geometry", async ({
-  page,
-}, testInfo) => {
-  await page.goto("/");
-  await expectHomeReadyForLayout(page);
-
-  const searchEntry = page.locator(".search-entry");
-  const coverage = page.getByRole("region", { name: "Cobertura revisada" });
-  const reviewedPrograms = coverage
-    .getByRole("list", {
-      name: "Ciclos revisados destacados",
-    })
-    .getByRole("listitem");
-  await expect(reviewedPrograms).toHaveCount(3);
-  const searchPanel = await searchEntry.boundingBox();
-  const coveragePanel = await coverage.boundingBox();
-  const modeChoices = page.getByRole("group", {
-    name: "¿Desde dónde empiezas?",
-  });
-  await expect(modeChoices.getByRole("radio")).toHaveCount(3);
-  expect(searchPanel).not.toBeNull();
-  expect(coveragePanel).not.toBeNull();
-
-  if (!searchPanel || !coveragePanel) {
-    return;
-  }
-
-  if (testInfo.project.name === "chromium-desktop") {
-    expect(Math.abs(searchPanel.y - coveragePanel.y)).toBeLessThanOrEqual(1);
-    expect(searchPanel.x).toBeLessThan(coveragePanel.x);
-    expect(searchPanel.x + searchPanel.width).toBeLessThanOrEqual(
-      coveragePanel.x + 1,
-    );
-  } else {
-    expect(searchPanel.y).toBeLessThanOrEqual(coveragePanel.y);
-    expect(searchPanel.width).toBeGreaterThan(280);
-  }
-
-  await expectNoHorizontalOverflow(page);
-});
-
-test("the home coverage panel exposes only manifest-reviewed program keys", async ({
-  page,
-}) => {
-  await page.goto("/");
-
-  const coverage = page.getByRole("region", { name: "Cobertura revisada" });
-  const links = coverage
-    .getByRole("list", { name: "Ciclos revisados destacados" })
-    .getByRole("link");
-  await expect(links).toHaveCount(3);
-  const hrefs = await links.evaluateAll((items) =>
-    items.map((item) => item.getAttribute("href")),
-  );
-  expect(
-    hrefs.every((href) => /^\/desde-fp\/[A-Z0-9]+$/u.test(href ?? "")),
-  ).toBe(true);
 });

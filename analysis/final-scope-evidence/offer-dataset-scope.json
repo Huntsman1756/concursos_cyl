@@ -1,0 +1,181 @@
+{
+  "publicFile": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/offer-evidence.json",
+  "localFile": "public/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/offer-evidence.json",
+  "generator": [
+    "scripts/data/buildOfferEvidenceSnapshot.ts",
+    "scripts/data/activateOfferEvidenceCandidate.ts"
+  ],
+  "sourceResources": {
+    "manifestDependencyKeys": [
+      "jobOffers",
+      "occupationAliases",
+      "occupations",
+      "professionalCertificates",
+      "professionalProfiles",
+      "programs",
+      "publishedRequirements",
+      "trainingOccupationLinks"
+    ],
+    "sourceSnapshots": [
+      {
+        "snapshotId": "jcyl-employment-offers",
+        "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records",
+        "recordCount": 1058,
+        "sha256": "decd3bcf879cd001ea4750bb2bdd5f1146c8a301dddab660e1810e23d07662a7"
+      },
+      {
+        "snapshotId": "jcyl-employment-offers",
+        "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records",
+        "recordCount": 354,
+        "sha256": "2f48dd0b6ffec650f7f8af35145e894d39bc45e900c9e85d515c34fcd5b975ac"
+      },
+      {
+        "snapshotId": "jcyl-vocational-training-offer",
+        "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
+        "recordCount": 187,
+        "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72"
+      },
+      {
+        "snapshotId": "ine-cno11-reviewed-occupation-catalog",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "recordCount": 131,
+        "sha256": "4e82ab9810dc6681b0e79aa2cfe3b038985ee23eb36cdb5f4603b53961efae2e"
+      },
+      {
+        "snapshotId": "ine-cno11-reviewed-occupation-catalog",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "recordCount": 35,
+        "sha256": "ea21e47968691b02a39025272596fc3e947e89351c49b0c5b8d3c02296d2d9af"
+      },
+      {
+        "snapshotId": "todofp-boe-reviewed-training-occupation-links",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales.html",
+        "recordCount": 264,
+        "sha256": "01b23ced0aadd865f33870b5e5136440eaff71de46e5e555e23c2c99fb03fd02"
+      },
+      {
+        "snapshotId": "todofp-official-professional-outputs",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales.html",
+        "recordCount": 1728,
+        "sha256": "2794228570e734a5dca0f8d594a199a67b9b732d7f54ffd56abe3af22f66d22b"
+      }
+    ],
+    "sourceDataset": "jcyl-employment-offers",
+    "sourceDatasetUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records"
+  },
+  "recordCount": 1058,
+  "counts": {
+    "offerCount": 1058,
+    "offersWithPublishedRequirements": 354,
+    "requirementCount": 1055,
+    "classifiedRequirementCount": 70,
+    "unclassifiedRequirementCount": 985,
+    "offersWithReviewedFpRelationship": 138,
+    "reviewedRelationCount": 196,
+    "offersWithAlternativePathway": 29,
+    "offersWithAmbiguity": 352
+  },
+  "schema": {
+    "schemaVersion": "1.0.0",
+    "validator": "data/schemas/offerEvidence.ts:OfferEvidenceResourceSchema",
+    "topLevelKeys": [
+      "schemaVersion",
+      "snapshotId",
+      "baseSnapshotId",
+      "generatedAt",
+      "reviewVersion",
+      "sourceSnapshots",
+      "counts",
+      "notes",
+      "records"
+    ],
+    "recordKeys": [
+      "offerId",
+      "title",
+      "occupationLabel",
+      "province",
+      "locality",
+      "sourceName",
+      "employer",
+      "status",
+      "publishedAt",
+      "sourceDate",
+      "freshnessDate",
+      "sourceUrl",
+      "originalUrl",
+      "evidenceStatus",
+      "hasAmbiguousRequirements",
+      "requirements",
+      "relations",
+      "nextActions"
+    ]
+  },
+  "license": {
+    "derivedResourceDeclaration": "NOT_DECLARED",
+    "sourceDatasetDocumentation": "CC BY 4.0 ES",
+    "sourceEvidence": "docs/data-audit-jcyl-open-data.md:128-141",
+    "conclusion": "The source license is documented, but the derived public resource does not declare its own reuse terms in its manifest/catalog entry."
+  },
+  "provenance": {
+    "snapshotId": "20260830120000000-8c6c79fbd2a1",
+    "baseSnapshotId": "20260822085631889-fc9bf2ba23f9",
+    "generatedAt": "2026-08-30T12:00:00.000Z",
+    "reviewVersion": "1.0.0",
+    "reviewCatalogSha256": "0f7e913c70e7f1e66686bb0837a617667130d0dfa6e17aed647d74fb825b7127",
+    "manifestSourceSnapshotId": "20260822085631889-fc9bf2ba23f9",
+    "activationKind": "immutable_candidate",
+    "derivedResourceKeys": ["offerEvidence"]
+  },
+  "hash": {
+    "actualSha256": "80dd7ccb917c75015bf38492cc5baf4bed6ee20a3a4043e3a981a9a6d38c17d4",
+    "manifestSha256": "80dd7ccb917c75015bf38492cc5baf4bed6ee20a3a4043e3a981a9a6d38c17d4",
+    "matchesManifest": true
+  },
+  "snapshot": {
+    "manifestRecordCount": 1058,
+    "resourceRecordCount": 1058,
+    "manifestFetchedAt": "2026-08-30T12:00:00.000Z",
+    "resourceGeneratedAt": "2026-08-30T12:00:00.000Z"
+  },
+  "tests": [
+    "data/schemas/offerEvidence.ts",
+    "scripts/data/buildOfferEvidenceSnapshot.test.ts",
+    "src/domain/offerEvidence.test.ts",
+    "src/data/generatedDataClient.test.ts",
+    "scripts/release/validateCandidateBoundary.test.ts",
+    "scripts/release/distributionCheck.ts",
+    "tests/e2e/offer-first.spec.ts"
+  ],
+  "manifestRelationship": {
+    "manifestKey": "offerEvidence",
+    "resourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/offer-evidence.json",
+    "sourceId": "salida-cyl-derived-offer-evidence",
+    "qualityStatus": "passed",
+    "activationDependencyKeys": [
+      "jobOffers",
+      "occupationAliases",
+      "occupations",
+      "professionalCertificates",
+      "professionalProfiles",
+      "programs",
+      "publishedRequirements",
+      "trainingOccupationLinks"
+    ]
+  },
+  "canonicalOrDerived": "DERIVED",
+  "containsPrivateEmployers": "NO",
+  "containsPredictions": "NO",
+  "publicSurface": "REMOVED_FROM_OPEN_DATA_SURFACE",
+  "runtimeRole": "RUNTIME_DERIVED_RESOURCE",
+  "standalonePublicationStatus": "NOT_PUBLISHED_AS_STANDALONE_REUSABLE_DATASET",
+  "publicMethodologyCoverage": "PRESENT",
+  "classificationCode": "D",
+  "classification": "INSUFFICIENTLY_DOCUMENTED_FOR_STANDALONE_PUBLICATION",
+  "classificationBasis": [
+    "Purpose, provenance, snapshot, schema, hashes and tests are present.",
+    "The derived resource has no explicit license/reuse declaration in its own manifest/catalog entry.",
+    "The public Methodology page now documents the runtime role and the non-standalone publication status in one proportional note.",
+    "Standalone publication remains insufficiently documented until the derived resource's reuse terms are closed at the same level as the published datasets."
+  ],
+  "candidate8Decision": "REMOVED_FROM_OPEN_DATA_SURFACE_KEEP_RUNTIME_RESOURCE"
+}

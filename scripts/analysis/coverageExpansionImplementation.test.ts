@@ -356,7 +356,7 @@ let artifacts: Artifacts;
 beforeAll(async () => {
   const runtimeManifest = await readJson<{
     resourceSnapshots: Record<string, { resourcePath: string }>;
-  }>(resolve(root, "public/data/v1/manifest.json"));
+  }>(resolve(root, "docs/contest/manifest-20260830-historical.json"));
   const activeSnapshotId = runtimeManifest.resourceSnapshots
     .programs!.resourcePath.split("/")
     .at(-2)!;

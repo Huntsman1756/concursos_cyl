@@ -165,59 +165,89 @@ export function resolveGeneratedAssetPath(
   return `${normalizedBase}${assetPath}`;
 }
 
-/** Fetches a generated static asset and enforces its runtime contract. */
+const POISONED_CACHE_CODES: ReadonlyArray<GeneratedDataErrorCode> = [
+  "schema",
+  "missing",
+];
+
+/**
+ * Fetches a generated static asset and enforces its runtime contract.
+ *
+ * Snapshot resources are served with year-long immutable caching. If a browser
+ * ever cached a broken payload for such a URL (for example an SPA-fallback
+ * HTML body served for a missing file during a deployment window), the cached
+ * copy would fail the contract forever. To recover from that poisoned-cache
+ * state, a failed contract triggers exactly one bypassing retry with
+ * `cache: "no-store"` before the failure is surfaced (still fail-closed).
+ */
 export async function loadGeneratedResource<T>(
   path: string,
   schema: z.ZodType<T>,
   requestInit?: RequestInit,
 ): Promise<T> {
   const assetPath = resolveGeneratedAssetPath(path);
-  let response: Response;
+
+  const attempt = async (cacheMode: RequestCache): Promise<T> => {
+    let response: Response;
+    try {
+      response = await fetch(assetPath, {
+        ...(requestInit ?? {}),
+        cache: cacheMode,
+      });
+    } catch (error) {
+      if (isGeneratedDataAbortError(error)) throw error;
+      throw new GeneratedDataError(
+        "network",
+        `Could not fetch generated resource: ${assetPath}.`,
+        error,
+      );
+    }
+
+    if (!response.ok) {
+      const code = response.status === 404 ? "missing" : "network";
+      throw new GeneratedDataError(
+        code,
+        `Generated resource request failed with HTTP ${response.status}: ${assetPath}.`,
+      );
+    }
+
+    let json: unknown;
+    try {
+      json = await response.json();
+    } catch (error) {
+      if (isGeneratedDataAbortError(error)) throw error;
+      throw new GeneratedDataError(
+        "schema",
+        `Generated resource is not valid JSON: ${assetPath}.`,
+        error,
+      );
+    }
+
+    const result = schema.safeParse(json);
+    if (!result.success) {
+      throw new GeneratedDataError(
+        "schema",
+        `Generated resource failed schema validation: ${assetPath}.`,
+        result.error,
+      );
+    }
+
+    return result.data;
+  };
 
   try {
-    response =
-      requestInit === undefined
-        ? await fetch(assetPath)
-        : await fetch(assetPath, requestInit);
+    return await attempt(requestInit?.cache ?? "default");
   } catch (error) {
-    if (isGeneratedDataAbortError(error)) throw error;
-    throw new GeneratedDataError(
-      "network",
-      `Could not fetch generated resource: ${assetPath}.`,
-      error,
-    );
+    if (
+      isGeneratedDataAbortError(error) ||
+      !(error instanceof GeneratedDataError) ||
+      !POISONED_CACHE_CODES.includes(error.code) ||
+      requestInit?.cache === "no-store"
+    ) {
+      throw error;
+    }
+    return attempt("no-store");
   }
-
-  if (!response.ok) {
-    const code = response.status === 404 ? "missing" : "network";
-    throw new GeneratedDataError(
-      code,
-      `Generated resource request failed with HTTP ${response.status}: ${assetPath}.`,
-    );
-  }
-
-  let json: unknown;
-  try {
-    json = await response.json();
-  } catch (error) {
-    if (isGeneratedDataAbortError(error)) throw error;
-    throw new GeneratedDataError(
-      "schema",
-      `Generated resource is not valid JSON: ${assetPath}.`,
-      error,
-    );
-  }
-
-  const result = schema.safeParse(json);
-  if (!result.success) {
-    throw new GeneratedDataError(
-      "schema",
-      `Generated resource failed schema validation: ${assetPath}.`,
-      result.error,
-    );
-  }
-
-  return result.data;
 }
 
 export function loadManifest(
@@ -384,14 +414,17 @@ export function loadPublishedRequirements(
   );
 }
 
-/** Loads the candidate offer→requirement→next-action sidecar from its manifest entry. */
+/** Loads the offer→requirement→next-action resource declared by the active manifest. */
 export async function loadOfferEvidence(
   manifest: LoadableGeneratedManifest,
   options?: GeneratedDataLoadOptions,
 ): Promise<OfferEvidenceResource> {
   const resourceSnapshots =
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
-      Record<string, { resourcePath: string } | undefined>;
+      Record<
+        "offerEvidence",
+        { resourcePath: string; recordCount: number } | undefined
+      >;
   const snapshot = resourceSnapshots.offerEvidence;
   if (snapshot === undefined) {
     throw new GeneratedDataError(
@@ -400,45 +433,46 @@ export async function loadOfferEvidence(
     );
   }
 
-  const resource = await loadGeneratedResource(
-    snapshot.resourcePath,
-    OfferEvidenceResourceSchema,
-    requestInitFor(options),
-  );
-  const baseOfferSnapshot = manifest.resourceSnapshots.jobOffers.resourcePath;
-  const baseMatch = /^\/data\/v1\/snapshots\/([^/]+)\//u.exec(
-    baseOfferSnapshot,
-  );
+  const basePath = manifest.resourceSnapshots.jobOffers.resourcePath;
+  const baseMatch = /^\/data\/v1\/snapshots\/([^/]+)\//u.exec(basePath);
+  if (baseMatch === null) {
+    throw new GeneratedDataError(
+      "schema",
+      `Active job offer resource is not an immutable snapshot: ${basePath}.`,
+    );
+  }
   const activationProvenance =
     "activationProvenance" in manifest
       ? manifest.activationProvenance
       : undefined;
   const expectedBaseSnapshotId =
-    activationProvenance?.sourceSnapshotId ?? baseMatch?.[1];
+    activationProvenance?.sourceSnapshotId ?? baseMatch[1];
   if (
-    baseMatch === null ||
-    expectedBaseSnapshotId === undefined ||
-    resource.baseSnapshotId !== expectedBaseSnapshotId
+    !snapshot.resourcePath.endsWith(
+      `/${GENERATED_RESOURCE_CATALOG.offerEvidence.fileName}`,
+    )
   ) {
-    throw new GeneratedDataError(
-      "schema",
-      "Offer evidence sidecar does not match the manifest offer snapshot.",
-    );
-  }
-  if (
-    resource.counts.offerCount !==
-    manifest.resourceSnapshots.jobOffers.recordCount
-  ) {
-    throw new GeneratedDataError(
-      "schema",
-      "Offer evidence sidecar does not match the manifest offer count.",
-    );
-  }
-  const expectedFileName = GENERATED_RESOURCE_CATALOG.offerEvidence.fileName;
-  if (!snapshot.resourcePath.endsWith(`/${expectedFileName}`)) {
     throw new GeneratedDataError(
       "schema",
       "Offer evidence manifest entry does not use the canonical resource name.",
+    );
+  }
+  const resource = await loadGeneratedResource(
+    snapshot.resourcePath,
+    OfferEvidenceResourceSchema,
+    requestInitFor(options),
+  );
+  if (
+    snapshot.resourcePath !==
+      `/data/v1/snapshots/${resource.snapshotId}/${GENERATED_RESOURCE_CATALOG.offerEvidence.fileName}` ||
+    resource.baseSnapshotId !== expectedBaseSnapshotId ||
+    resource.counts.offerCount !==
+      manifest.resourceSnapshots.jobOffers.recordCount ||
+    resource.counts.offerCount !== snapshot.recordCount
+  ) {
+    throw new GeneratedDataError(
+      "schema",
+      "Offer evidence sidecar does not match the active offer snapshot.",
     );
   }
   return resource;

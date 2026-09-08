@@ -1,0 +1,191 @@
+{
+  "checkedAt": "2026-09-08T04:37:31.290Z",
+  "snapshotId": "20260830120000000-8c6c79fbd2a1",
+  "meaning": "Publisher metadata dates are distinct from retrieval dates and record publication dates. Counts alone do not establish unchanged content.",
+  "sources": [
+    {
+      "key": "training",
+      "sourceId": "jcyl-vocational-training-offer",
+      "metadataUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional",
+      "checkedAt": "2026-09-08T04:37:30.552Z",
+      "status": "retrieved",
+      "publisherModified": "2026-07-29T09:14:16.425000+00:00",
+      "publisherDataProcessed": null,
+      "publisherMetadataProcessed": null,
+      "recordCount": 1294,
+      "resources": [
+        {
+          "key": "centers",
+          "recordCount": 229,
+          "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+          "sourceUpdatedAt": null
+        },
+        {
+          "key": "programs",
+          "recordCount": 187,
+          "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+          "sourceUpdatedAt": null
+        },
+        {
+          "key": "trainingOfferings",
+          "recordCount": 1294,
+          "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+          "sourceUpdatedAt": null
+        }
+      ]
+    },
+    {
+      "key": "offers",
+      "sourceId": "jcyl-employment-offers",
+      "metadataUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo",
+      "checkedAt": "2026-09-08T04:37:30.593Z",
+      "status": "retrieved",
+      "publisherModified": "2026-09-07T20:00:58.219000+00:00",
+      "publisherDataProcessed": null,
+      "publisherMetadataProcessed": null,
+      "recordCount": 1032,
+      "resources": [
+        {
+          "key": "jobOffers",
+          "recordCount": 1058,
+          "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+          "sourceUpdatedAt": "2026-08-20T00:00:00.000Z"
+        },
+        {
+          "key": "publishedRequirements",
+          "recordCount": 354,
+          "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+          "sourceUpdatedAt": "2026-08-20T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "key": "ecylCourses",
+      "sourceId": "jcyl-ecyl-training",
+      "metadataUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/formacion-del-ecyl",
+      "checkedAt": "2026-09-08T04:37:30.663Z",
+      "status": "retrieved",
+      "publisherModified": "2026-09-07T20:06:10.670000+00:00",
+      "publisherDataProcessed": null,
+      "publisherMetadataProcessed": null,
+      "recordCount": 718,
+      "resources": [
+        {
+          "key": "ecylCourses",
+          "recordCount": 791,
+          "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+          "sourceUpdatedAt": null
+        }
+      ]
+    },
+    {
+      "key": "professionalCertificates",
+      "sourceId": "jcyl-professional-certificates",
+      "metadataUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/certificados-profesionalidad",
+      "checkedAt": "2026-09-08T04:37:30.793Z",
+      "status": "retrieved",
+      "publisherModified": "2026-08-05T11:04:38.288000+00:00",
+      "publisherDataProcessed": null,
+      "publisherMetadataProcessed": null,
+      "recordCount": 583,
+      "resources": [
+        {
+          "key": "professionalCertificates",
+          "recordCount": 583,
+          "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+          "sourceUpdatedAt": null
+        }
+      ]
+    },
+    {
+      "key": "publicEmploymentCalls",
+      "sourceId": "jcyl-public-employment-calls",
+      "metadataUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/convocatorias-de-empleo-publico",
+      "checkedAt": "2026-09-08T04:37:30.899Z",
+      "status": "retrieved",
+      "publisherModified": "2026-09-06T20:06:04.689000+00:00",
+      "publisherDataProcessed": null,
+      "publisherMetadataProcessed": null,
+      "recordCount": 307,
+      "resources": [
+        {
+          "key": "publicEmploymentCalls",
+          "recordCount": 307,
+          "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+          "sourceUpdatedAt": null
+        }
+      ]
+    },
+    {
+      "key": "regionalContracts",
+      "sourceId": "jcyl-provincial-employment-contracts",
+      "metadataUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/contratos-realizados-en-las-provincias-de-castilla-y-leon",
+      "checkedAt": "2026-09-08T04:37:31.030Z",
+      "status": "retrieved",
+      "publisherModified": "2026-09-02T10:04:17.313000+00:00",
+      "publisherDataProcessed": null,
+      "publisherMetadataProcessed": null,
+      "recordCount": 2600,
+      "resources": [
+        {
+          "key": "provincialContracts",
+          "recordCount": 2331,
+          "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+          "sourceUpdatedAt": null
+        }
+      ]
+    },
+    {
+      "key": "municipalities",
+      "sourceId": "jcyl-municipal-registry",
+      "metadataUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/registro-de-municipios-de-castilla-y-leon",
+      "checkedAt": "2026-09-08T04:37:31.160Z",
+      "status": "retrieved",
+      "publisherModified": "2026-09-07T20:00:44.693000+00:00",
+      "publisherDataProcessed": null,
+      "publisherMetadataProcessed": null,
+      "recordCount": 2248,
+      "resources": [
+        {
+          "key": "municipalities",
+          "recordCount": 2248,
+          "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+          "sourceUpdatedAt": null
+        }
+      ]
+    },
+    {
+      "key": "educationCenterDirectory",
+      "sourceId": "jcyl-education-center-directory",
+      "metadataUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/directorio-de-centros-docentes",
+      "checkedAt": "2026-09-08T04:37:31.289Z",
+      "status": "retrieved",
+      "publisherModified": "2026-09-07T20:00:56.891000+00:00",
+      "publisherDataProcessed": null,
+      "publisherMetadataProcessed": null,
+      "recordCount": 1742,
+      "resources": [
+        {
+          "key": "educationCenterDirectory",
+          "recordCount": 1741,
+          "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+          "sourceUpdatedAt": null
+        }
+      ]
+    },
+    {
+      "key": "educabaseIncome",
+      "sourceId": "educabase-fp-income-four-table-bundle",
+      "resources": [
+        {
+          "key": "outcomeIndicators",
+          "recordCount": 22170,
+          "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+          "sourceUpdatedAt": null
+        }
+      ],
+      "status": "local-curated-source",
+      "note": "La fecha del recurso curado no se renueva mediante metadatos JCyL."
+    }
+  ]
+}

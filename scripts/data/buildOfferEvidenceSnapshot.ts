@@ -7,17 +7,12 @@ import { z } from "zod";
 import { REVIEWED_PROGRAM_QUALIFICATION_LINKS } from "../../data/catalogs/reviewedProgramQualifications";
 import { REVIEWED_QUALIFICATIONS } from "../../data/catalogs/reviewedQualifications";
 import {
-  ProfessionalCertificatesResourceSchema,
-  type ProfessionalCertificate,
-} from "../../data/schemas/ecylResources";
-import {
   JobOfferSchema,
   LoadableGeneratedManifestSchema,
   TrainingProgramSchema,
   type JobOffer,
   type TrainingProgram,
 } from "../../data/schemas/generated";
-import { immutableGeneratedResourcePath } from "../../data/schemas/generatedResourceCatalog";
 import {
   OccupationsSchema,
   OccupationAliasesSchema,
@@ -31,15 +26,12 @@ import {
   OFFER_EVIDENCE_SNAPSHOT_ID,
   OfferEvidenceReviewCatalogSchema,
   OfferEvidenceResourceSchema,
-  type OfferEvidenceCertificateEvidence,
-  type OfferEvidenceCertificateRouteType,
   type OfferEvidenceNextAction,
   type OfferEvidenceRecord,
   type OfferEvidenceRelation,
   type OfferEvidenceRequirement,
   type OfferEvidenceReview,
   type OfferEvidenceStatus,
-  type OfferEvidenceUniversityClass,
 } from "../../data/schemas/offerEvidence";
 import {
   PublishedRequirementsResourceSchema,
@@ -53,13 +45,6 @@ import {
 
 const REVIEW_CATALOG_PATH = resolve("data/curated/offer-evidence-reviews.json");
 const MANIFEST_PATH = resolve("public/data/v1/manifest.json");
-const OUTPUT_PATH = resolve(
-  "public",
-  immutableGeneratedResourcePath(
-    "offerEvidence",
-    OFFER_EVIDENCE_SNAPSHOT_ID,
-  ).slice(1),
-);
 const GENERATED_AT = "2026-08-30T12:00:00.000Z";
 const FP_ADMISSION_URL = "https://www.educa.jcyl.es/fp/es/admision-alumnado";
 const ACCREDITATION_URL =
@@ -70,7 +55,9 @@ const UNIVERSITY_ROUTE_URL = "https://www.universidades.gob.es/";
 
 const IsoManifestSchema = z.object({
   activationProvenance: z
-    .object({ sourceSnapshotId: z.string().min(1) })
+    .object({
+      sourceSnapshotId: z.string().min(1),
+    })
     .optional(),
   resourceSnapshots: z.record(
     z.string(),
@@ -90,19 +77,26 @@ function readJson(path: string): Promise<unknown> {
   return readFile(path, "utf8").then((value) => JSON.parse(value) as unknown);
 }
 
-function resourcePath(manifest: Manifest, key: string): string {
+function resourcePath(
+  manifest: Manifest,
+  key: string,
+  rootDirectory = ".",
+): string {
   const snapshot = manifest.resourceSnapshots[key];
   if (snapshot === undefined)
     throw new Error(`Missing manifest resource: ${key}.`);
-  return resolve("public", snapshot.resourcePath.slice(1));
+  return resolve(rootDirectory, "public", snapshot.resourcePath.slice(1));
 }
 
 async function readResource<T>(
   manifest: Manifest,
   key: string,
   schema: z.ZodType<T>,
+  rootDirectory = ".",
 ): Promise<T> {
-  return schema.parse(await readJson(resourcePath(manifest, key)));
+  return schema.parse(
+    await readJson(resourcePath(manifest, key, rootDirectory)),
+  );
 }
 
 function sha256Json(value: unknown): string {
@@ -116,101 +110,6 @@ function normalizedText(value: string): string {
     .toLocaleLowerCase("es-ES")
     .replace(/[^\p{Letter}\p{Number}]+/gu, " ")
     .trim();
-}
-
-const REVIEWED_CERTIFICATE_ALTERNATIVE_OCCUPATION = normalizedText(
-  "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
-);
-
-type CertificateRoute = {
-  routeType: OfferEvidenceCertificateRouteType;
-  evidence: OfferEvidenceCertificateEvidence[];
-};
-
-function certificateEvidence(
-  certificate: ProfessionalCertificate,
-  sourceQuote: string,
-  routeType: OfferEvidenceCertificateRouteType,
-): OfferEvidenceCertificateEvidence {
-  return {
-    certificateCode: certificate.code,
-    certificateTitle: certificate.title,
-    authoritativeSourceUrl: certificate.programUrl,
-    sourceQuote,
-    relevance:
-      routeType === "offer_explicitly_accepts"
-        ? "El literal de la oferta identifica esta credencial por su denominación; la ficha oficial del SEPE permite comprobar su programa."
-        : "La oferta no identifica un certificado concreto; la etiqueta ocupacional publicada permite mostrar esta credencial oficial solo como alternativa relacionada, no como requisito satisfecho.",
-  };
-}
-
-function certificateRouteForOffer(
-  offer: JobOffer,
-  requirements: readonly OfferEvidenceRequirement[],
-  certificates: readonly ProfessionalCertificate[],
-): CertificateRoute | null {
-  const certificateRequirements = requirements.filter(
-    ({ normalizedCategory }) => normalizedCategory === "certificate",
-  );
-  if (certificateRequirements.length === 0) return null;
-
-  const byTitle = [...certificates].sort(
-    (left, right) => right.title.length - left.title.length,
-  );
-  const exactEvidence = certificateRequirements.flatMap((requirement) => {
-    const normalizedRequirement = normalizedText(
-      requirement.literalRequirement,
-    );
-    const certificate = byTitle.find((candidate) =>
-      normalizedRequirement.includes(normalizedText(candidate.title)),
-    );
-    return certificate === undefined
-      ? []
-      : [
-          certificateEvidence(
-            certificate,
-            requirement.literalRequirement,
-            "offer_explicitly_accepts",
-          ),
-        ];
-  });
-  const uniqueExactEvidence = [
-    ...new Map(
-      exactEvidence.map((evidence) => [evidence.certificateCode, evidence]),
-    ).values(),
-  ];
-  if (uniqueExactEvidence.length > 0) {
-    return {
-      routeType: "offer_explicitly_accepts",
-      evidence: uniqueExactEvidence,
-    };
-  }
-
-  if (
-    normalizedText(offer.title) === REVIEWED_CERTIFICATE_ALTERNATIVE_OCCUPATION
-  ) {
-    const certificate = certificates.find(({ code }) => code === "SSCS0208");
-    const requirement = certificateRequirements[0];
-    if (certificate === undefined || requirement === undefined) {
-      throw new Error(
-        `The reviewed certificate alternative is not present in the official catalog: ${offer.id}.`,
-      );
-    }
-    return {
-      routeType: "occupation_related_alternative",
-      evidence: [
-        certificateEvidence(
-          certificate,
-          requirement.literalRequirement,
-          "occupation_related_alternative",
-        ),
-      ],
-    };
-  }
-
-  throw new Error(
-    `Certificate requirement has no exact or reviewed alternative evidence: ${offer.id}.`,
-  );
 }
 
 function baseSnapshotId(manifest: Manifest): string {
@@ -230,9 +129,7 @@ function sourceSnapshot(manifest: Manifest, key: string) {
   if (snapshot === undefined)
     throw new Error(`Missing source snapshot: ${key}.`);
   return {
-    resourceKey: key,
-    snapshotId: baseSnapshotId(manifest),
-    sourceId: snapshot.sourceId,
+    snapshotId: snapshot.sourceId,
     sourceUrl: snapshot.sourceUrl,
     recordCount: snapshot.recordCount,
     sha256: snapshot.sha256,
@@ -428,42 +325,6 @@ function isUniversityOrRegulatedTitle(title: string): boolean {
   );
 }
 
-function universitySignal(
-  relations: readonly OfferEvidenceRelation[],
-  requirements: readonly OfferEvidenceRequirement[],
-  title: string,
-): OfferEvidenceRecord["universitySignal"] {
-  if (
-    relations.length > 0 ||
-    requirements.some(({ normalizedCategory }) => normalizedCategory === "fp")
-  ) {
-    return "none";
-  }
-  if (
-    requirements.some(({ normalizedCategory }) =>
-      ["university", "licence"].includes(normalizedCategory),
-    )
-  ) {
-    return "literal_offer_requirement";
-  }
-  return isUniversityOrRegulatedTitle(title) ? "title_only_unverified" : "none";
-}
-
-function universityEvidence(
-  requirements: readonly OfferEvidenceRequirement[],
-): OfferEvidenceRecord["universityEvidence"] {
-  const requirement = requirements.find(({ normalizedCategory }) =>
-    ["university", "licence"].includes(normalizedCategory),
-  );
-  if (requirement === undefined) return null;
-  return {
-    evidenceClass: "U1",
-    basis: "literal_offer_requirement",
-    sourceUrl: requirement.sourceUrl,
-    sourceQuote: requirement.literalRequirement,
-  };
-}
-
 function uniqueActions(
   actions: readonly OfferEvidenceNextAction[],
 ): OfferEvidenceNextAction[] {
@@ -483,7 +344,7 @@ function action(value: OfferEvidenceNextAction): OfferEvidenceNextAction {
 function deriveStatus(
   relations: readonly OfferEvidenceRelation[],
   requirements: readonly OfferEvidenceRequirement[],
-  universityEvidenceClass: OfferEvidenceUniversityClass | null,
+  offerTitle: string,
 ): OfferEvidenceStatus {
   if (relations.length > 0) return "reviewed_fp_relationship";
   if (
@@ -491,7 +352,12 @@ function deriveStatus(
   ) {
     return "explicit_training_requirement";
   }
-  if (universityEvidenceClass !== null) {
+  if (
+    requirements.some(({ normalizedCategory }) =>
+      ["university", "licence"].includes(normalizedCategory),
+    ) ||
+    isUniversityOrRegulatedTitle(offerTitle)
+  ) {
     return "university_or_regulatory_route";
   }
   if (
@@ -519,8 +385,6 @@ function deriveActions(
   relations: readonly OfferEvidenceRelation[],
   requirements: readonly OfferEvidenceRequirement[],
   evidenceStatus: OfferEvidenceStatus,
-  universityEvidenceClass: OfferEvidenceUniversityClass | null,
-  certificateRoute: CertificateRoute | null,
 ): OfferEvidenceNextAction[] {
   const actions: OfferEvidenceNextAction[] = [
     action({
@@ -569,7 +433,7 @@ function deriveActions(
     ({ normalizedCategory }) => normalizedCategory === "experience",
   );
   const isBoundary = evidenceStatus === "university_or_regulatory_route";
-  if (hasCertificate && certificateRoute !== null) {
+  if (hasCertificate) {
     actions.push(
       action({
         actionType: "professional_alternative",
@@ -580,8 +444,6 @@ function deriveActions(
           "La oferta menciona una credencial que puede orientar una alternativa de cualificación.",
         caveat:
           "Es una alternativa para investigar; no equivale automáticamente a un título de FP.",
-        certificateRouteType: certificateRoute.routeType,
-        certificateEvidence: certificateRoute.evidence,
       }),
     );
   }
@@ -595,8 +457,7 @@ function deriveActions(
         reason:
           "La experiencia puede ser relevante para la vía oficial de acreditación.",
         caveat:
-          "No calculamos tu elegibilidad: la administración debe comprobar si tu experiencia y documentación cumplen la convocatoria.",
-        eligibilityStatus: "not_calculated",
+          "La administración debe comprobar si tu experiencia y documentación cumplen la convocatoria.",
       }),
     );
   }
@@ -608,14 +469,9 @@ function deriveActions(
         label: "Consultar la vía universitaria oficial",
         href: UNIVERSITY_ROUTE_URL,
         reason:
-          universityEvidenceClass === "U1"
-            ? "La oferta publica literalmente un requisito universitario o regulado."
-            : "La profesión está regulada y requiere comprobar la fuente oficial.",
+          "La etiqueta apunta a una profesión o requisito con límite universitario/regulado.",
         caveat:
           "No inferimos equivalencias, acceso, colegiación ni empleabilidad desde esta oferta.",
-        ...(universityEvidenceClass === null
-          ? {}
-          : { universityEvidenceClass }),
       }),
     );
   }
@@ -643,7 +499,6 @@ function createRecord(
     string,
     readonly OfferEvidenceRelation[]
   >,
-  professionalCertificates: readonly ProfessionalCertificate[],
 ): OfferEvidenceRecord {
   const requirements = (published?.requirements ?? []).map((requirement) =>
     mapRequirement(
@@ -659,25 +514,7 @@ function createRecord(
       left.occupationId.localeCompare(right.occupationId) ||
       left.matchRule.localeCompare(right.matchRule),
   );
-  const universitySignalValue = universitySignal(
-    relations,
-    requirements,
-    offer.title,
-  );
-  const universityEvidenceValue = universityEvidence(requirements);
-  const universityEvidenceClassValue =
-    universityEvidenceValue?.evidenceClass ?? null;
-  const certificateRoute = certificateRouteForOffer(
-    offer,
-    requirements,
-    professionalCertificates,
-  );
-  const certificateRouteTypeValue = certificateRoute?.routeType ?? null;
-  const evidenceStatus = deriveStatus(
-    relations,
-    requirements,
-    universityEvidenceClassValue,
-  );
+  const evidenceStatus = deriveStatus(relations, requirements, offer.title);
   return {
     offerId: offer.id,
     title: offer.title,
@@ -699,20 +536,9 @@ function createRecord(
         classificationStatus === "unclassified" ||
         normalizedCategory === "unknown",
     ),
-    universitySignal: universitySignalValue,
-    universityEvidenceClass: universityEvidenceClassValue,
-    universityEvidence: universityEvidenceValue,
-    certificateRouteType: certificateRouteTypeValue,
     requirements,
     relations,
-    nextActions: deriveActions(
-      offer,
-      relations,
-      requirements,
-      evidenceStatus,
-      universityEvidenceClassValue,
-      certificateRoute,
-    ),
+    nextActions: deriveActions(offer, relations, requirements, evidenceStatus),
   };
 }
 
@@ -806,15 +632,29 @@ function buildRelations(
   return byOffer;
 }
 
-export async function buildOfferEvidenceResource(): Promise<
-  z.infer<typeof OfferEvidenceResourceSchema>
-> {
-  const rawManifest = await readJson(MANIFEST_PATH);
+export async function buildOfferEvidenceResource(
+  options: {
+    rootDirectory?: string;
+    snapshotId?: string;
+    generatedAt?: string;
+    reviewCatalogPath?: string;
+    manifestPath?: string;
+  } = {},
+): Promise<z.infer<typeof OfferEvidenceResourceSchema>> {
+  const rootDirectory = options.rootDirectory ?? ".";
+  const rawManifest = await readJson(
+    options.manifestPath ??
+      (options.rootDirectory === undefined
+        ? MANIFEST_PATH
+        : resolve(rootDirectory, "public/data/v1/manifest.json")),
+  );
   const manifest = IsoManifestSchema.parse(
     LoadableGeneratedManifestSchema.parse(rawManifest),
   );
   const baseId = baseSnapshotId(manifest);
-  const rawReviewCatalog = await readJson(REVIEW_CATALOG_PATH);
+  const rawReviewCatalog = await readJson(
+    options.reviewCatalogPath ?? REVIEW_CATALOG_PATH,
+  );
   const reviewCatalog =
     OfferEvidenceReviewCatalogSchema.parse(rawReviewCatalog);
   if (reviewCatalog.baseSnapshotId !== baseId) {
@@ -823,39 +663,45 @@ export async function buildOfferEvidenceResource(): Promise<
     );
   }
 
-  const [
-    offers,
-    publishedRequirements,
-    programs,
-    occupations,
-    aliases,
-    links,
-    professionalCertificates,
-  ] = await Promise.all([
-    readResource(manifest, "jobOffers", z.array(JobOfferSchema)),
-    readResource(
-      manifest,
-      "publishedRequirements",
-      PublishedRequirementsResourceSchema,
-    ),
-    readResource(manifest, "programs", z.array(TrainingProgramSchema)),
-    readResource(manifest, "occupations", OccupationsSchema),
-    readResource(manifest, "occupationAliases", OccupationAliasesSchema),
-    readResource(
-      manifest,
-      "trainingOccupationLinks",
-      TrainingOccupationLinksSchema,
-    ),
-    readResource(
-      manifest,
-      "professionalCertificates",
-      ProfessionalCertificatesResourceSchema,
-    ),
-  ]);
+  const [offers, publishedRequirements, programs, occupations, aliases, links] =
+    await Promise.all([
+      readResource(
+        manifest,
+        "jobOffers",
+        z.array(JobOfferSchema),
+        rootDirectory,
+      ),
+      readResource(
+        manifest,
+        "publishedRequirements",
+        PublishedRequirementsResourceSchema,
+        rootDirectory,
+      ),
+      readResource(
+        manifest,
+        "programs",
+        z.array(TrainingProgramSchema),
+        rootDirectory,
+      ),
+      readResource(manifest, "occupations", OccupationsSchema, rootDirectory),
+      readResource(
+        manifest,
+        "occupationAliases",
+        OccupationAliasesSchema,
+        rootDirectory,
+      ),
+      readResource(
+        manifest,
+        "trainingOccupationLinks",
+        TrainingOccupationLinksSchema,
+        rootDirectory,
+      ),
+    ]);
   const professionalProfiles = await readResource(
     manifest,
     "professionalProfiles",
     ProfessionalProfilesResourceSchema,
+    rootDirectory,
   );
   if (professionalProfiles.length === 0)
     throw new Error("TodoFP profiles are missing.");
@@ -909,7 +755,6 @@ export async function buildOfferEvidenceResource(): Promise<
       reviewedRequirementIds,
       reviewedRequirementValues,
       relationsByOfferId,
-      professionalCertificates,
     ),
   );
   const requirementRecords = records.flatMap(
@@ -924,13 +769,18 @@ export async function buildOfferEvidenceResource(): Promise<
     "occupationAliases",
     "trainingOccupationLinks",
     "professionalProfiles",
-    "professionalCertificates",
   ].map((key) => sourceSnapshot(manifest, key));
   const resource = {
     schemaVersion: "1.0.0" as const,
-    snapshotId: OFFER_EVIDENCE_SNAPSHOT_ID,
+    snapshotId:
+      options.snapshotId ??
+      (rawManifest as { snapshotId?: string }).snapshotId ??
+      OFFER_EVIDENCE_SNAPSHOT_ID,
     baseSnapshotId: baseId,
-    generatedAt: GENERATED_AT,
+    generatedAt:
+      options.generatedAt ??
+      (rawManifest as { generatedAt?: string }).generatedAt ??
+      GENERATED_AT,
     reviewVersion: reviewCatalog.reviewVersion,
     sourceSnapshots,
     counts: {
@@ -959,49 +809,11 @@ export async function buildOfferEvidenceResource(): Promise<
       offersWithAmbiguity: records.filter(
         ({ hasAmbiguousRequirements }) => hasAmbiguousRequirements,
       ).length,
-      universitySignalCount: records.filter(
-        ({ universitySignal }) => universitySignal !== "none",
-      ).length,
-      universityAcceptedRecordCount: records.filter(
-        ({ universityEvidenceClass }) => universityEvidenceClass !== null,
-      ).length,
-      titleOnlyUniversitySignalCount: records.filter(
-        ({ universitySignal }) => universitySignal === "title_only_unverified",
-      ).length,
-      universityEvidenceClassCounts: {
-        U1: records.filter(
-          ({ universityEvidenceClass }) => universityEvidenceClass === "U1",
-        ).length,
-        U2: records.filter(
-          ({ universityEvidenceClass }) => universityEvidenceClass === "U2",
-        ).length,
-        U3: records.filter(
-          ({ universityEvidenceClass }) => universityEvidenceClass === "U3",
-        ).length,
-      },
-      accreditationActionCount: records.reduce(
-        (count, record) =>
-          count +
-          record.nextActions.filter(
-            ({ actionType }) => actionType === "accreditation_route",
-          ).length,
-        0,
-      ),
-      certificateOfferAcceptanceCount: records.filter(
-        ({ certificateRouteType }) =>
-          certificateRouteType === "offer_explicitly_accepts",
-      ).length,
-      certificateAlternativeRouteCount: records.filter(
-        ({ certificateRouteType }) =>
-          certificateRouteType === "occupation_related_alternative",
-      ).length,
     },
     notes: [
       "La etiqueta ocupacional conserva el título publicado; esta copia no publica el empleador y no lo completa por inferencia.",
       "status significa publicada en la instantánea base, no que la oferta siga abierta.",
       "Las relaciones FP y los requisitos revisados conservan cita, URL y fecha; la ausencia de relación no prueba imposibilidad.",
-      "Las señales universitarias por título no se convierten en rutas: solo U1 (requisito literal) entra en la evidencia aceptada; U2 y U3 requieren una fuente oficial revisada.",
-      "La acreditación se ofrece como consulta de procedimiento y no calcula elegibilidad; los certificados se muestran como aceptación literal de la oferta o como alternativa relacionada, nunca como equivalencia FP.",
       "No se recomiendan cursos ECYL como siguiente acción cuando la ficha no conserva fechas y condiciones suficientes para comprobar vigencia.",
       `El catálogo derivado se apoya en ${sha256Json(reviewCatalog)} como revisión local reproducible; las fuentes oficiales están en cada relación.`,
     ],
@@ -1012,18 +824,32 @@ export async function buildOfferEvidenceResource(): Promise<
 
 async function main(): Promise<void> {
   const resource = await buildOfferEvidenceResource();
-  await mkdir(resolve("public/data/v1/snapshots", OFFER_EVIDENCE_SNAPSHOT_ID), {
+  const outputPath = resolve(
+    "public/data/v1/snapshots",
+    resource.snapshotId,
+    "offer-evidence.json",
+  );
+  const content = `${JSON.stringify(resource, null, 2)}\n`;
+  let existing: string | undefined;
+  try {
+    existing = await readFile(outputPath, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+  if (existing !== undefined && existing !== content) {
+    throw new Error(
+      "Refusing to overwrite immutable offer evidence; create a new candidate snapshot.",
+    );
+  }
+  await mkdir(resolve("public/data/v1/snapshots", resource.snapshotId), {
     recursive: true,
   });
-  await writeFile(
-    OUTPUT_PATH,
-    `${JSON.stringify(resource, null, 2)}\n`,
-    "utf8",
-  );
+  if (existing === undefined)
+    await writeFile(outputPath, content, { encoding: "utf8", flag: "wx" });
   console.log(
     JSON.stringify(
       {
-        output: OUTPUT_PATH,
+        output: outputPath,
         counts: resource.counts,
       },
       null,

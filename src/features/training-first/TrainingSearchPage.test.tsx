@@ -169,7 +169,7 @@ describe("training-first search", () => {
     await user.type(select, "COM01M");
     await user.keyboard("{ArrowDown}{Enter}");
     const unavailableStatus = screen.getByText(
-      /salidas oficiales disponibles.*todavía no hay una relación revisada para buscar ofertas/i,
+      /Verás sus salidas oficiales;.*esta copia no contiene una relación comprobada para buscar ofertas/i,
     );
     expect(unavailableStatus).toHaveAttribute("role", "status");
     expect(unavailableStatus).toHaveAttribute("aria-live", "polite");
@@ -178,7 +178,7 @@ describe("training-first search", () => {
     });
     expect(catalogScope).toHaveTextContent("2 ciclos oficiales");
     expect(catalogScope).toHaveTextContent(
-      "1 ciclo o modalidad con esa relación revisada",
+      "1 ciclo o modalidad con relaciones profesionales comprobadas",
     );
     expect(
       within(catalogScope).getByRole("link", {
@@ -191,8 +191,8 @@ describe("training-first search", () => {
   });
 
   it.each([
-    [1, "Relaciones revisadas con 1 grupo de ocupación."],
-    [2, "Relaciones revisadas con 2 grupos de ocupación."],
+    [1, "Profesiones comprobadas para este ciclo: 1."],
+    [2, "Profesiones comprobadas para este ciclo: 2."],
   ])(
     "uses singular/plural coverage copy for %s reviewed occupation groups",
     async (approvedMappings, expectedCopy) => {
@@ -252,7 +252,7 @@ describe("training-first search", () => {
     );
 
     const heading = await screen.findByRole("heading", {
-      name: "Consulta salidas y ofertas relacionadas con tu FP",
+      name: "¿En qué puedes trabajar con una FP?",
     });
     expect(heading).toBeVisible();
     expect(heading).toHaveAttribute("id", "training-search-heading");
@@ -285,10 +285,10 @@ describe("training-first search", () => {
     );
 
     const levelFilter = await screen.findByRole("combobox", {
-      name: "Filtrar por nivel",
+      name: "Nivel",
     });
     const familyFilter = screen.getByRole("combobox", {
-      name: "Filtrar por familia profesional",
+      name: "Familia profesional",
     });
     const programCombobox = screen.getByRole("combobox", {
       name: "Ciclo de Formación Profesional",
@@ -368,9 +368,9 @@ describe("training-first search", () => {
     const guidedLinks = within(examples).getAllByRole("link");
     expect(guidedLinks).toHaveLength(3);
     expect(guidedLinks.map((link) => link.getAttribute("href"))).toEqual([
+      "/desde-fp/IFC03S",
       "/desde-fp/ADG01S",
       "/desde-fp/SAN01M",
-      "/desde-fp/IFC03S",
     ]);
     expect(
       within(examples).queryByRole("link", { name: /zeta comercial/i }),
@@ -409,7 +409,7 @@ describe("training-first search", () => {
     await user.click(screen.getByRole("button", { name: /ver salidas/i }));
 
     expect(screen.getByTestId("location")).toHaveTextContent(
-      "/desde-fp/IFC03S?province=Le%C3%B3n",
+      "/desde-fp/IFC03S?query=Desarrollo+de+Aplicaciones+Web&province=Le%C3%B3n",
     );
   });
 
@@ -451,10 +451,10 @@ describe("training-first search", () => {
     expect(options).toHaveLength(2);
     expect(options.map((option) => option.textContent)).toEqual([
       expect.stringContaining(
-        "Grado medio · Informática y Comunicaciones · IFC03M",
+        "grado medio · Informática y Comunicaciones · IFC03M",
       ),
       expect.stringContaining(
-        "Grado superior · Informática y Comunicaciones · IFC03S",
+        "grado superior · Informática y Comunicaciones · IFC03S",
       ),
     ]);
   });

@@ -104,12 +104,12 @@ describe("ActionPanel integration", () => {
 
     expect(
       screen.getByRole("link", {
-        name: "Desarrollo de Aplicaciones Web, Grado superior, IFC03S",
+        name: "Desarrollo de Aplicaciones Web, grado superior, IFC03S",
       }),
     ).toHaveAttribute("href", "/formacion/IFC03S");
     expect(
       screen.getByRole("link", {
-        name: "Desarrollo de Aplicaciones Web (distancia), Grado superior, IFC03SD",
+        name: "Desarrollo de Aplicaciones Web (distancia), grado superior, IFC03SD",
       }),
     ).toHaveAttribute("href", "/formacion/IFC03SD");
   });

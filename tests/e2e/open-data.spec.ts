@@ -21,6 +21,17 @@ test("publishes the derived FP occupation graph in reusable formats", async ({
     "href",
     /derived-fp-occupation-graph\.csv$/u,
   );
+  await expect(
+    page.getByRole("heading", {
+      name: "Ofertas: requisito, relación y acción",
+    }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByText("Dataset candidato de expansión", { exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("link", { name: "Descargar dataset JSON" }),
+  ).toHaveCount(0);
 
   const csvResponse = await request.get((await csvLink.getAttribute("href"))!);
   expect(csvResponse.ok()).toBe(true);

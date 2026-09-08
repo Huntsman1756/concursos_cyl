@@ -9,6 +9,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && npm run release:runtime-data && npm run qa:assets:check && npm run qa:distribution:check && npm run release:candidate:verify",
+    "qa:design-system:audit": "node scripts/release/auditDesignSystemNormalization.mjs",
+    "qa:design-system:invariants": "node scripts/release/assertDesignSystemNormalization.mjs",
+    "qa:design-system:capture": "node scripts/release/captureDesignSystemNormalizationScreenshots.mjs",
+    "qa:final-scope:offer-data": "tsx scripts/release/auditOfferEvidenceScope.ts",
+    "qa:final-scope:capture": "node scripts/release/captureFinalScopeEvidence.mjs",
     "preview": "vite preview",
     "pages:prepare": "tsx scripts/release/preparePagesFallback.ts",
     "release:pages:verify": "tsx scripts/release/verifyPagesDeployment.ts",
@@ -28,7 +33,7 @@
     "qa:distribution:check": "tsx scripts/release/distributionCheck.ts",
     "lint": "eslint .",
     "format:check": "prettier --check .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc -b",
     "analysis:aliases:validate": "tsx scripts/analysis/validateFpOfficialAliasPass.ts",
     "analysis:aliases:report:check": "tsx scripts/analysis/renderFpOfficialAliasPassReport.ts",
     "analysis:aliases:report:write": "tsx scripts/analysis/renderFpOfficialAliasPassReport.ts --write",
@@ -102,11 +107,14 @@
     "jsdom": "^30.0.1",
     "playwright": "^1.62.1",
     "prettier": "^3.9.6",
-    "sanitize-html": "^2.17.6",
+    "sanitize-html": "^2.17.7",
     "tsx": "^4.23.5",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.66.0",
     "vite": "^8.2.0",
     "vitest": "^4.1.10"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
   }
 }

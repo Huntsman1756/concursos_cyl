@@ -19,6 +19,8 @@ import {
 } from "../../domain/outcomes";
 import { findTrainingOutcomeGroup } from "../../domain/trainingOutcomeMatching";
 import { ExternalLink } from "../../components/ExternalLink";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
+import { PageEyebrow } from "../../components/PageEyebrow";
 import { PrintButton } from "../../components/PrintButton";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import { IncomeComparisonForm } from "./IncomeComparisonForm";
@@ -449,14 +451,17 @@ export function CompareStudiesPage() {
   if (state.status === "loading") {
     return (
       <section
-        className="compare-page compare-page--status"
-        aria-live="polite"
+        className="compare-page compare-page--status container"
+        aria-busy="true"
         aria-labelledby="compare-heading"
       >
-        <h1 id="compare-heading">Ingresos observados</h1>
-        <p role="status" aria-live="polite">
-          Cargando los datos de comparación…
-        </p>
+        <h1 className="h1" id="compare-heading">
+          Ingresos observados
+        </h1>
+        <LoadingSkeleton
+          status="Cargando los datos de comparación…"
+          layout="page"
+        />
       </section>
     );
   }
@@ -467,7 +472,9 @@ export function CompareStudiesPage() {
         aria-live="polite"
         aria-labelledby="compare-heading"
       >
-        <h1 id="compare-heading">Ingresos observados</h1>
+        <h1 className="h1" id="compare-heading">
+          Ingresos observados
+        </h1>
         <p>Los datos de comparación no están disponibles en esta versión.</p>
         <p>
           <Link to="/metodologia">Consultar la metodología y las fuentes</Link>
@@ -482,7 +489,9 @@ export function CompareStudiesPage() {
         aria-live="polite"
         aria-labelledby="compare-heading"
       >
-        <h1 id="compare-heading">Ingresos observados</h1>
+        <h1 className="h1" id="compare-heading">
+          Ingresos observados
+        </h1>
         <p>No se han podido cargar o validar los datos de comparación.</p>
         <p>Prueba de nuevo más tarde o consulta la metodología.</p>
       </section>
@@ -494,10 +503,12 @@ export function CompareStudiesPage() {
   );
   return (
     <section className="compare-page" aria-labelledby="compare-heading">
-      <header className="compare-page__intro">
-        <p className="compare-page__eyebrow">Comparar estudios</p>
-        <h1 id="compare-heading">Ingresos observados</h1>
-        <p>
+      <header className="page-masthead compare-page__intro">
+        <PageEyebrow>Comparar estudios</PageEyebrow>
+        <h1 className="h1" id="compare-heading">
+          Ingresos observados
+        </h1>
+        <p className="page-lede">
           Compara la base de cotización anualizada publicada de hasta tres
           ciclos, usando la misma cohorte y el mismo año.
         </p>
@@ -527,6 +538,7 @@ export function CompareStudiesPage() {
         cohortWindow={cohortWindow}
         cohortWindows={cohortWindows}
         postGraduationYear={postGraduationYear}
+        hasResult={comparison !== null}
         onTrainingLevelChange={chooseTrainingLevel}
         onGroupKeysChange={chooseGroupKeys}
         onCohortChange={chooseCohort}
@@ -542,6 +554,8 @@ export function CompareStudiesPage() {
       {comparison ? (
         <section
           className="income-results"
+          id="comparacion"
+          tabIndex={-1}
           aria-live="polite"
           aria-label="Evidencia seleccionada"
         >
@@ -581,7 +595,7 @@ export function CompareStudiesPage() {
           <p className="income-limitation">
             Mostramos ambas referencias por separado porque la fuente consultada
             no publica ingresos por ciclo concreto en Castilla y León; solo
-            ofrece una referencia conjunta para Grado Medio o Grado Superior.
+            ofrece una referencia conjunta para grado medio o grado superior.
           </p>
           {state.outcomeSource !== undefined ? (
             <footer className="income-results__source">

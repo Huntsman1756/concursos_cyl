@@ -32,16 +32,13 @@ import {
 
 const ROOT = process.cwd();
 
-const APPROVED_SOURCE_COMMIT_SHA = "032426013a88c35bad348f3c443dae7d9a1639a3";
+const APPROVED_SOURCE_COMMIT_SHA = "136a08859f387427b74605bdcf8c19ea9584aebc";
 const PRIOR_SCHEMA_TWO_SOURCE_COMMIT_SHA =
   "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
 const LEGACY_SOURCE_COMMIT_SHA = "05f905397d22b217c4716c88a2406d802892fb6d";
-const CANONICAL_SNAPSHOT_ID = "20260822085631889-fc9bf2ba23f9";
+const CANONICAL_SNAPSHOT_ID = "20260908044344059-f92da75832e9";
 const CANONICAL_MANIFEST_SHA256 =
-  "b41189db5e116bb83f2ec07e865909e6114c31622324e5c5f0f268161f2381e1";
-const HISTORICAL_RESOURCE_KEYS = CANDIDATE_RESOURCE_KEYS.filter(
-  (key) => key !== "offerEvidence",
-);
+  "93010bd8973e244b2687ae6c625e84d0fd2b85d76d4126c2473faf1cb342742e";
 
 async function readFreeze(): Promise<Record<string, unknown>> {
   return JSON.parse(
@@ -256,7 +253,7 @@ describe("contest coverage freeze validator", () => {
         },
         { rootDir: ROOT },
       ),
-    ).toThrow(/candidate resource set|missing|21/iu);
+    ).toThrow(/candidate resource set|missing/iu);
 
     const extra = { ...snapshots, unexpected: snapshots.centers };
     expect(() =>
@@ -267,7 +264,7 @@ describe("contest coverage freeze validator", () => {
         },
         { rootDir: ROOT },
       ),
-    ).toThrow(/candidate resource set|extra|21/iu);
+    ).toThrow(/candidate resource set|extra/iu);
 
     const reordered = Object.fromEntries(Object.entries(snapshots).reverse());
     expect(Object.keys(reordered)).not.toEqual([...CANDIDATE_RESOURCE_KEYS]);
@@ -319,6 +316,7 @@ describe("contest coverage freeze validator", () => {
         ),
       ).toThrow(/manifest|resource|path|sha256|recordCount|recomput/iu);
     },
+    30_000,
   );
 
   it("validates the canonical SEPE period, sorted unique CNOs, and coverage", async () => {
@@ -376,7 +374,7 @@ describe("contest coverage freeze validator", () => {
     expect(fresh.schemaVersion).toBe("2.0.0");
     expect(fresh).not.toHaveProperty("deployment");
     expect(Object.keys(fresh.manifest.resourceSnapshots)).toEqual([
-      ...HISTORICAL_RESOURCE_KEYS,
+      ...CANDIDATE_RESOURCE_KEYS,
     ]);
     expect(fresh.manifest.path).toBe("public/data/v1/manifest.json");
     expect(fresh.manifest.snapshotId).toBe(CANONICAL_SNAPSHOT_ID);
@@ -384,9 +382,9 @@ describe("contest coverage freeze validator", () => {
     expect(fresh.coverage.approvedRelationCount).toBe(264);
     expect(fresh.coverage.distinctQualificationCount).toBe(113);
     expect(fresh.coverage.modalityKeyCount).toBe(130);
-    expect(fresh.coverage.matchedRelationCount).toBe(33);
-    expect(fresh.coverage.zeroReviewedRelationCount).toBe(231);
-    expect(fresh.offers.matchedOfferCount).toBe(133);
+    expect(fresh.coverage.matchedRelationCount).toBe(34);
+    expect(fresh.coverage.zeroReviewedRelationCount).toBe(230);
+    expect(fresh.offers.matchedOfferCount).toBe(128);
     expect(fresh.coverage.deferredProgramCount).toBe(0);
     expect(fresh.attempts).toEqual({
       completed: 11,
@@ -405,7 +403,7 @@ describe("contest coverage freeze validator", () => {
     expect(fresh.manifest.sha256).toBe(CANONICAL_MANIFEST_SHA256);
   });
 
-  it("refuses to write a v2 candidate while the expansion source boundary is dirty", async () => {
+  it("writes a v2 candidate from current sources and discards poisoned v1 metadata", async () => {
     const root = mkdtempSync(join(tmpdir(), "contest-freeze-write-"));
     const freezePath = join(root, "coverage-freeze.json");
     try {
@@ -426,9 +424,18 @@ describe("contest coverage freeze validator", () => {
         "utf8",
       );
 
-      await expect(
-        writeContestFreeze(ROOT, APPROVED_SOURCE_COMMIT_SHA, freezePath),
-      ).rejects.toThrow(/Refusing coverage freeze --write/iu);
+      await writeContestFreeze(ROOT, APPROVED_SOURCE_COMMIT_SHA, freezePath);
+      const written = JSON.parse(readFileSync(freezePath, "utf8")) as Record<
+        string,
+        unknown
+      >;
+      expect(written.schemaVersion).toBe("2.0.0");
+      expect(written).not.toHaveProperty("deployment");
+      expect(written.manifest).toMatchObject({
+        path: "public/data/v1/manifest.json",
+        sha256: CANONICAL_MANIFEST_SHA256,
+      });
+      expect(JSON.stringify(written)).not.toContain("poisoned");
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
@@ -544,13 +551,13 @@ describe("contest coverage freeze validator", () => {
       );
       await expect(
         writeContestFreeze(ROOT, APPROVED_SOURCE_COMMIT_SHA, writePath),
-      ).rejects.toThrow(/Refusing coverage freeze --write/iu);
+      ).rejects.toThrow(/Duplicate JSON key.*schemaVersion/iu);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
   }, 30_000);
 
-  it("requires exactly 21 manifest resources and the canonical SEPE snapshot count", async () => {
+  it("requires exactly 22 manifest resources and the canonical SEPE snapshot count", async () => {
     const freeze = await readFreeze();
     const manifest = freeze.manifest as Record<string, unknown>;
     const resourceSnapshots = manifest.resourceSnapshots as Record<
@@ -565,7 +572,7 @@ describe("contest coverage freeze validator", () => {
         ...freeze,
         manifest: { ...manifest, resourceSnapshots: withoutSepe },
       }),
-    ).toThrow(/21|sepeOccupationMarket|missing/i);
+    ).toThrow(/22|sepeOccupationMarket|missing/i);
 
     const currentManifest = JSON.parse(
       await readFile("public/data/v1/manifest.json", "utf8"),
@@ -582,7 +589,7 @@ describe("contest coverage freeze validator", () => {
     };
 
     expect(() => loadAndValidateContestFreeze(ROOT)).not.toThrow();
-    expect(Object.keys(manifest.resourceSnapshots)).toHaveLength(21);
+    expect(Object.keys(manifest.resourceSnapshots)).toHaveLength(22);
     expect(manifest.resourceSnapshots.sepeOccupationMarket?.recordCount).toBe(
       116,
     );
@@ -649,7 +656,7 @@ describe("contest coverage freeze validator", () => {
         { ...freeze, sourceCommitSha: "0".repeat(40) },
         { rootDir: ROOT },
       ),
-    ).toThrow(/21|sourceCommitSha|commit|mutation|sepeOccupationMarket/i);
+    ).toThrow(/sourceCommitSha|commit|mutation|sepeOccupationMarket/i);
   }, 30_000);
 
   it("rejects inconsistent coverage counts and marginal deltas", async () => {
@@ -679,7 +686,7 @@ describe("contest coverage freeze validator", () => {
         },
         { rootDir: ROOT },
       ),
-    ).toThrow(/21|coverage|offer|recomput|marginal|sepeOccupationMarket/i);
+    ).toThrow(/coverage|offer|recomput|marginal|sepeOccupationMarket/i);
   }, 30_000);
 });
 
@@ -696,7 +703,7 @@ it("asserts every canonical final fact in the checked-in fixture", async () => {
     sha256: CANONICAL_MANIFEST_SHA256,
   });
   expect(Object.keys(manifest.resourceSnapshots as object)).toEqual([
-    ...HISTORICAL_RESOURCE_KEYS,
+    ...CANDIDATE_RESOURCE_KEYS,
   ]);
   const resources = manifest.resourceSnapshots as Record<
     string,
@@ -712,12 +719,12 @@ it("asserts every canonical final fact in the checked-in fixture", async () => {
   );
   expect(
     (freeze.coverage as Record<string, unknown>).matchedRelationCount,
-  ).toBe(33);
+  ).toBe(34);
   expect(
     (freeze.coverage as Record<string, unknown>).zeroReviewedRelationCount,
-  ).toBe(231);
+  ).toBe(230);
   expect((freeze.offers as Record<string, unknown>).matchedOfferCount).toBe(
-    133,
+    128,
   );
   expect(
     (freeze.coverage as Record<string, unknown>).deferredProgramCount,

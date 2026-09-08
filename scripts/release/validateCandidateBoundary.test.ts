@@ -37,7 +37,7 @@ const DOCUMENT_PATHS = [
 
 const PUBLIC_MANIFEST = "public/data/v1/manifest.json";
 const DIST_MANIFEST = "dist/data/v1/manifest.json";
-const SNAPSHOT_ID = "20260830120000000-8c6c79fbd2a1";
+const SNAPSHOT_ID = "20260908044344059-f92da75832e9";
 const RESTORED_FILES = [
   PUBLIC_MANIFEST,
   DIST_MANIFEST,
@@ -117,16 +117,6 @@ async function copyCandidateFixture(): Promise<string> {
     await mkdir(join(destination, ".."), { recursive: true });
     await cp(join(ROOT, documentPath), destination);
   }
-  await mkdir(join(rootDir, "config"), { recursive: true });
-  await writeFile(
-    join(rootDir, "config/runtime-snapshot-retention.json"),
-    `${JSON.stringify({
-      schemaVersion: "1.0.0",
-      sourceSnapshotIds: [SNAPSHOT_ID],
-      runtimeSnapshotIds: [],
-    })}\n`,
-    "utf8",
-  );
   return rootDir;
 }
 
@@ -340,7 +330,9 @@ describe("candidate data boundary", () => {
 
     await expect(
       validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
-    ).rejects.toThrow(/bundle.*centers.*resourcePath|snapshot.*centers/iu);
+    ).rejects.toThrow(
+      /bundle.*centers.*resourcePath|snapshot.*centers|generated manifest schema validation/iu,
+    );
   }, 90_000);
 
   it("rejects a bundle with divergent manifest metadata", async () => {

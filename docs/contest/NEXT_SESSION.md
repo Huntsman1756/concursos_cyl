@@ -1,6 +1,6 @@
 # Registro de cierre: candidate.3 publicada sin reabrir `main`
 
-> NOTA HISTÓRICA. Registro de cierre de la iteración `v2026.08.26-candidate.3`. Los estados vigentes (candidate.5, snapshot `fc9bf2ba23f9`, despliegue `753a316` verificado) están en `release-evidence.json` y `submission-checklist.md`; este archivo se conserva como registro histórico de la iteración.
+> HISTÓRICO / ARCHIVED: este registro describe una release anterior. No es la identidad del candidato local actual; consulta `coverage-freeze.json` y `release-evidence.json`.
 
 ## Estado final
 

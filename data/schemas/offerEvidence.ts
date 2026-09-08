@@ -10,7 +10,7 @@ const ReviewDateSchema = z.string().date();
 const SemanticVersionSchema = z.string().regex(/^\d+\.\d+\.\d+$/u);
 
 export const OFFER_EVIDENCE_SNAPSHOT_ID = "20260830120000000-8c6c79fbd2a1";
-export const OFFER_EVIDENCE_RESOURCE_FILE_NAME = "offer-evidence.json";
+export const OFFER_EVIDENCE_RESOURCE_PATH = `/data/v1/snapshots/${OFFER_EVIDENCE_SNAPSHOT_ID}/offer-evidence.json`;
 
 export const OfferEvidenceRequirementCategorySchema = z.enum([
   "fp",
@@ -42,44 +42,6 @@ export const OfferEvidenceRequirementClassificationSchema = z.enum([
   "ambiguous",
   "unclassified",
 ]);
-
-export const OfferEvidenceUniversityClassSchema = z.enum(["U1", "U2", "U3"]);
-
-export const OfferEvidenceUniversitySignalSchema = z.enum([
-  "none",
-  "title_only_unverified",
-  "literal_offer_requirement",
-  "regulated_profession_official_source",
-  "other_reviewed_official_evidence",
-]);
-
-export const OfferEvidenceCertificateRouteTypeSchema = z.enum([
-  "offer_explicitly_accepts",
-  "occupation_related_alternative",
-]);
-
-export const OfferEvidenceCertificateEvidenceSchema = z
-  .object({
-    certificateCode: NonBlankStringSchema,
-    certificateTitle: NonBlankStringSchema,
-    authoritativeSourceUrl: z.string().url(),
-    sourceQuote: NonBlankStringSchema,
-    relevance: NonBlankStringSchema,
-  })
-  .strict();
-
-export const OfferEvidenceUniversityEvidenceSchema = z
-  .object({
-    evidenceClass: OfferEvidenceUniversityClassSchema,
-    basis: z.enum([
-      "literal_offer_requirement",
-      "regulated_profession_official_source",
-      "other_reviewed_official_evidence",
-    ]),
-    sourceUrl: z.string().url(),
-    sourceQuote: NonBlankStringSchema,
-  })
-  .strict();
 
 export const OfferEvidenceRequirementSchema = z
   .object({
@@ -148,13 +110,6 @@ export const OfferEvidenceNextActionSchema = z
     reason: NonBlankStringSchema,
     caveat: NonBlankStringSchema.optional(),
     programKey: NonBlankStringSchema.optional(),
-    eligibilityStatus: z.literal("not_calculated").optional(),
-    certificateRouteType: OfferEvidenceCertificateRouteTypeSchema.optional(),
-    certificateEvidence: z
-      .array(OfferEvidenceCertificateEvidenceSchema)
-      .min(1)
-      .optional(),
-    universityEvidenceClass: OfferEvidenceUniversityClassSchema.optional(),
   })
   .strict()
   .superRefine((action, context) => {
@@ -176,68 +131,6 @@ export const OfferEvidenceNextActionSchema = z
         message: "FP route actions must identify their program.",
       });
     }
-    if (action.actionType === "accreditation_route") {
-      if (action.eligibilityStatus !== "not_calculated") {
-        context.addIssue({
-          code: "custom",
-          path: ["eligibilityStatus"],
-          message:
-            "Accreditation actions must state that eligibility is not calculated.",
-        });
-      }
-    } else if (action.eligibilityStatus !== undefined) {
-      context.addIssue({
-        code: "custom",
-        path: ["eligibilityStatus"],
-        message: "Eligibility status is only valid for accreditation actions.",
-      });
-    }
-    if (action.actionType === "professional_alternative") {
-      if (action.certificateRouteType === undefined) {
-        context.addIssue({
-          code: "custom",
-          path: ["certificateRouteType"],
-          message: "Certificate actions must distinguish their route type.",
-        });
-      }
-      if (action.certificateEvidence === undefined) {
-        context.addIssue({
-          code: "custom",
-          path: ["certificateEvidence"],
-          message:
-            "Certificate actions must identify an exact official certificate and its relevance.",
-        });
-      }
-    } else if (
-      action.certificateRouteType !== undefined ||
-      action.certificateEvidence !== undefined
-    ) {
-      context.addIssue({
-        code: "custom",
-        path: [
-          action.certificateRouteType !== undefined
-            ? "certificateRouteType"
-            : "certificateEvidence",
-        ],
-        message: "Certificate evidence is only valid for certificate actions.",
-      });
-    }
-    if (action.actionType === "university_route") {
-      if (action.universityEvidenceClass === undefined) {
-        context.addIssue({
-          code: "custom",
-          path: ["universityEvidenceClass"],
-          message: "University actions must identify U1, U2 or U3 evidence.",
-        });
-      }
-    } else if (action.universityEvidenceClass !== undefined) {
-      context.addIssue({
-        code: "custom",
-        path: ["universityEvidenceClass"],
-        message:
-          "University evidence class is only valid for university actions.",
-      });
-    }
   });
 
 export const OfferEvidenceRecordSchema = z
@@ -257,10 +150,6 @@ export const OfferEvidenceRecordSchema = z
     originalUrl: z.string().url(),
     evidenceStatus: OfferEvidenceStatusSchema,
     hasAmbiguousRequirements: z.boolean(),
-    universitySignal: OfferEvidenceUniversitySignalSchema,
-    universityEvidenceClass: OfferEvidenceUniversityClassSchema.nullable(),
-    universityEvidence: OfferEvidenceUniversityEvidenceSchema.nullable(),
-    certificateRouteType: OfferEvidenceCertificateRouteTypeSchema.nullable(),
     requirements: z.array(OfferEvidenceRequirementSchema),
     relations: z.array(OfferEvidenceRelationSchema),
     nextActions: z.array(OfferEvidenceNextActionSchema).min(1),
@@ -287,90 +176,11 @@ export const OfferEvidenceRecordSchema = z
         message: "Ambiguity flag must be derived from requirement evidence.",
       });
     }
-    const hasUniversityRequirement = record.requirements.some(
-      ({ normalizedCategory }) =>
-        normalizedCategory === "university" || normalizedCategory === "licence",
-    );
-    if (
-      record.universitySignal === "literal_offer_requirement" &&
-      !hasUniversityRequirement
-    ) {
-      context.addIssue({
-        code: "custom",
-        path: ["universitySignal"],
-        message:
-          "A literal university signal requires a university or licence requirement.",
-      });
-    }
-    if (
-      record.universityEvidenceClass === null &&
-      record.universityEvidence !== null
-    ) {
-      context.addIssue({
-        code: "custom",
-        path: ["universityEvidence"],
-        message: "University evidence details require an evidence class.",
-      });
-    }
-    if (
-      record.universityEvidenceClass !== null &&
-      record.universityEvidence?.evidenceClass !==
-        record.universityEvidenceClass
-    ) {
-      context.addIssue({
-        code: "custom",
-        path: ["universityEvidence"],
-        message: "University evidence class must agree with its details.",
-      });
-    }
-    if (
-      record.universityEvidenceClass !== null &&
-      record.universitySignal !==
-        (
-          {
-            U1: "literal_offer_requirement",
-            U2: "regulated_profession_official_source",
-            U3: "other_reviewed_official_evidence",
-          } as const
-        )[record.universityEvidenceClass]
-    ) {
-      context.addIssue({
-        code: "custom",
-        path: ["universityEvidenceClass"],
-        message:
-          "Accepted university evidence must be grounded in a reviewed signal.",
-      });
-    }
-    if (
-      record.universityEvidenceClass === null &&
-      [
-        "regulated_profession_official_source",
-        "other_reviewed_official_evidence",
-      ].includes(record.universitySignal)
-    ) {
-      context.addIssue({
-        code: "custom",
-        path: ["universityEvidenceClass"],
-        message: "Official university signals must carry an evidence class.",
-      });
-    }
-    const hasCertificateRequirement = record.requirements.some(
-      ({ normalizedCategory }) => normalizedCategory === "certificate",
-    );
-    if ((record.certificateRouteType !== null) !== hasCertificateRequirement) {
-      context.addIssue({
-        code: "custom",
-        path: ["certificateRouteType"],
-        message: "Certificate route type must match certificate requirements.",
-      });
-    }
   });
 
 export const OfferEvidenceSourceSnapshotSchema = z
   .object({
-    resourceKey: NonBlankStringSchema,
     snapshotId: NonBlankStringSchema,
-    sourceId: NonBlankStringSchema,
     sourceUrl: z.string().url(),
     recordCount: z.number().int().nonnegative(),
     sha256: z.string().regex(/^[a-f0-9]{64}$/u),
@@ -388,26 +198,13 @@ export const OfferEvidenceCountsSchema = z
     reviewedRelationCount: z.number().int().nonnegative(),
     offersWithAlternativePathway: z.number().int().nonnegative(),
     offersWithAmbiguity: z.number().int().nonnegative(),
-    universitySignalCount: z.number().int().nonnegative(),
-    universityAcceptedRecordCount: z.number().int().nonnegative(),
-    titleOnlyUniversitySignalCount: z.number().int().nonnegative(),
-    universityEvidenceClassCounts: z
-      .object({
-        U1: z.number().int().nonnegative(),
-        U2: z.number().int().nonnegative(),
-        U3: z.number().int().nonnegative(),
-      })
-      .strict(),
-    accreditationActionCount: z.number().int().nonnegative(),
-    certificateOfferAcceptanceCount: z.number().int().nonnegative(),
-    certificateAlternativeRouteCount: z.number().int().nonnegative(),
   })
   .strict();
 
 export const OfferEvidenceResourceSchema = z
   .object({
     schemaVersion: z.literal("1.0.0"),
-    snapshotId: z.literal(OFFER_EVIDENCE_SNAPSHOT_ID),
+    snapshotId: z.string().regex(/^\d{17}-[a-f0-9]{12}$/u),
     baseSnapshotId: NonBlankStringSchema,
     generatedAt: IsoDateTimeSchema,
     reviewVersion: SemanticVersionSchema,
@@ -486,18 +283,6 @@ export type OfferEvidenceRequirementCategory = z.infer<
   typeof OfferEvidenceRequirementCategorySchema
 >;
 export type OfferEvidenceStatus = z.infer<typeof OfferEvidenceStatusSchema>;
-export type OfferEvidenceUniversityClass = z.infer<
-  typeof OfferEvidenceUniversityClassSchema
->;
-export type OfferEvidenceUniversitySignal = z.infer<
-  typeof OfferEvidenceUniversitySignalSchema
->;
-export type OfferEvidenceCertificateRouteType = z.infer<
-  typeof OfferEvidenceCertificateRouteTypeSchema
->;
-export type OfferEvidenceCertificateEvidence = z.infer<
-  typeof OfferEvidenceCertificateEvidenceSchema
->;
 export type OfferEvidenceRequirement = z.infer<
   typeof OfferEvidenceRequirementSchema
 >;

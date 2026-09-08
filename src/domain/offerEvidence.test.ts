@@ -1,8 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  OfferEvidenceNextActionSchema,
-  OfferEvidenceRecordSchema,
   OfferEvidenceResourceSchema,
   type OfferEvidenceRecord,
 } from "../../data/schemas/offerEvidence";
@@ -32,10 +30,6 @@ function record(
     originalUrl: "https://example.com/offer-1",
     evidenceStatus: "ambiguous_requirement",
     hasAmbiguousRequirements: true,
-    universitySignal: "none",
-    universityEvidenceClass: null,
-    universityEvidence: null,
-    certificateRouteType: null,
     requirements: [
       {
         requirementId:
@@ -102,80 +96,9 @@ describe("offer evidence domain", () => {
 
   it("exposes only the small user-facing taxonomy", () => {
     expect(offerEvidenceStatusLabel("reviewed_fp_relationship")).toBe(
-      "Relación revisada",
+      "Relación FP revisada",
     );
     expect(offerEvidenceCategoryLabel("unknown")).toBe("Sin clasificar");
     expect(OfferEvidenceResourceSchema.shape.records).toBeDefined();
-  });
-
-  it("accepts an official U2 signal only when the evidence class is explicit", () => {
-    const u2 = record({
-      evidenceStatus: "university_or_regulatory_route",
-      universitySignal: "regulated_profession_official_source",
-      universityEvidenceClass: "U2",
-      universityEvidence: {
-        evidenceClass: "U2",
-        basis: "regulated_profession_official_source",
-        sourceUrl: "https://example.com/official-regulated-profession",
-        sourceQuote: "La profesión está regulada.",
-      },
-      nextActions: [
-        {
-          actionType: "open_original_offer",
-          targetKind: "external",
-          label: "Abrir la oferta original",
-          href: "https://example.com/offer-1",
-          reason: "Comprobar la publicación.",
-        },
-        {
-          actionType: "university_route",
-          targetKind: "external",
-          label: "Consultar la vía oficial",
-          href: "https://example.com/official-regulated-profession",
-          reason: "Comprobar la regulación.",
-          universityEvidenceClass: "U2",
-        },
-      ],
-    });
-    expect(OfferEvidenceRecordSchema.safeParse(u2).success).toBe(true);
-    expect(
-      OfferEvidenceRecordSchema.safeParse({
-        ...u2,
-        universityEvidenceClass: null,
-        universityEvidence: null,
-      }).success,
-    ).toBe(false);
-  });
-
-  it("requires exact official certificate evidence on certificate actions", () => {
-    const certificateAction = {
-      actionType: "professional_alternative" as const,
-      targetKind: "internal" as const,
-      label: "Explorar certificados profesionales",
-      href: "/recursos",
-      reason: "La oferta menciona una credencial.",
-      caveat: "No equivale automáticamente a un título de FP.",
-      certificateRouteType: "occupation_related_alternative" as const,
-      certificateEvidence: [
-        {
-          certificateCode: "SSCS0208",
-          certificateTitle:
-            "ATENCIÓN SOCIOSANITARIA A PERSONAS DEPENDIENTES EN INSTITUCIONES SOCIALES",
-          authoritativeSourceUrl:
-            "https://sede.sepe.gob.es/es/portaltrabaja/resources/pdf/especialidades/SSCS0208.pdf",
-          sourceQuote: ". Certificado de Profesionalidad.",
-          relevance: "Alternativa relacionada, no requisito satisfecho.",
-        },
-      ],
-    };
-    expect(
-      OfferEvidenceNextActionSchema.safeParse(certificateAction).success,
-    ).toBe(true);
-    expect(
-      OfferEvidenceNextActionSchema.safeParse({
-        ...certificateAction,
-        certificateEvidence: undefined,
-      }).success,
-    ).toBe(false);
   });
 });

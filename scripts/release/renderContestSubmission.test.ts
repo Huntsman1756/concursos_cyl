@@ -316,10 +316,10 @@ describe("contest submission renderer", () => {
       "captura visual actual pendiente; las 13 capturas anteriores son históricas",
     );
     expect(rendered["submission-checklist.md"]).toContain(
-      "Ejecutar la captura nativa OS A4 en un Mac desbloqueado",
+      "Capturar y revisar visualmente los recorridos de la versión final en un navegador disponible",
     );
     expect(rendered["submission-checklist.md"]).toContain(
-      "rama de trabajo → PR → checks → revisión/aprobación → merge a `main` → GitHub Pages",
+      "verificar el despliegue contra su commit",
     );
   });
 
@@ -349,18 +349,19 @@ describe("contest submission renderer", () => {
         { useGrouping: "always" },
       );
 
-    expect(memo).toContain(freeze.manifest.snapshotId);
+    expect(memo.trim().split(/\s+/u).length).toBeLessThanOrEqual(1000);
+    expect(memo).not.toContain("SHA-256");
     expect(memo).toContain(
-      `${freeze.coverage.approvedRelationCount} relaciones FP-ocupación`,
+      `${freeze.coverage.approvedRelationCount} relaciones aprobadas`,
     );
     expect(memo).toContain(
       `${freeze.coverage.distinctQualificationCount} cualificaciones distintas`,
     );
     expect(memo).toContain(
-      `${freeze.coverage.modalityKeyCount} claves de modalidad`,
+      `${freeze.coverage.modalityKeyCount} de las ${freeze.manifest.resourceSnapshots.programs.recordCount} claves de programa`,
     );
     expect(memo).toContain(
-      `${freeze.offers.matchedOfferCount} ofertas alcanzadas pertenecen a una copia fechada de ${offerCount} ofertas`,
+      `${freeze.offers.matchedOfferCount} de las ${offerCount} ofertas de la instantánea`,
     );
   });
 });

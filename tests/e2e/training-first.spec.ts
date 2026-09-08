@@ -95,7 +95,7 @@ test("FP result data stays within the initial budget and loads outcomes on reque
     typeof currentManifestFixture
   >;
   await expect(
-    page.getByRole("heading", { name: "Desarrollo de Aplicaciones Web" }),
+    page.getByRole("heading", { name: /Desarrollo de Aplicaciones Web/iu }),
   ).toBeVisible();
   await expectNoHorizontalOverflow(page);
   await page.waitForLoadState("networkidle");
@@ -105,6 +105,7 @@ test("FP result data stays within the initial budget and loads outcomes on reque
     "centers",
     "trainingOfferings",
     "jobOffers",
+    "offerEvidence",
     "publishedRequirements",
     "occupations",
     "occupationAliases",
@@ -118,15 +119,15 @@ test("FP result data stays within the initial budget and loads outcomes on reque
     "/data/v1/manifest.json",
     ...initialKeys.map((key) => manifest.resourceSnapshots[key].resourcePath),
   ].sort();
-  await expect.poll(() => dataResponses.length, { timeout: 15_000 }).toBe(13);
+  await expect.poll(() => dataResponses.length, { timeout: 15_000 }).toBe(14);
   const initialResponses = [...dataResponses];
   expect(initialResponses.map(({ path }) => path).sort()).toEqual(
     expectedInitialPaths,
   );
-  expect(new Set(initialResponses.map(({ path }) => path)).size).toBe(13);
+  expect(new Set(initialResponses.map(({ path }) => path)).size).toBe(14);
   expect(
     initialResponses.reduce((total, response) => total + response.bytes, 0),
-  ).toBeLessThanOrEqual(7_000_000);
+  ).toBeLessThanOrEqual(10_000_000);
   const outcomePath = manifest.resourceSnapshots.outcomeIndicators.resourcePath;
   expect(dataResponses.filter(({ path }) => path === outcomePath)).toHaveLength(
     0,
@@ -210,14 +211,18 @@ test("FP search confirms official options and recovers from filters and zero sta
   await expect(submit).toBeEnabled();
   await expectStrictAxe(page);
 
-  await page.getByLabel("Filtrar por nivel").selectOption({
-    label: "Grado medio",
+  await page
+    .locator("summary")
+    .filter({ hasText: "Filtrar catálogo y contexto" })
+    .click();
+  await page.getByLabel("Nivel").selectOption({
+    label: "grado medio",
   });
   await expect(combobox).toHaveValue("");
   await expect(submit).toBeDisabled();
   await expectStrictAxe(page);
 
-  await page.getByLabel("Filtrar por nivel").selectOption({
+  await page.getByLabel("Nivel").selectOption({
     label: "Todos los niveles",
   });
   await expect(combobox).toHaveValue("");
@@ -258,16 +263,20 @@ test("FP results preserve complete centers, province context, deferred outcomes,
     page.url(),
   ).pathname;
   await chooseTrainingProgram(page, "IFC03S");
+  await page
+    .locator("summary")
+    .filter({ hasText: "Filtrar catálogo y contexto" })
+    .click();
   await page.getByLabel("Provincia para el contexto (opcional)").selectOption({
     label: "León",
   });
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
 
   await expect(page).toHaveURL(
-    "http://127.0.0.1:4173/desde-fp/IFC03S?province=Le%C3%B3n",
+    "http://127.0.0.1:4173/desde-fp/IFC03S?query=Desarrollo+de+Aplicaciones+WEB&province=Le%C3%B3n",
   );
   await expect(
-    page.getByRole("heading", { name: "Desarrollo de Aplicaciones Web" }),
+    page.getByRole("heading", { name: /Desarrollo de Aplicaciones Web/iu }),
   ).toBeVisible();
   await expect(
     page.getByText("Contexto provincial elegido: León"),
@@ -275,16 +284,10 @@ test("FP results preserve complete centers, province context, deferred outcomes,
   await expectNoHorizontalOverflow(page);
   expect(requestedDataPaths.filter((path) => path === outcomePath)).toEqual([]);
 
-  await expect(
-    page.getByRole("link", { name: "Comparar ingresos" }),
-  ).not.toBeVisible();
-  await page
-    .getByRole("button", { name: "Cargar datos de ingresos observados" })
-    .click();
-  await expect(
-    page.getByText("Espa\u00f1a \u00b7 grupo del ciclo"),
-  ).toBeVisible();
-  const compareLink = page.getByRole("link", { name: "Comparar ingresos" });
+  const compareLink = page.getByRole("link", {
+    name: "Comparar ingresos observados de este ciclo",
+    exact: true,
+  });
   await expect(compareLink).toHaveAttribute("href", "/comparar?program=IFC03S");
   await expect(
     page.getByRole("button", { name: "Imprimir esta orientación" }),
@@ -296,28 +299,18 @@ test("FP results preserve complete centers, province context, deferred outcomes,
   await expectStrictAxe(page);
 
   const centersLink = page.getByRole("link", {
-    name: "Ver centros y modalidades",
+    name: /^Ver los \d+ centros con direcciones y web/u,
   });
   await expect(centersLink).toHaveAttribute("href", "/formacion/IFC03S");
   await centersLink.click();
   await expect(page).toHaveURL(/\/formacion\/IFC03S$/u);
-  const centers = page.getByRole("list", {
-    name: "Centros que imparten el ciclo",
-  });
-  await expect(centers.getByRole("listitem")).toHaveCount(18);
+  await expect(page.locator("#center-results-table tbody tr")).toHaveCount(18);
 
   await page.goBack();
-  await expect(page).toHaveURL(/\/desde-fp\/IFC03S\?province=Le%C3%B3n$/u);
-  await page
-    .getByRole("button", { name: "Cargar datos de ingresos observados" })
-    .click();
-  await expect(
-    page.getByText("Espa\u00f1a \u00b7 grupo del ciclo"),
-  ).toBeVisible();
-  const reloadedCompareLink = page.getByRole("link", {
-    name: "Comparar ingresos",
-  });
-  await reloadedCompareLink.click();
+  await expect(page).toHaveURL(
+    /\/desde-fp\/IFC03S\?query=Desarrollo\+de\+Aplicaciones\+WEB&province=Le%C3%B3n$/u,
+  );
+  await compareLink.click();
   await expect(page).toHaveURL(/\/comparar\?program=IFC03S$/u);
 });
 
@@ -331,12 +324,12 @@ test("live DAW results shows formacion link and approved occupation", async ({
 
   await expect(
     page.getByRole("link", {
-      name: "Ver centros y modalidades",
+      name: /^Ver los \d+ centros con direcciones y web/u,
     }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", {
-      name: "Ver centros y modalidades",
+      name: /^Ver los \d+ centros con direcciones y web/u,
     }),
   ).toHaveAttribute("href", "/formacion/IFC03S");
 
@@ -348,7 +341,10 @@ test("live DAW results shows formacion link and approved occupation", async ({
   await expectNoHorizontalOverflow(page);
 
   await expect(
-    page.getByRole("heading", { name: "Qué sabemos de este título" }),
+    page.getByRole("heading", {
+      name: "Salidas relacionadas",
+      exact: true,
+    }),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", {
@@ -364,24 +360,30 @@ test("live DAW results shows formacion link and approved occupation", async ({
     ),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Contexto provincial" }),
+    page.getByRole("heading", {
+      name: "Contexto laboral e ingresos",
+      exact: true,
+    }),
   ).toBeVisible();
   await expect(
-    page.getByText(
-      "Contexto provincial — no específico de esta ocupación. Reúne contratos registrados de todas las ocupaciones.",
-    ),
+    page.getByText("Contratos registrados por provincia (contexto general)", {
+      exact: true,
+    }),
   ).toBeVisible();
   const sectionNavigation = page.getByRole("navigation", {
-    name: "Secciones del resultado",
+    name: "Secciones de esta página",
   });
   await expect(
     sectionNavigation.getByRole("link", { name: "Dónde estudiar" }),
   ).toHaveAttribute("href", "#donde-estudiar");
   await expect(
-    sectionNavigation.getByRole("link", { name: "Contexto provincial" }),
-  ).toHaveAttribute("href", "#contexto-provincial");
+    sectionNavigation.getByRole("link", { name: "Contexto", exact: true }),
+  ).toHaveAttribute("href", "#contexto");
   await expect(
-    sectionNavigation.getByRole("link", { name: "Salidas profesionales" }),
+    sectionNavigation.getByRole("link", {
+      name: "Salidas relacionadas",
+      exact: true,
+    }),
   ).toHaveAttribute("href", "#salidas-profesionales");
 
   const studyLink = sectionNavigation.getByRole("link", {
@@ -390,12 +392,15 @@ test("live DAW results shows formacion link and approved occupation", async ({
   await tabTo(page, studyLink);
   await expect(studyLink).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/\/desde-fp\/IFC03S#donde-estudiar$/u);
+  await expect(page).toHaveURL(
+    /\/desde-fp\/IFC03S(?:\?query=[^#]+)?#donde-estudiar$/u,
+  );
   await expect(page.locator("#donde-estudiar")).toBeVisible();
   await expect(page.locator("#donde-estudiar")).toBeFocused();
-  await expect(
-    page.getByText(/no representa todo el mercado laboral/u),
-  ).toBeVisible();
+  await expect(page.getByText(/miden el mercado completo/u)).toBeVisible();
+  await page
+    .getByText("Distribución geográfica de los centros", { exact: true })
+    .click();
   const distribution = page.getByRole("region", {
     name: "Distribución de centros",
   });
@@ -452,7 +457,7 @@ test("live DAW results shows formacion link and approved occupation", async ({
 
   await expect(
     page.getByRole("link", {
-      name: /Analistas, programadores y diseñadores web y multimedia CNO-11 2713/,
+      name: /Analistas, programadores y diseñadores web y multimedia.*CNO-11 2713/iu,
     }),
   ).toHaveAttribute("href", "/desde-ocupacion/occupation%3Acno11%3A2713");
 });
@@ -484,11 +489,14 @@ test("live DAW results name the dated zero-match snapshot without claiming there
     ),
   );
 
+  await expect(page.locator(".result-summary")).toContainText(
+    `0 ofertas · fuente del ${snapshotDate}`,
+  );
   await expect(
-    page.getByText(
-      `0 ofertas con correspondencia validada en la copia de datos del ${snapshotDate}.`,
-    ),
-  ).toBeVisible();
+    page.getByRole("heading", {
+      name: /Ofertas relacionadas con Desarrollo de Aplicaciones WEB/iu,
+    }),
+  ).toHaveCount(0);
   await expect(page.getByText(/no hay (empleo|trabajo|puestos)/iu)).toHaveCount(
     0,
   );
@@ -502,22 +510,26 @@ test("COM01M exposes seven reviewed groups with bounded current offers", async (
   await page.goto("/desde-fp");
   await chooseTrainingProgram(page, "COM01M");
   await expect(
-    page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
-  ).toContainText("Relaciones revisadas con 7 grupos de ocupación.");
+    page.getByText("Profesiones comprobadas para este ciclo: 7."),
+  ).toContainText("Profesiones comprobadas para este ciclo: 7.");
   await expect(
-    page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
+    page.getByText("Profesiones comprobadas para este ciclo: 7."),
   ).toHaveAttribute("role", "status");
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
-  await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
+  await expect(page).toHaveURL(/\/desde-fp\/COM01M\?query=/u);
   await expect(
-    page.getByRole("heading", { name: "Actividades Comerciales" }),
+    page.getByRole("heading", {
+      name: "Actividades Comerciales",
+      exact: true,
+    }),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", {
-      name: "Grupos de ocupación revisados para buscar ofertas",
+      name: "Salidas relacionadas",
+      exact: true,
     }),
   ).toBeVisible();
-  await expect(page.getByRole("article")).toHaveCount(7);
+  await expect(page.getByRole("article")).toHaveCount(6);
   await expectNoHorizontalOverflow(page);
   await expectStrictAxe(page);
 });
@@ -535,9 +547,9 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
   });
   await expect(card).toBeVisible();
 
-  const evidenceDisclosure = card.getByText("Ver evidencia y requisitos", {
-    exact: true,
-  });
+  const evidenceDisclosure = card.locator(
+    'summary[aria-label="Fuente y revisión de esta oferta (Desarrollador web para servicios públicos)"]',
+  );
   await tabTo(page, evidenceDisclosure);
   await expect(evidenceDisclosure).toBeFocused();
   await page.keyboard.press("Enter");
@@ -546,26 +558,28 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
     card.getByRole("heading", { name: "Por qué aparece" }),
   ).toBeVisible();
   await expect(
-    card.getByRole("heading", { name: "Qué publica la vacante" }),
-  ).toBeVisible();
-  await expect(
-    card.getByRole("heading", { name: "Tu comprobación" }),
-  ).toBeVisible();
-  await expect(
-    card.getByRole("heading", { name: "Siguiente acción" }),
+    card.getByRole("heading", { name: "Cómo se extrajeron los requisitos" }),
   ).toBeVisible();
 
-  const mappingDisclosure = card
-    .getByText("Ver cita exacta", { exact: true })
-    .first();
-  await tabTo(page, mappingDisclosure);
-  await expect(mappingDisclosure).toBeFocused();
-  await page.keyboard.press("Enter");
   await expect(
     card.getByText("Desarrollador de aplicaciones en entornos Web.", {
       exact: true,
     }),
   ).toBeVisible();
+
+  const requirementDisclosure = card
+    .locator("summary")
+    .filter({ hasText: "Requisitos: ¿los cumples?" });
+  if (
+    !(await card
+      .getByRole("radio", { name: /^Lo tengo:/u })
+      .first()
+      .isVisible()
+      .catch(() => false))
+  ) {
+    await requirementDisclosure.click();
+  }
+  await expect(requirementDisclosure).toBeVisible();
 
   const firstExperienceAnswer = card.getByRole("radio", {
     name: `Lo tengo: ${syntheticQuotes.experienceQuote}`,
@@ -579,7 +593,7 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
   });
   await expect(missingExperience).toBeFocused();
   await expect(
-    card.getByText("Has indicado que no cumples este requisito."),
+    card.getByText("Has indicado que no cumples un requisito publicado."),
   ).toBeVisible();
 
   const exactAbsenceAction = card.getByRole("button", {
@@ -590,7 +604,7 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
   await page.keyboard.press("Enter");
   await expect(
     page.getByText(
-      "Filtro activo: ofertas relacionadas que no publican este requisito exacto.",
+      "Filtro activo: ofertas que no publican ese requisito exacto.",
     ),
   ).toBeVisible();
   await expect(

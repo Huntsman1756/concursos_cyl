@@ -1,54 +1,43 @@
-# Memoria de candidatura: SALIDA CyL
+# SALIDA CyL: de la formación profesional al siguiente paso
 
-Candidatura al [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html), categoría **Productos y Servicios**.
+Categoría: **Productos y Servicios**. X Concurso de Datos Abiertos de Castilla y León, 2026.
 
-## Resumen
+Acceso público: https://salida-cyl.157-90-22-40.sslip.io/
 
-SALIDA CyL convierte datos públicos dispersos en una decisión formativa y laboral. Responde «¿en qué puedo trabajar con mi FP?» y «¿qué FP me lleva a esta ocupación?». La persona puede empezar en un ciclo o en una ocupación, consultar relaciones revisadas, contrastar ofertas de una instantánea y localizar centros, modalidades y contexto territorial. Cuando la evidencia no basta, la aplicación deja la relación pendiente y lo explica en lugar de inventarla.
+## Qué resuelve
 
-La candidatura está etiquetada y publicada como `v2026.08.28-candidate.5` sobre el commit certificado `77b1ff1fd5c16dd01967828012b6a3989984e62e`. Su evidencia enlaza el límite de cobertura `032426013a88c35bad348f3c443dae7d9a1639a3`, el snapshot `20260822085631889-fc9bf2ba23f9` y el manifest `b41189db5e116bb83f2ec07e865909e6114c31622324e5c5f0f268161f2381e1`. El despliegue publicado sirve el commit `753a3160cc3cc895b943ccd5c8d7c52129a6dc9f` (run `33189836718`) y las 13/13 capturas A4 automatizadas están ligadas a ese commit.
+Elegir una FP exige conectar información dispersa: qué se estudia, qué ocupaciones se relacionan con el título, dónde se imparte y qué ofertas permiten explorar esas opciones. SALIDA CyL reúne esas consultas en una aplicación pública y gratuita, con fuentes identificadas y límites visibles.
 
-Histórico: la referencia funcional certificada anterior es `v2026.08.27-candidate.4`, commit `a59a788a39bc8d300c66fee39ea2f2469f588112`, y ya no es la referencia actual. Ese estado permanece intacto como fallback; sus observaciones live y A4 no se presentan como evidencia actual de la candidatura expandida.
+Una persona interesada en Cuidados Auxiliares de Enfermería puede abrir la ficha del estudio, explorar sus ocupaciones relacionadas, consultar centros y revisar las ofertas vinculadas de una instantánea fechada. También puede comenzar por una profesión o una oferta. Los enlaces oficiales permiten contrastar la información antes de decidir una matrícula o candidatura.
 
-## 1. Utilidad
+## Utilidad
 
-SALIDA CyL ordena una decisión que normalmente obliga a saltar entre FP, ocupaciones, empleo y centros. Permite consultar 187 ciclos oficiales y 502 grupos primarios CNO-11. La ficha separa salidas oficiales, relaciones FP-ocupación aprobadas, ofertas alcanzadas, centros y fuentes.
+El servicio se dirige a estudiantes, personas que buscan empleo o un cambio profesional, familias y profesionales de orientación. Reduce los pasos necesarios para consultar catálogos separados y permite recorrer la relación entre formación y ocupación en ambos sentidos. Incluye 187 claves de programa, con modalidades, y 502 grupos de la clasificación ocupacional CNO-11. Estas cifras describen el catálogo; no son usuarios ni resultados de inserción laboral.
 
-Dos recorridos muestran el valor en pocos segundos. Desde FP: [Cuidados Auxiliares de Enfermería (SAN21)](https://salida-cyl.157-90-22-40.sslip.io/desde-fp/SAN21) lleva a ocupaciones revisadas y a ofertas de la instantánea con correspondencia validada. Desde ocupación: [Auxiliares de enfermería hospitalaria (CNO 5611)](https://salida-cyl.157-90-22-40.sslip.io/desde-ocupacion/occupation%3Acno11%3A5611) devuelve la FP relacionada. La cobertura congelada contiene 264 relaciones FP-ocupación revisadas, 35 alias aprobados (denominaciones de ocupación verificadas que amplían la búsqueda sin inventar vínculos), 113 cualificaciones distintas y 130 claves de modalidad (identificadores oficiales del catálogo de FP). El SEPE aporta 116 de 116 páginas de ocupación consultadas para `2026-07`.
+## Valor económico
 
-Las ofertas relacionadas solo aparecen después de que la relación FP-ocupación correspondiente supera la revisión; no constituyen una búsqueda de empleo general, sino una copia fechada con correspondencia validada frente a la que cada persona comprueba los requisitos.
+El producto puede reducir trabajo de búsqueda y contraste en orientación. La licencia MIT del código y su grafo descargable permiten reutilizar componentes en otros servicios e integrar relaciones documentadas sin rehacer toda la revisión. El acceso actual es gratuito. No se atribuyen ingresos, ahorro cuantificado, clientes ni rentabilidad que no se hayan medido.
 
-## 2. Valor económico
+## Valor público y social
 
-El valor económico está en reducir el tiempo y la incertidumbre antes de elegir una matrícula, desplazamiento o ruta profesional: hoy contrastar una decisión exige saltar entre cuatro o más catálogos oficiales, y SALIDA CyL los reúne en una sola pantalla con cada dato fechado. Es gratuita, sin registro ni cuenta, lo que elimina barreras de entrada. Cada fuente lleva fecha y código, y el dataset derivado es descargable (JSON/CSV) con licencia CC BY 4.0 y verificación de integridad SHA-256, reutilizable por terceros sin pagar ni pedir permiso.
+Facilita el acceso a información sobre formación y empleo en Castilla y León sin registro. Los centros y filtros territoriales ayudan a explorar opciones por ubicación. Cada relación conserva su procedencia y los vacíos de evidencia se muestran expresamente. El beneficio social es potencial: no se afirma haber reducido desempleo o despoblación ni haber demostrado impacto mediante un estudio de usuarios.
 
-Ese límite protege la decisión: SALIDA CyL no convierte una tabla agregada en una promesa de ingresos ni atribuye ahorros, contratación o impacto que todavía no hayan sido medidos.
+## Originalidad y mejora respecto a consultas separadas
 
-## 3. Valor público y social
+La aportación es conectar formación, ocupaciones y ofertas mediante relaciones revisadas y consultables en ambos sentidos. No se presentan coincidencias por semejanza como equivalencias acreditadas. Cuando no hay oferta relacionada, la formación permanece visible y el límite se explica. Esta distinción permite comprobar por qué aparece un resultado y evita interpretar una ausencia como falta de oportunidades.
 
-Es gratuito, no requiere cuenta y funciona en móvil y escritorio. Cualquier persona puede explorar opciones de Castilla y León, comparar centros por provincia y localidad y abrir las fuentes públicas. La aplicación no crea perfiles: no guarda búsquedas, respuestas ni resultados. Distingue el lugar del centro, la población municipal y los contratos provinciales para no convertir contexto territorial en una afirmación sobre la residencia o el futuro de una persona.
+## Variedad de datos
 
-## 4. Originalidad e innovación
+Combina ocho conjuntos del Portal de Datos Abiertos de la Junta: oferta de FP, ofertas de empleo, formación del ECYL, certificados de profesionalidad, convocatorias de empleo público, contratos provinciales, registro de municipios y directorio de centros docentes. Se complementan con CNO-11, TodoFP, SEPE y EDUCAbase. La metodología identifica sus funciones y ámbitos. El grafo derivado se devuelve a la comunidad en JSON y CSV con fuentes y condiciones de reutilización.
 
-La unidad de valor es un grafo bidireccional FP ↔ ocupación revisado relación por relación. Cada vínculo conserva fuente, fecha, estado y límites; los vínculos no revisados permanecen fuera de las afirmaciones. El sistema aplica un criterio fail-closed: una coincidencia débil no se publica por similitud ni por texto generado. El resultado se devuelve como datos abiertos derivados en JSON y CSV, con integridad verificable. La innovación está en convertir un catálogo disperso en una relación navegable y auditable, manteniendo visible la incertidumbre.
+## Facilidad de uso y accesibilidad
 
-## 5. Variedad de datasets
+La aplicación ofrece entradas por formación, profesión y oferta, búsquedas y filtros, navegación adaptable a móvil y enlaces a las fuentes. Las pruebas automatizadas comprueban recorridos, teclado y reglas de accesibilidad; no equivalen a una certificación integral. La comparación de ingresos distingue ámbitos estadísticos y evita presentarlos como salarios individuales garantizados.
 
-Los ocho conjuntos regionales de la Junta tienen un uso visible: oferta de estudios de FP, ofertas de empleo, formación del ECYL, certificados de profesionalidad, convocatorias de empleo público, contratos por provincia, registro de municipios y directorio de centros docentes. Se combinan con CNO-11, TodoFP, BOE, SEPE y EDUCAbase. La metodología conserva el ámbito de cada fuente y la [página de datos abiertos](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos) permite descargar el grafo revisado.
+## Calidad técnica y cobertura comprobable
 
-## 6. Facilidad de uso y accesibilidad
+Publica 264 relaciones aprobadas: 130 de las 187 claves de programa tienen alguna relación revisada (69,5 %), correspondientes a 113 cualificaciones distintas. Las modalidades se cuentan por separado; no son 130 titulaciones diferentes.
 
-La portada ofrece un único punto de partida y mantiene el recorrido principal corto. Los selectores funcionan con teclado, el foco es visible y los estados vacíos explican qué está disponible, qué falta revisar y qué acción puede realizarse. Los recorridos de escritorio y móvil comprobaron overflow, red, consola y Axe. Las 13/13 capturas A4 automatizadas se recapturaron de forma anónima el 2026-08-28 contra el despliegue verificado (commit `753a3160cc3cc895b943ccd5c8d7c52129a6dc9f`) y constan validadas en `evidence-capture.json`; la captura A4 nativa del sistema operativo y la revisión humana de las figuras siguen pendientes. La declaración de accesibilidad diferenciada por discapacidad está sujeta a la evaluación WCAG 2.1 AA por un experto, aún no realizada.
+128 de las 1.032 ofertas de la instantánea tienen relación FP revisada (12,4 %). Se cuentan ofertas distintas; no representan todo el mercado laboral. Las fuentes JCyL se descargaron el 8 de septiembre de 2026; las ofertas incluyen publicaciones hasta el 4 de septiembre. El recurso derivado se generó el 8 de septiembre. Las revisiones nacionales conservan sus fechas originales. La vigencia se contrasta en la fuente oficial.
 
-## 7. Calidad técnica
-
-La candidatura expandida usa el snapshot inmutable `20260822085631889-fc9bf2ba23f9`, manifest SHA-256 `b41189db5e116bb83f2ec07e865909e6114c31622324e5c5f0f268161f2381e1`, 21 recursos, 264 relaciones FP-ocupación, 35 alias aprobados y 133 ofertas alcanzadas de 1.058. Una actualización inválida no sustituye la copia válida. La publicación está verificada y registrada: `release-evidence.json` atestigua el despliegue del commit `753a3160cc3cc895b943ccd5c8d7c52129a6dc9f` (run `33189836718`), la raíz pública respondió HTTP 200 sirviendo el manifest `b41189db5e116bb83f2ec07e865909e6114c31622324e5c5f0f268161f2381e1` el 2026-08-28T18:44:36Z, y las 13/13 capturas A4 automatizadas están ligadas a ese commit. La candidatura no requiere humanos para verificar su integridad: cada paso está automatizado y registrado.
-
-## Recorrido para el jurado
-
-1. Abrir [SAN21](https://salida-cyl.157-90-22-40.sslip.io/desde-fp/SAN21) y seguir una salida revisada con ofertas de la copia fechada.
-2. Abrir [CNO 5611](https://salida-cyl.157-90-22-40.sslip.io/desde-ocupacion/occupation%3Acno11%3A5611) para ver el recorrido inverso, o [CNO 7111](https://salida-cyl.157-90-22-40.sslip.io/desde-ocupacion/occupation%3Acno11%3A7111) para ver el valor desde la ocupación (Encofradores).
-3. Abrir [Programadores informáticos, CNO 3820](https://salida-cyl.157-90-22-40.sslip.io/desde-ocupacion/occupation%3Acno11%3A3820) para ver cómo se explica un caso sin ofertas en esta copia (fail-closed) sin ocultarlo.
-4. Abrir [Datos abiertos](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos) y comprobar la descarga, las fuentes y la trazabilidad.
-
-Las 133 ofertas alcanzadas pertenecen a una copia fechada de 1.058 ofertas y no representan todo el mercado. Los contratos provinciales son contexto agregado; las tablas de ingresos no predicen una situación individual; no se afirma adopción o impacto sin evidencia humana. La identidad, el consentimiento y la autorización de presentación permanecen fuera del repositorio y requieren aprobación humana explícita.
+El proyecto dispone de pruebas de datos e interfaz, control de licencias y verificación de integridad de recursos. La metodología, el inventario de fuentes y los datos descargables están accesibles desde la aplicación. La evidencia técnica detallada se conserva en el repositorio para su comprobación.

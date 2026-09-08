@@ -1,585 +1,606 @@
-import { type ReactNode, useEffect, useMemo, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import type { FormEvent } from "react";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 
 import type {
-  OfferEvidenceNextAction,
   OfferEvidenceRecord,
   OfferEvidenceStatus,
 } from "../../../data/schemas/offerEvidence";
+import { Breadcrumbs } from "../../components/Breadcrumbs";
+import { ExternalLink } from "../../components/ExternalLink";
+import { Icon } from "../../components/Icon";
+import { InfoDisclosure } from "../../components/InfoDisclosure";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
+import { PageEyebrow } from "../../components/PageEyebrow";
+import { useRouteReady } from "../../app/RouteReadyContext";
 import {
+  globalOffersPath,
+  occupationDetailPath,
+  trainingDetailPath,
+} from "../../app/routePaths";
+import {
+  loadFoundationResourceSubset,
   loadManifest,
+  loadOfficialOccupations,
   loadOfferEvidence,
 } from "../../data/generatedDataClient";
-import { Icon, type IconName } from "../../components/Icon";
 import {
   OFFER_EVIDENCE_CLASSIFICATION_LABELS,
-  OFFER_EVIDENCE_STATUS_LABELS,
   filterOfferEvidenceRecords,
   offerEvidenceCategoryLabel,
   sortOfferEvidenceRecords,
 } from "../../domain/offerEvidence";
-import { useRouteReady } from "../../app/RouteReadyContext";
+import { formatProgramTitle } from "../../domain/trainingPresentation";
+import {
+  formatOfferTitle,
+  formatOccupationLabel,
+  longDate,
+} from "../../domain/displayFormat";
 import "./offerExplorer.css";
 
-const PAGE_SIZE = 12;
-const STATUS_OPTIONS = [
+const PAGE_SIZE = 10;
+
+const STATUS_OPTIONS: Array<OfferEvidenceStatus | "all"> = [
   "all",
-  ...Object.keys(OFFER_EVIDENCE_STATUS_LABELS),
-] as Array<OfferEvidenceStatus | "all">;
-const STATUS_HELP = [
-  "Cita y revisión.",
-  "Menciona formación; no implica relación FP.",
-  "U1/U2/U3: vía universitaria o regulada; el título no basta.",
-  "Certificados o acreditación: vías a investigar, no equivalencias.",
-  "Texto literal; no adivinamos.",
-  "Evidencia insuficiente.",
-] as const;
+  "reviewed_fp_relationship",
+  "explicit_training_requirement",
+  "university_or_regulatory_route",
+  "alternative_vocational_route",
+  "ambiguous_requirement",
+  "no_reviewed_relationship",
+];
+
+const STATUS_FILTER_LABELS: Record<OfferEvidenceStatus | "all", string> = {
+  all: "Todas",
+  reviewed_fp_relationship: "Con FP relacionada",
+  explicit_training_requirement: "Piden una titulación concreta",
+  university_or_regulatory_route: "Vía universitaria o regulada",
+  alternative_vocational_route: "Piden un certificado o cualificación",
+  ambiguous_requirement: "Requisitos sin clasificar",
+  no_reviewed_relationship: "Sin relación FP comprobada",
+};
+
+export type OfferExplorerScope = "global" | "program" | "occupation";
+
+type OfferContext =
+  | { kind: "global" }
+  | { kind: "program"; programKey: string; programTitle: string }
+  | {
+      kind: "occupation";
+      occupationId: string;
+      occupationLabel: string;
+      classificationCode: string;
+    };
 
 type OfferExplorerState =
   | { status: "loading" }
   | { status: "failed" }
-  | { status: "ready"; records: OfferEvidenceRecord[]; generatedAt: string };
+  | {
+      status: "not-found";
+      contextKind: Exclude<OfferExplorerScope, "global">;
+    }
+  | {
+      status: "ready";
+      records: OfferEvidenceRecord[];
+      generatedAt: string;
+      offersSourceDate: string | null;
+      context: OfferContext;
+    };
 
 function formattedDate(value: string): string {
-  return new Intl.DateTimeFormat("es-ES", {
-    dateStyle: "long",
-    timeZone: "UTC",
-  }).format(new Date(value));
+  return longDate(value);
 }
 
-const NO_REQUIREMENTS_COPY = "No hay requisitos concretos extraídos.";
-const NO_RELATION_COPY =
-  "No hay relación FP revisada; no demuestra imposibilidad.";
-const LIMITATIONS_COPY =
-  "No inferimos equivalencias, acceso, colegiación ni empleabilidad desde esta copia.";
-const SECTION_CLASS = "offer-explorer-card__section";
-const LITERAL_CLASS = "offer-explorer__literal";
-const ACTION_LINK_CLASS = "offer-explorer__action-link";
-const NORMALIZED_CLASS = "offer-explorer__normalized";
-const MUTED_CLASS = "offer-explorer__muted";
-const EYEBROW_CLASS = "offer-explorer__eyebrow";
-const EXTERNAL_LINK_PROPS = {
-  target: "_blank",
-  rel: "noreferrer",
-} as const;
+function shortDate(value: string): string {
+  return longDate(value);
+}
 
-function EvidenceState({ status }: { status: OfferEvidenceStatus }) {
-  const icon: IconName =
-    status === "ambiguous_requirement"
-      ? "eye"
-      : status === "no_reviewed_relationship"
-        ? "x"
-        : "badge-check";
+function locationLabel(record: OfferEvidenceRecord): string | null {
+  const location = [record.locality, record.province]
+    .filter((value): value is string => value !== null)
+    .filter((value, index, values) => values.indexOf(value) === index)
+    .join(", ");
+  return location.length > 0 ? location : null;
+}
+
+function isStatus(value: string | null): value is OfferEvidenceStatus {
   return (
-    <p className="offer-explorer__evidence-state">
-      <Icon name={icon} size={19} />
-      <strong>{OFFER_EVIDENCE_STATUS_LABELS[status]}</strong>
-    </p>
+    value !== null && STATUS_OPTIONS.includes(value as OfferEvidenceStatus)
   );
 }
 
-function ActionLink({ action }: { action: OfferEvidenceNextAction }) {
-  if (action.targetKind === "internal") {
-    return (
-      <Link className={ACTION_LINK_CLASS} to={action.href}>
-        {action.label}
-      </Link>
-    );
-  }
+function TraceabilityContent({ record }: { record: OfferEvidenceRecord }) {
   return (
-    <a
-      {...EXTERNAL_LINK_PROPS}
-      className={ACTION_LINK_CLASS}
-      href={action.href}
-    >
-      {action.label}
-      <span aria-hidden="true"> ↗</span>
-    </a>
-  );
-}
+    <div className="offer-row__traceability">
+      <section>
+        <h3>Información de la publicación</h3>
+        <dl className="offer-row__metadata">
+          <div>
+            <dt>Estado de la revisión</dt>
+            <dd>{STATUS_FILTER_LABELS[record.evidenceStatus]}</dd>
+          </div>
+          <div>
+            <dt>Fuente del dato</dt>
+            <dd>
+              <ExternalLink href={record.sourceUrl}>
+                {record.sourceName}
+              </ExternalLink>
+            </dd>
+          </div>
+          <div>
+            <dt>Fecha de publicación</dt>
+            <dd>{formattedDate(record.sourceDate)}</dd>
+          </div>
+          <div>
+            <dt>Última comprobación</dt>
+            <dd>{formattedDate(record.freshnessDate)}</dd>
+          </div>
+        </dl>
+      </section>
 
-function EvidenceItem({
-  icon,
-  className,
-  children,
-}: {
-  icon: IconName;
-  className?: string;
-  children: ReactNode;
-}) {
-  return (
-    <li className={className}>
-      <Icon name={icon} size={18} />
-      <div>{children}</div>
-    </li>
-  );
-}
-
-function RequirementEvidence({
-  record,
-  compact,
-}: {
-  record: OfferEvidenceRecord;
-  compact?: boolean;
-}) {
-  const requirement = record.requirements[0];
-  const headingId = `requirements-${record.offerId}`;
-  return (
-    <section
-      className="offer-explorer-card__requirement"
-      aria-labelledby={headingId}
-    >
-      <div className="offer-explorer__section-heading">
-        <Icon name="file-check" size={20} />
-        <h3 id={headingId}>Requisito literal</h3>
-      </div>
-      {record.requirements.length === 0 ? (
-        <p className={MUTED_CLASS}>
-          {NO_REQUIREMENTS_COPY}
-          {record.universityEvidence?.evidenceClass === "U1" ? (
-            <> U1: “{record.universityEvidence.sourceQuote}”</>
-          ) : null}
-        </p>
-      ) : compact ? (
-        <>
-          <blockquote className={LITERAL_CLASS}>
-            “{requirement.literalRequirement}”
-          </blockquote>
-          {record.requirements.length > 1 ? (
-            <p className="offer-explorer__preview-note">
-              + {record.requirements.length - 1} requisitos más.
-            </p>
-          ) : null}
-        </>
-      ) : (
-        <ul className="offer-explorer__requirements">
-          {record.requirements.map((requirement) => (
-            <li key={requirement.requirementId}>
-              <blockquote className={LITERAL_CLASS}>
-                “{requirement.literalRequirement}”
-              </blockquote>
-              <p className="offer-explorer__requirement-meta">
-                Tipo:{" "}
-                <strong>
-                  {offerEvidenceCategoryLabel(requirement.normalizedCategory)}
-                </strong>{" "}
-                · Lectura:{" "}
-                {
-                  OFFER_EVIDENCE_CLASSIFICATION_LABELS[
-                    requirement.classificationStatus
-                  ]
-                }
-              </p>
-              {requirement.normalizedValue !== null ? (
-                <p className={NORMALIZED_CLASS}>
-                  Lectura normalizada:{" "}
-                  <strong>{String(requirement.normalizedValue)}</strong>
-                </p>
-              ) : (
-                <p className={NORMALIZED_CLASS}>
-                  No se ha normalizado este texto.
-                </p>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-    </section>
-  );
-}
-
-function KnownEvidence({ record }: { record: OfferEvidenceRecord }) {
-  const certificateAction = record.nextActions.find(
-    (action) => action.certificateEvidence !== undefined,
-  );
-  const headingId = `known-${record.offerId}`;
-  return (
-    <section
-      className={`${SECTION_CLASS} offer-explorer-card__known`}
-      aria-labelledby={headingId}
-    >
-      <h3 id={headingId}>Lo que sabemos</h3>
-      <ul className="offer-explorer__known-list">
-        {record.relations.map((relation) => (
-          <EvidenceItem
-            key={
-              relation.programKey + relation.occupationId + relation.matchRule
-            }
-            icon="badge-check"
-          >
-            <strong>{relation.programTitle}</strong> ·{" "}
-            {relation.occupationLabel}
-            <small>
-              {OFFER_EVIDENCE_STATUS_LABELS.reviewed_fp_relationship}
-            </small>
-          </EvidenceItem>
-        ))}
-        {record.universityEvidence !== null ? (
-          <EvidenceItem
-            icon="shield-check"
-            className="offer-explorer__known-boundary"
-          >
-            <strong>
-              {record.universityEvidence.evidenceClass} ·{" "}
-              {record.universityEvidence.evidenceClass === "U1"
-                ? "Requisito literal"
-                : record.universityEvidence.evidenceClass === "U2"
-                  ? "Vía regulada"
-                  : "Contexto oficial"}
-            </strong>
-            <blockquote className={LITERAL_CLASS}>
-              “{record.universityEvidence.sourceQuote}”
-            </blockquote>
-          </EvidenceItem>
-        ) : null}
-        {certificateAction !== undefined ? (
-          <EvidenceItem key="known-certificate" icon="file-check">
-            <strong>
-              {certificateAction.certificateRouteType ===
-              "offer_explicitly_accepts"
-                ? "Certificado citado por la oferta"
-                : "Certificado oficial relacionado"}
-            </strong>
-            {certificateAction.certificateEvidence?.map((certificate) => (
-              <span key={certificate.certificateCode}>
-                {certificate.certificateCode} · {certificate.certificateTitle}
-                <small>{certificate.relevance}</small>
-              </span>
-            ))}
-          </EvidenceItem>
-        ) : null}
-        {record.relations.length === 0 &&
-        record.universityEvidence === null &&
-        certificateAction === undefined ? (
-          <EvidenceItem icon="eye">
-            La oferta publica la ocupación{" "}
-            <strong>{record.occupationLabel}</strong>.
-          </EvidenceItem>
-        ) : null}
-      </ul>
-    </section>
-  );
-}
-
-function UnknownEvidence({ record }: { record: OfferEvidenceRecord }) {
-  const hasAccreditationAction = record.nextActions.some(
-    (action) => action.actionType === "accreditation_route",
-  );
-  const hasUnknowns =
-    record.requirements.length === 0 ||
-    record.hasAmbiguousRequirements ||
-    record.relations.length === 0 ||
-    record.universitySignal === "title_only_unverified" ||
-    hasAccreditationAction;
-
-  if (!hasUnknowns) return null;
-  const headingId = `unknown-${record.offerId}`;
-
-  return (
-    <section
-      className={`${SECTION_CLASS} offer-explorer-card__unknown`}
-      aria-labelledby={headingId}
-    >
-      <h3 id={headingId}>Lo que no sabemos</h3>
-      <ul className="offer-explorer__unknown-list">
+      <section>
+        <h3>Qué publica la oferta</h3>
         {record.requirements.length === 0 ? (
-          <EvidenceItem icon="eye">{NO_REQUIREMENTS_COPY}</EvidenceItem>
-        ) : null}
-        {record.hasAmbiguousRequirements ? (
-          <EvidenceItem icon="eye">
-            Texto de requisito sin clasificar; no adivinamos.
-          </EvidenceItem>
-        ) : null}
+          <p className="offer-explorer__muted">
+            No hemos podido extraer requisitos concretos de esta publicación.
+            Compruébalos en la oferta oficial.
+          </p>
+        ) : (
+          <ul className="offer-row__requirements">
+            {record.requirements.map((requirement) => (
+              <li key={requirement.requirementId}>
+                <p>
+                  <strong>
+                    {offerEvidenceCategoryLabel(requirement.normalizedCategory)}
+                  </strong>{" "}
+                  <span>
+                    (
+                    {
+                      OFFER_EVIDENCE_CLASSIFICATION_LABELS[
+                        requirement.classificationStatus
+                      ]
+                    }
+                    )
+                  </span>
+                </p>
+                <blockquote>{requirement.literalRequirement}</blockquote>
+                {requirement.normalizedValue !== null && (
+                  <p>
+                    Lectura normalizada:{" "}
+                    <strong>{String(requirement.normalizedValue)}</strong>
+                  </p>
+                )}
+                <p className="offer-row__evidence-meta">
+                  <ExternalLink href={requirement.sourceUrl}>
+                    Fuente de la oferta
+                  </ExternalLink>
+                  <span>
+                    Publicada el {formattedDate(requirement.sourceDate)}
+                  </span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section>
+        <h3>Correspondencia con formación</h3>
         {record.relations.length === 0 ? (
-          <EvidenceItem icon="x">{NO_RELATION_COPY}</EvidenceItem>
+          <p className="offer-explorer__muted">
+            No hay una relación FP comprobada para esta oferta. Su ausencia no
+            demuestra que la relación no exista.
+          </p>
+        ) : (
+          <ul className="offer-row__relations">
+            {record.relations.map((relation) => (
+              <li
+                key={`${relation.programKey}-${relation.occupationId}-${relation.matchRule}`}
+              >
+                <p>
+                  <strong>{formatProgramTitle(relation.programTitle)}</strong> ·{" "}
+                  {relation.occupationLabel}
+                </p>
+                <blockquote>{relation.sourceQuote}</blockquote>
+                <p className="offer-row__evidence-meta">
+                  <ExternalLink href={relation.sourceUrl}>
+                    Fuente de la relación
+                  </ExternalLink>
+                  <span>Revisada el {formattedDate(relation.reviewedAt)}</span>
+                  <span>Versión de la relación: {relation.mappingVersion}</span>
+                </p>
+                {relation.reviewNote !== undefined && (
+                  <p>{relation.reviewNote}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+        {record.evidenceStatus === "university_or_regulatory_route" ? (
+          <p className="offer-explorer__boundary-note">
+            Aquí marcamos un límite: no inferimos equivalencias, acceso,
+            colegiación ni empleabilidad universitaria.
+          </p>
         ) : null}
-        {record.universitySignal === "title_only_unverified" ? (
-          <EvidenceItem icon="shield-check">
-            El título por sí solo no prueba una exigencia universitaria o
-            regulada.
-          </EvidenceItem>
-        ) : null}
-        {hasAccreditationAction ? (
-          <EvidenceItem icon="eye">
-            La elegibilidad para acreditación no está calculada.
-          </EvidenceItem>
-        ) : null}
-      </ul>
-    </section>
+      </section>
+    </div>
   );
 }
 
-function ActionNotes({ action }: { action: OfferEvidenceNextAction }) {
-  const note = action.caveat
-    ? "Límite: " + action.caveat
-    : action.eligibilityStatus === "not_calculated"
-      ? "La elegibilidad para acreditación no está calculada."
-      : null;
-
-  if (!note) return null;
-
-  return <p className="offer-explorer__caveat">{note}</p>;
-}
-
-function NextAction({
+function RelatedTrainingLinks({
   record,
-  compact,
+  context,
 }: {
   record: OfferEvidenceRecord;
-  compact?: boolean;
+  context: OfferContext;
 }) {
-  const primaryAction =
-    record.nextActions.find(
-      (action) => action.actionType === "open_original_offer",
-    ) ?? record.nextActions[0];
-  if (compact) {
-    return <ActionLink action={primaryAction} />;
-  }
-  const secondaryAction = record.nextActions.find(
-    (action) => action !== primaryAction && action.actionType !== "ecyl_office",
-  );
-  const headingId = `actions-${record.offerId}`;
+  const relations =
+    context.kind === "program"
+      ? record.relations.filter(
+          (relation) => relation.programKey === context.programKey,
+        )
+      : record.relations;
+
+  if (relations.length === 0) return null;
 
   return (
-    <section
-      className={`${SECTION_CLASS} offer-explorer-card__next-action`}
-      aria-labelledby={headingId}
-    >
-      <h3 id={headingId}>Siguiente acción</h3>
-      <p>{primaryAction.reason}</p>
-      <ActionLink action={primaryAction} />
-      <ActionNotes action={primaryAction} />
-      {secondaryAction ? (
-        <div className="offer-explorer__secondary-action">
-          <ActionLink action={secondaryAction} />
-          <p>{secondaryAction.reason}</p>
-          <ActionNotes action={secondaryAction} />
-        </div>
-      ) : null}
-    </section>
-  );
-}
-
-function SupportingEvidence({ record }: { record: OfferEvidenceRecord }) {
-  const universitySource =
-    record.universityEvidence === null
-      ? []
-      : [
-          {
-            key: "university-evidence",
-            url: record.universityEvidence.sourceUrl,
-            linkLabel: "abrir fuente",
-          },
-        ];
-  const sources = [
-    {
-      key: "data-source",
-      url: record.sourceUrl,
-      linkLabel:
-        record.sourceName +
-        " · Empleador no publicado · Frescura " +
-        formattedDate(record.freshnessDate),
-    },
-    ...record.requirements.map((requirement) => ({
-      key: requirement.requirementId,
-      url: requirement.sourceUrl,
-      linkLabel: "abrir publicación",
-    })),
-    ...record.relations.map((relation) => ({
-      key: relation.programKey + relation.occupationId + relation.matchRule,
-      url: relation.sourceUrl,
-      linkLabel:
-        "ver evidencia oficial · " + formattedDate(relation.reviewedAt),
-    })),
-    ...universitySource,
-    ...record.nextActions.flatMap((action) =>
-      (action.certificateEvidence ?? []).map((certificate) => ({
-        key: certificate.certificateCode,
-        url: certificate.authoritativeSourceUrl,
-        linkLabel: "Abrir fuente oficial SEPE ↗",
-      })),
-    ),
-  ];
-  const headingId = `supporting-${record.offerId}`;
-
-  return (
-    <section
-      className={`${SECTION_CLASS} offer-explorer-card__supporting`}
-      aria-labelledby={headingId}
-    >
-      <h3 id={headingId}>Fuentes y limitaciones</h3>
-      <p className={MUTED_CLASS}>
-        Conservamos las fuentes y fechas que sostienen cada estado.{" "}
-        {LIMITATIONS_COPY}
-      </p>
-      <ul className="offer-explorer__supporting-list">
-        {sources.map((source) => (
-          <li key={source.key}>
-            <a {...EXTERNAL_LINK_PROPS} href={source.url}>
-              {source.linkLabel}
-            </a>
+    <div className="offer-row__relations-summary">
+      <span>Formación relacionada:</span>
+      <ul>
+        {relations.map((relation) => (
+          <li key={`${relation.programKey}-${relation.occupationId}`}>
+            <Link to={trainingDetailPath(relation.programKey)}>
+              {formatProgramTitle(relation.programTitle)}
+            </Link>
           </li>
         ))}
       </ul>
-    </section>
+    </div>
   );
 }
 
-function OfferCard({ record }: { record: OfferEvidenceRecord }) {
-  const headingId = `offer-heading-${record.offerId}`;
-  const stateHeadingId = `state-${record.offerId}`;
+function OfferRow({
+  record,
+  context,
+}: {
+  record: OfferEvidenceRecord;
+  context: OfferContext;
+}) {
+  const location = locationLabel(record);
+
   return (
-    <article className="offer-explorer-card" aria-labelledby={headingId}>
-      <header className="offer-explorer-card__header">
-        <h2 id={headingId}>{record.title}</h2>
-        <p className="offer-explorer-card__occupation">
-          Ocupación publicada: <strong>{record.occupationLabel}</strong>
-        </p>
-      </header>
-
-      <dl className="offer-explorer-card__facts">
-        <div>
-          <dt>Ubicación</dt>
-          <dd>
-            {[record.locality, record.province].filter(Boolean).join(" · ") ||
-              "Ubicación no publicada"}
-          </dd>
+    <article className="offer-row" aria-label={record.title}>
+      <div className="offer-row__body">
+        <div className="offer-row__content">
+          <h3 className="offer-row__title">
+            <span>{formatOfferTitle(record.title)}</span>
+          </h3>
+          <p className="offer-row__meta">
+            {location !== null ? `${location} · ` : ""}
+            {record.sourceName} · publicada{" "}
+            <time dateTime={record.publishedAt}>
+              {shortDate(record.publishedAt)}
+            </time>
+          </p>
+          <RelatedTrainingLinks record={record} context={context} />
         </div>
-        <div>
-          <dt>Publicada</dt>
-          <dd>{formattedDate(record.publishedAt)}</dd>
-        </div>
-        <div>
-          <dt>Fuente</dt>
-          <dd>{record.sourceName}</dd>
-        </div>
-        <div>
-          <dt>Instantánea</dt>
-          <dd>Copia fechada</dd>
-        </div>
-      </dl>
-
-      <p className="offer-explorer-card__source">
-        <a {...EXTERNAL_LINK_PROPS} href={record.originalUrl}>
-          Abrir publicación original ↗
-        </a>
-      </p>
-
-      <RequirementEvidence record={record} compact />
-
-      <EvidenceState status={record.evidenceStatus} />
-
-      <p className="offer-explorer-card__critical">
-        <Icon name="eye" size={18} />
-        <span>
-          <strong>Vigencia no confirmada.</strong> Esta oferta aparece en una
-          copia fechada del{" "}
-          <time dateTime={record.freshnessDate}>
-            {formattedDate(record.freshnessDate)}
-          </time>
-          .
-        </span>
-      </p>
-
-      <NextAction record={record} compact />
-
-      <details className="offer-explorer-card__details">
-        <summary>Ver requisito, evidencia y siguiente acción</summary>
-        <div className="offer-explorer-card__decision-flow">
-          <RequirementEvidence record={record} />
-          <section
-            className={`${SECTION_CLASS} offer-explorer-card__state`}
-            aria-labelledby={stateHeadingId}
+        <div className="offer-row__actions">
+          <ExternalLink
+            className="offer-row__official"
+            href={record.originalUrl}
           >
-            <h3 id={stateHeadingId}>Estado de la evidencia</h3>
-            <EvidenceState status={record.evidenceStatus} />
-          </section>
-          <KnownEvidence record={record} />
-          <UnknownEvidence record={record} />
-          <NextAction record={record} />
-          <SupportingEvidence record={record} />
+            Ver oferta oficial
+            <Icon name="external-link" size={16} />
+          </ExternalLink>
+          <InfoDisclosure
+            label={`Fuente y revisión de ${record.title}`}
+            trigger="Fuente y revisión"
+          >
+            <TraceabilityContent record={record} />
+          </InfoDisclosure>
         </div>
-      </details>
+      </div>
     </article>
   );
 }
 
-export function OfferExplorerPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const queryParam = searchParams.get("query") ?? "";
-  const [state, setState] = useState<OfferExplorerState>({ status: "loading" });
-  const [status, setStatus] = useState<OfferEvidenceStatus | "all">("all");
-  const [province, setProvince] = useState<string>("all");
-  const [page, setPage] = useState(1);
+function breadcrumbItems(context: OfferContext) {
+  if (context.kind === "global") {
+    return [
+      { label: "Inicio", to: "/" },
+      { label: "Ofertas de empleo", to: globalOffersPath() },
+    ];
+  }
+  return [
+    { label: "Inicio", to: "/" },
+    { label: "Ofertas de empleo", to: globalOffersPath() },
+    context.kind === "program"
+      ? {
+          label: formatProgramTitle(context.programTitle),
+          to: trainingDetailPath(context.programKey),
+        }
+      : {
+          label: context.occupationLabel,
+          to: occupationDetailPath(context.occupationId),
+        },
+    { label: "Ofertas relacionadas" },
+  ];
+}
 
-  useRouteReady(state.status !== "loading" && state.status !== "failed");
+function contextLabel(context: OfferContext): string {
+  if (context.kind === "program") {
+    return `Ofertas relacionadas con ${formatProgramTitle(context.programTitle)}`;
+  }
+  if (context.kind === "occupation") {
+    return `Ofertas relacionadas con ${context.occupationLabel}`;
+  }
+  return "Ofertas de empleo";
+}
+
+function contextIntro(context: OfferContext): string {
+  if (context.kind === "program") {
+    return "Ofertas de la copia activa cuya relación con este ciclo está documentada.";
+  }
+  if (context.kind === "occupation") {
+    return "Ofertas de la copia activa relacionadas con esta profesión mediante relaciones revisadas.";
+  }
+  return "Copia de ofertas publicadas por la Junta de Castilla y León. Cuando una oferta tiene una formación relacionada comprobada, te lo indicamos.";
+}
+
+function contextScopeNote(context: OfferContext): string {
+  if (context.kind === "program") {
+    return "Comprueba siempre la vigencia y los requisitos en la publicación oficial. La relación orienta la búsqueda; no implica contratación ni equivalencia profesional.";
+  }
+  if (context.kind === "occupation") {
+    return "No representan todo el mercado laboral. La relación orienta la búsqueda; no implica contratación ni equivalencia profesional.";
+  }
+  return "Comprueba siempre la vigencia y los requisitos en la oferta oficial. La relación orienta la búsqueda; no implica contratación ni equivalencia profesional.";
+}
+
+export function OfferExplorerPage({
+  scope = "global",
+}: {
+  scope?: OfferExplorerScope;
+}) {
+  const { programKey, occupationId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [state, setState] = useState<OfferExplorerState>({ status: "loading" });
+  const queryParam = searchParams.get("query") ?? "";
+  const statusParam = searchParams.get("status");
+  const status: OfferEvidenceStatus | "all" = isStatus(statusParam)
+    ? statusParam
+    : "all";
+  const province = searchParams.get("province") ?? "all";
+  const pageParam = Number.parseInt(searchParams.get("page") ?? "1", 10);
+  const requestedPage =
+    Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
+
+  useRouteReady(state.status !== "loading");
 
   useEffect(() => {
     const controller = new AbortController();
     const options = { signal: controller.signal };
+
     void loadManifest(options)
-      .then((manifest) => loadOfferEvidence(manifest, options))
-      .then((resource) => {
+      .then(async (manifest) => {
+        const evidencePromise = loadOfferEvidence(manifest, options);
+        const jobOffersSnapshot = (
+          manifest as {
+            resourceSnapshots?: Partial<
+              Record<
+                "jobOffers",
+                {
+                  sourceUpdatedAt: string | null;
+                  snapshotFetchedAt: string;
+                }
+              >
+            >;
+          }
+        ).resourceSnapshots?.jobOffers;
+        const offersSourceDate =
+          jobOffersSnapshot === undefined
+            ? null
+            : (jobOffersSnapshot.sourceUpdatedAt ??
+              jobOffersSnapshot.snapshotFetchedAt);
+        if (scope === "program") {
+          if (programKey === undefined) {
+            return {
+              kind: "not-found" as const,
+              contextKind: "program" as const,
+            };
+          }
+          const [resource, foundation] = await Promise.all([
+            evidencePromise,
+            loadFoundationResourceSubset(manifest, ["programs"], options),
+          ]);
+          const program = foundation.programs.find(
+            (candidate) => candidate.programKey === programKey,
+          );
+          if (program === undefined) {
+            return {
+              kind: "not-found" as const,
+              contextKind: "program" as const,
+            };
+          }
+          return {
+            kind: "ready" as const,
+            resource,
+            offersSourceDate,
+            context: {
+              kind: "program" as const,
+              programKey: program.programKey,
+              programTitle: program.programTitle,
+            },
+          };
+        }
+        if (scope === "occupation") {
+          if (occupationId === undefined) {
+            return {
+              kind: "not-found" as const,
+              contextKind: "occupation" as const,
+            };
+          }
+          const [resource, occupations] = await Promise.all([
+            evidencePromise,
+            loadOfficialOccupations(manifest, options),
+          ]);
+          const occupation = occupations.find(
+            (candidate) => candidate.occupationId === occupationId,
+          );
+          if (occupation === undefined) {
+            return {
+              kind: "not-found" as const,
+              contextKind: "occupation" as const,
+            };
+          }
+          return {
+            kind: "ready" as const,
+            resource,
+            offersSourceDate,
+            context: {
+              kind: "occupation" as const,
+              occupationId: occupation.occupationId,
+              occupationLabel: formatOccupationLabel(occupation.preferredLabel),
+              classificationCode: occupation.classificationCode,
+            },
+          };
+        }
+        return {
+          kind: "ready" as const,
+          resource: await evidencePromise,
+          offersSourceDate,
+          context: { kind: "global" as const },
+        };
+      })
+      .then((result) => {
         if (controller.signal.aborted) return;
+        if (result.kind === "not-found") {
+          setState({ status: "not-found", contextKind: result.contextKind });
+          return;
+        }
         setState({
           status: "ready",
-          records: resource.records,
-          generatedAt: resource.generatedAt,
+          records: result.resource.records,
+          generatedAt: result.resource.generatedAt,
+          offersSourceDate: result.offersSourceDate,
+          context: result.context,
         });
       })
       .catch(() => {
         if (controller.signal.aborted) return;
         setState({ status: "failed" });
       });
-    return () => controller.abort();
-  }, []);
 
-  const provinces = useMemo(() => {
+    return () => controller.abort();
+  }, [occupationId, programKey, scope]);
+
+  const contextualRecords = useMemo(() => {
     if (state.status !== "ready") return [];
-    return [
-      ...new Set(
-        state.records
-          .map(({ province }) => province)
-          .filter((value): value is string => value !== null),
+    const context = state.context;
+    if (context.kind === "global") return state.records;
+    if (context.kind === "program") {
+      const { programKey } = context;
+      return state.records.filter((record) =>
+        record.relations.some((relation) => relation.programKey === programKey),
+      );
+    }
+    const { occupationId } = context;
+    return state.records.filter((record) =>
+      record.relations.some(
+        (relation) => relation.occupationId === occupationId,
       ),
-    ].sort((left, right) => left.localeCompare(right, "es"));
+    );
   }, [state]);
 
-  const filteredRecords = useMemo(() => {
-    if (state.status !== "ready") return [];
-    return sortOfferEvidenceRecords(
-      filterOfferEvidenceRecords(state.records, {
-        query: queryParam,
-        status,
-        province,
-      }),
-    );
-  }, [province, queryParam, state, status]);
+  const provinces = useMemo(
+    () =>
+      [
+        ...new Set(
+          contextualRecords
+            .map(({ province: value }) => value)
+            .filter((value): value is string => value !== null),
+        ),
+      ].sort((left, right) => left.localeCompare(right, "es")),
+    [contextualRecords],
+  );
+
+  const filteredRecords = useMemo(
+    () =>
+      sortOfferEvidenceRecords(
+        filterOfferEvidenceRecords(contextualRecords, {
+          query: queryParam,
+          status,
+          province,
+        }),
+      ),
+    [contextualRecords, province, queryParam, status],
+  );
 
   const pageCount = Math.max(1, Math.ceil(filteredRecords.length / PAGE_SIZE));
-  const currentPage = Math.min(page, pageCount);
+  // Count unique offers in the filtered result, not relations or page rows.
+  const reviewedOfferCount = filteredRecords.filter(
+    (record) => record.relations.length > 0,
+  ).length;
+  const currentPage = Math.min(requestedPage, pageCount);
   const visibleRecords = filteredRecords.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE,
   );
+  useEffect(() => {
+    if (state.status !== "ready") return;
+    const canonicalPage = currentPage <= 1 ? null : String(currentPage);
+    if (searchParams.get("page") === canonicalPage) return;
+    const next = new URLSearchParams(searchParams);
+    if (canonicalPage === null) next.delete("page");
+    else next.set("page", canonicalPage);
+    setSearchParams(next, { replace: true });
+  }, [currentPage, searchParams, setSearchParams, state.status]);
+  const firstVisibleResult =
+    filteredRecords.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+  const lastVisibleResult = Math.min(
+    currentPage * PAGE_SIZE,
+    filteredRecords.length,
+  );
+  const hasActiveFilters =
+    queryParam.trim().length > 0 || status !== "all" || province !== "all";
 
-  const submitSearch = (event: React.FormEvent<HTMLFormElement>) => {
+  function updateParams(values: Record<string, string | null>): void {
+    const next = new URLSearchParams(searchParams);
+    for (const [key, value] of Object.entries(values)) {
+      if (value === null || value === "" || value === "all") next.delete(key);
+      else next.set(key, value);
+    }
+    next.delete("page");
+    setSearchParams(next);
+  }
+
+  function submitSearch(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const nextQuery = String(formData.get("query") ?? "").trim();
-    setPage(1);
-    if (nextQuery.length === 0) {
-      setSearchParams({}, { replace: true });
-    } else {
-      setSearchParams({ query: nextQuery }, { replace: true });
-    }
-  };
+    updateParams({ query: String(formData.get("query") ?? "").trim() });
+  }
+
+  function clearFilters(): void {
+    setSearchParams({});
+  }
+
+  function goToPage(nextPage: number): void {
+    const next = new URLSearchParams(searchParams);
+    if (nextPage <= 1) next.delete("page");
+    else next.set("page", String(nextPage));
+    setSearchParams(next);
+    window.requestAnimationFrame(() => {
+      const results = document.getElementById("offer-results-heading");
+      results?.scrollIntoView?.({ block: "start", behavior: "instant" });
+      results?.focus({ preventScroll: true });
+    });
+  }
 
   if (state.status === "loading") {
     return (
-      <p role="status" aria-live="polite">
-        Cargando las ofertas y su evidencia…
-      </p>
+      <section className="container catalog-loading" aria-busy="true">
+        <LoadingSkeleton status="Cargando las ofertas…" layout="catalog" />
+      </section>
     );
   }
   if (state.status === "failed") {
@@ -587,133 +608,264 @@ export function OfferExplorerPage() {
       <section
         className="status-panel"
         aria-labelledby="offer-explorer-error-heading"
+        role="alert"
       >
         <h1 id="offer-explorer-error-heading">
           No hemos podido abrir las ofertas
         </h1>
         <p>
-          La instantánea candidata no está disponible o no coincide con la base
-          activa. Prueba de nuevo más tarde.
+          La copia de ofertas no está disponible. Prueba de nuevo más tarde.
         </p>
         <Link to="/">Volver al inicio</Link>
       </section>
     );
   }
+  if (state.status === "not-found") {
+    return (
+      <section
+        className="status-panel"
+        aria-labelledby="offer-explorer-not-found-heading"
+      >
+        <h1 id="offer-explorer-not-found-heading">
+          {state.contextKind === "program"
+            ? "Ciclo no encontrado"
+            : "Profesión no encontrada"}
+        </h1>
+        <p>
+          La dirección no corresponde a un elemento oficial disponible en la
+          copia activa.
+        </p>
+        <Link
+          to={
+            state.contextKind === "program" ? "/desde-fp" : "/desde-ocupacion"
+          }
+        >
+          Volver a explorar
+        </Link>
+      </section>
+    );
+  }
+
+  const { context } = state;
+  const heading = contextLabel(context);
+  const isGlobal = context.kind === "global";
+  const resultNoun = isGlobal
+    ? filteredRecords.length === 1
+      ? "oferta"
+      : "ofertas"
+    : filteredRecords.length === 1
+      ? "oferta relacionada"
+      : "ofertas relacionadas";
+  const resultsSummary = `${firstVisibleResult.toLocaleString("es-ES")}–${lastVisibleResult.toLocaleString("es-ES")} de ${filteredRecords.length.toLocaleString("es-ES")} ${resultNoun}`;
 
   return (
-    <article
+    <section
       className="offer-explorer"
       aria-labelledby="offer-explorer-heading"
     >
-      <header className="offer-explorer__intro">
-        <p className={EYEBROW_CLASS}>Desde una oferta</p>
-        <h1 id="offer-explorer-heading">Tengo una oferta</h1>
-        <p>Comprueba requisito, evidencia y siguiente acción.</p>
-        <p className="offer-explorer__limit">
-          Copia fechada de {state.records.length.toLocaleString("es-ES")}{" "}
-          ofertas. La vigencia actual se comprueba en la publicación de origen.
+      <Breadcrumbs items={breadcrumbItems(context)} />
+      <header className="page-header page-masthead offer-explorer__intro">
+        <PageEyebrow>
+          {isGlobal ? "Oportunidades publicadas" : "Contexto documentado"}
+        </PageEyebrow>
+        <h1 className="h1" id="offer-explorer-heading">
+          {heading}
+        </h1>
+        <p className="page-subcopy page-lede">{contextIntro(context)}</p>
+        <p
+          className="caption offer-explorer__freshness"
+          style={{ marginTop: "var(--space-2)" }}
+        >
+          Ofertas de empleo
+          {state.offersSourceDate !== null && (
+            <>
+              {" · publicaciones hasta el "}
+              <time dateTime={state.offersSourceDate}>
+                {formattedDate(state.offersSourceDate)}
+              </time>
+            </>
+          )}{" "}
+          · evidencia generada el{" "}
+          <time dateTime={state.generatedAt}>
+            {formattedDate(state.generatedAt)}
+          </time>{" "}
+          ·{" "}
+          <Link to="/metodologia" className="link-quiet">
+            Cómo se comprueba
+          </Link>
         </p>
       </header>
 
-      <section
-        className="offer-explorer__search"
-        aria-labelledby="offer-search-heading"
+      <form
+        className="filter-bar offer-explorer__search"
+        onSubmit={submitSearch}
+        aria-label="Buscar ofertas"
       >
-        <h2 id="offer-search-heading">Buscar una oferta</h2>
-        <form onSubmit={submitSearch}>
+        <div className="filter-field filter-grow">
           <label htmlFor="offer-query">
             Título, ocupación, requisito o localidad
           </label>
-          <div className="offer-explorer__search-row">
-            <input
-              id="offer-query"
-              name="query"
-              type="search"
-              defaultValue={queryParam}
-              placeholder="Ej.: cocina, cuidador, fisioterapeuta"
-            />
-            <button className="primary-button" type="submit">
-              Buscar
-            </button>
-          </div>
-        </form>
-        <div className="offer-explorer__filters">
-          <label>
-            <span>Estado de evidencia</span>
-            <select
-              value={status}
-              onChange={(event) => {
-                setPage(1);
-                setStatus(event.target.value as OfferEvidenceStatus | "all");
-              }}
-            >
-              {STATUS_OPTIONS.map((option) => (
-                <option value={option} key={option}>
-                  {option === "all"
-                    ? "Todos"
-                    : OFFER_EVIDENCE_STATUS_LABELS[option]}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
+          <input
+            id="offer-query"
+            key={queryParam}
+            name="query"
+            type="search"
+            defaultValue={queryParam}
+            placeholder="Ej.: puesto, localidad o código"
+          />
+        </div>
+        <div className="filter-field">
+          <label htmlFor="offer-province">
             <span>Provincia</span>
-            <select
-              value={province}
-              onChange={(event) => {
-                setPage(1);
-                setProvince(event.target.value);
-              }}
-            >
-              <option value="all">Todas</option>
-              {provinces.map((option) => (
-                <option value={option} key={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
           </label>
+          <select
+            id="offer-province"
+            value={province}
+            onChange={(event) => updateParams({ province: event.target.value })}
+          >
+            <option value="all">Todas las provincias</option>
+            {provinces.map((option) => (
+              <option value={option} key={option}>
+                {option}
+              </option>
+            ))}
+          </select>
         </div>
-        <div
-          className="offer-explorer__demos"
-          aria-label="Demos para el jurado"
-        >
-          <span>Prueba una demo:</span>
-          <Link to="/desde-oferta?query=cocina">
-            Cocina: requisito FP exacto
-          </Link>
-          <Link to="/desde-oferta?query=cuidador">
-            Cuidador: ambigüedad visible
-          </Link>
-          <Link to="/desde-oferta?query=fisioterapeuta">
-            Fisioterapia: límite universitario
-          </Link>
+        <div className="filter-field">
+          <label htmlFor="offer-status">
+            <span>Relación con la formación</span>
+          </label>
+          <select
+            id="offer-status"
+            value={status}
+            onChange={(event) => updateParams({ status: event.target.value })}
+          >
+            {STATUS_OPTIONS.map((option) => (
+              <option value={option} key={option}>
+                {STATUS_FILTER_LABELS[option]}
+              </option>
+            ))}
+          </select>
         </div>
-      </section>
+        <div className="filter-field">
+          <button className="button button--primary" type="submit">
+            Buscar
+          </button>
+        </div>
+        {hasActiveFilters && (
+          <button
+            className="offer-explorer__clear"
+            type="button"
+            onClick={clearFilters}
+          >
+            Limpiar filtros
+          </button>
+        )}
+      </form>
+
+      <aside
+        className="offer-explorer__scope-note"
+        aria-label="Alcance de esta copia"
+      >
+        <p>{contextScopeNote(context)}</p>
+      </aside>
 
       <section
         className="offer-explorer__results"
         aria-labelledby="offer-results-heading"
       >
-        <div className="offer-explorer__results-heading">
-          <div>
-            <p className={EYEBROW_CLASS}>Resultado reproducible</p>
-            <h2 id="offer-results-heading">
-              {filteredRecords.length.toLocaleString("es-ES")} de{" "}
-              {state.records.length.toLocaleString("es-ES")} ofertas
-            </h2>
-          </div>
-          <p>Ordenadas por fecha publicada y después por título.</p>
+        <div className="result-meta offer-explorer__count">
+          <h2
+            className="result-count"
+            id="offer-results-heading"
+            tabIndex={-1}
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {resultsSummary}
+          </h2>
+          {visibleRecords.length > 0 && (
+            <p className="caption" style={{ margin: 0 }}>
+              {isGlobal &&
+                `${reviewedOfferCount.toLocaleString("es-ES")} con FP relacionada en estos resultados · `}
+              más recientes primero
+            </p>
+          )}
         </div>
         {visibleRecords.length === 0 ? (
-          <p className="offer-explorer__empty">
-            No hay coincidencias con estos filtros. Prueba otra palabra o vuelve
-            a mostrar todas las ofertas.
-          </p>
+          <div className="offer-explorer__empty">
+            {context.kind === "global" || hasActiveFilters ? (
+              <>
+                <h3>No hay coincidencias</h3>
+                <p>
+                  Prueba con otras palabras, revisa la ortografía o quita algún
+                  filtro. La copia de ofertas no representa todo el mercado
+                  laboral.
+                </p>
+                {hasActiveFilters && (
+                  <button
+                    className="secondary-button"
+                    type="button"
+                    onClick={clearFilters}
+                  >
+                    Quitar filtros
+                  </button>
+                )}
+              </>
+            ) : (
+              // Fail-closed zero state (screen contract §7): a reviewed empty
+              // is a valid answer. Never "no existen ofertas".
+              <>
+                <h3>
+                  Todavía no hemos podido comprobar ofertas relacionadas en esta
+                  copia.
+                </h3>
+                <div className="empty-grid">
+                  <div>
+                    <h3>Qué significa</h3>
+                    <p>
+                      Ninguna oferta de esta copia tiene una relación revisada
+                      con esta{" "}
+                      {context.kind === "occupation" ? "profesión" : "FP"}.
+                    </p>
+                  </div>
+                  <div>
+                    <h3>Qué NO significa</h3>
+                    <p>
+                      No significa que no exista la oportunidad: la ausencia de
+                      relación no prueba imposibilidad.
+                    </p>
+                  </div>
+                  <div>
+                    <h3>Qué puedes hacer</h3>
+                    <p>
+                      Explora el catálogo completo o consulta la metodología
+                      para entender el criterio de revisión.
+                    </p>
+                  </div>
+                </div>
+                <div className="method-actions">
+                  <Link
+                    className="button button--secondary"
+                    to={globalOffersPath()}
+                  >
+                    Explorar todas las ofertas
+                  </Link>
+                  <Link className="link-action" to="/metodologia">
+                    Consultar metodología
+                  </Link>
+                </div>
+              </>
+            )}
+          </div>
         ) : (
-          <div className="offer-explorer__grid">
+          <div className="offer-explorer__list" id="offer-results-list">
             {visibleRecords.map((record) => (
-              <OfferCard key={record.offerId} record={record} />
+              <OfferRow
+                key={record.offerId}
+                record={record}
+                context={context}
+              />
             ))}
           </div>
         )}
@@ -721,50 +873,32 @@ export function OfferExplorerPage() {
           <nav
             className="offer-explorer__pagination"
             aria-label="Paginación de ofertas"
+            aria-controls="offer-results-list"
           >
             <button
               className="secondary-button"
               type="button"
+              aria-label="Página anterior"
               disabled={currentPage === 1}
-              onClick={() => setPage((value) => Math.max(1, value - 1))}
+              onClick={() => goToPage(Math.max(1, currentPage - 1))}
             >
-              Anteriores
+              Anterior
             </button>
-            <span>
+            <span aria-live="polite">
               Página {currentPage} de {pageCount}
             </span>
             <button
               className="secondary-button"
               type="button"
+              aria-label="Página siguiente"
               disabled={currentPage === pageCount}
-              onClick={() => setPage((value) => Math.min(pageCount, value + 1))}
+              onClick={() => goToPage(Math.min(pageCount, currentPage + 1))}
             >
-              Siguientes
+              Siguiente
             </button>
           </nav>
         ) : null}
       </section>
-
-      <details className="offer-explorer__legend">
-        <summary>Cómo interpretamos estos estados</summary>
-        <div className="offer-explorer__legend-content">
-          <ul>
-            {STATUS_HELP.map((description, index) => {
-              const status = STATUS_OPTIONS[index + 1] as OfferEvidenceStatus;
-              return (
-                <li key={status}>
-                  <strong>{OFFER_EVIDENCE_STATUS_LABELS[status]}:</strong>{" "}
-                  {description}
-                </li>
-              );
-            })}
-          </ul>
-          <p>
-            El dataset candidato se generó el{" "}
-            {state.generatedAt ? formattedDate(state.generatedAt) : "—"}.
-          </p>
-        </div>
-      </details>
-    </article>
+    </section>
   );
 }

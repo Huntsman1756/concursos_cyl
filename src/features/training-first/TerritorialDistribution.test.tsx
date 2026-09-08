@@ -138,7 +138,7 @@ describe("TerritorialDistribution", () => {
 
     expect(
       screen.getByText(
-        "No hay centros publicados para este ciclo en la copia actual.",
+        "No hay centros publicados para este ciclo en la copia activa.",
       ),
     ).toBeVisible();
     expect(

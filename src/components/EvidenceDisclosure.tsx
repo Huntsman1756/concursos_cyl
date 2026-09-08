@@ -1,4 +1,5 @@
 import { ExternalLink } from "./ExternalLink";
+import { InfoDisclosure } from "./InfoDisclosure";
 
 interface EvidenceDisclosureProps {
   quote: string;
@@ -7,8 +8,9 @@ interface EvidenceDisclosureProps {
   sourceDate?: string;
   reviewedAt?: string;
   mappingVersion?: string;
-  parserRule?: string;
-  parserVersion?: string;
+  label?: string;
+  /** Visible trigger text ("Fuente y revisión"); icon-only when omitted. */
+  trigger?: string;
 }
 
 function spanishDate(value: string): string {
@@ -27,14 +29,17 @@ export function EvidenceDisclosure({
   sourceDate,
   reviewedAt,
   mappingVersion,
-  parserRule,
-  parserVersion,
+  label = "Ver información de origen y revisión",
+  trigger,
 }: EvidenceDisclosureProps) {
   return (
-    <div className="evidence-disclosure">
-      <blockquote className="evidence-disclosure__quote">{quote}</blockquote>
-      <details className="evidence-disclosure__provenance">
-        <summary>Ver cita exacta</summary>
+    <InfoDisclosure
+      className="evidence-disclosure"
+      label={label}
+      trigger={trigger}
+    >
+      <div className="evidence-disclosure__body">
+        <blockquote className="evidence-disclosure__quote">{quote}</blockquote>
         <div className="evidence-metadata">
           {sourceDate !== undefined && (
             <p>Fecha de la fuente: {spanishDate(sourceDate)}</p>
@@ -45,17 +50,11 @@ export function EvidenceDisclosure({
           {mappingVersion !== undefined && (
             <p>Versión de la relación: {mappingVersion}</p>
           )}
-          {parserRule !== undefined && (
-            <p>Regla técnica de extracción: {parserRule}</p>
-          )}
-          {parserVersion !== undefined && (
-            <p>Versión de la extracción: {parserVersion}</p>
-          )}
         </div>
         {sourceUrl !== undefined && (
           <ExternalLink href={sourceUrl}>{sourceLabel}</ExternalLink>
         )}
-      </details>
-    </div>
+      </div>
+    </InfoDisclosure>
   );
 }

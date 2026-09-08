@@ -12,5 +12,9 @@ describe("release container", () => {
       "FROM caddy:2-alpine@sha256:5f5c8640aae01df9654968d946d8f1a56c497f1dd5c5cda4cf95ab7c14d58648",
     );
     expect(dockerfile).not.toMatch(/^FROM [^\n@]+$/gmu);
+    expect(dockerfile).toContain("ARG RELEASE_COMMIT");
+    expect(dockerfile).toContain(
+      './node_modules/.bin/tsx scripts/release/writeVersionMetadata.ts dist "${RELEASE_COMMIT}"',
+    );
   });
 });

@@ -3,19 +3,46 @@ import { basename, extname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const ASSET_BUDGET = {
-  // Calibrated from the activated Expansion V1 build (581,918 JS; 85,837 CSS).
-  // The 582,500-byte JS cap is the smallest rounded candidate-level reserve
-  // that covers the certificate evidence payload; the offer-first route stays
-  // lazy and the aggregate inventory remains below the existing 1.8 MB ceiling.
-  totalBytes: 1_800_000,
-  javascriptBytes: 582_500,
-  stylesheetBytes: 90_000,
-  imageBytes: 1_150_000,
+  // Redesign build calibration (measured on the SALIDA visual system build).
+  //
+  // A. CORE APPLICATION BUNDLE — JS + CSS + fonts + icons + qa policy artifact.
+  //    javascript 605,009 measured → 610k bucket + 10k reserve (Home rewrite,
+  //    InfoButton/EditorialImage, center catalog domain).
+  //    stylesheet 146,596 measured → 150k bucket + 5k reserve (salida.css:
+  //    the approved prototype style layer ported 1:1 into the runtime).
+  //    155,123 measured after the UX-audit closure pass (stable hero panel
+  //    grid, per-stat proof dates, offer-card action column) → 156k bucket.
+  //    156,544 measured after the 2026-09-04 Chrome-audit candidate pass
+  //    (viewport-collision popover rules, compare scroll-region boundary,
+  //    filter spacing rhythm, reading-measure constraints) -> 158k bucket.
+  //    fonts 100,912 measured (Public Sans latin 400/600/700 woff2 + OFL).
+  // B. EDITORIAL DISTRIBUTION — every AVIF/WebP variant of the editorial
+  //    photography (1,568,030 measured under images/editorial/). srcset
+  //    downloads ONE variant per viewport; the distribution gate keeps all
+  //    variants under control instead of excluding them silently.
+  // C. INITIAL PAGE TRANSFER (estimated) — what a first visit to / downloads
+  //    before interaction: CSS + JS + fonts + the eager hero image
+  //    (images/editorial/hero-career-guidance-960.avif; 884,901 measured).
+  //    Everything else is lazy.
+  // The aggregate cap covers the full raw distribution incl. the pre-existing
+  // root social/icon PNGs (1,032,395 measured — optimization follow-up).
+  totalBytes: 3_600_000,
+  // September 8: 620,078 measured after the public candidature link and
+  // precise snapshot labels; keep a bounded 922-byte reserve.
+  javascriptBytes: 621_000,
+  stylesheetBytes: 158_000,
+  fontBytes: 110_000,
+  editorialImageBytes: 1_700_000,
+  initialTransferBytes: 950_000,
 } as const;
+
+export const INITIAL_TRANSFER_REFERENCE_ASSET =
+  "images/editorial/hero-career-guidance-960.avif";
 
 export const DEFAULT_ASSET_DIRECTORY = "dist";
 
-export type AssetCategory = "javascript" | "stylesheet" | "image" | "other";
+export type AssetCategory =
+  "javascript" | "stylesheet" | "image" | "font" | "other";
 
 export type AssetFile = {
   path: string;
@@ -37,10 +64,15 @@ export type AssetInventoryRoot = {
 /**
  * The final-build inventory intentionally excludes dist/data/** and the root
  * index.html. Generated data has its own distribution budget, and HTML is not
- * a static asset budget input.
+ * a static asset budget input. Fonts, editorial images and the qa overlay are
+ * REQUIRED inventory roots: hiding them from QA is exactly what this gate
+ * must prevent.
  */
 export const ASSET_INVENTORY: readonly AssetInventoryRoot[] = [
   { path: "assets", recursive: true },
+  { path: "fonts", recursive: true },
+  { path: "images", recursive: true },
+  { path: "qa", recursive: true },
   { path: "robots.txt", recursive: false },
   { path: "salida-cyl-icon.png", recursive: false },
   { path: "salida-cyl-social.png", recursive: false },
@@ -58,6 +90,8 @@ const CATEGORY_BY_EXTENSION: Record<string, AssetCategory> = {
   ".png": "image",
   ".svg": "image",
   ".webp": "image",
+  ".woff": "font",
+  ".woff2": "font",
 };
 
 type CollectedAssetFile = {
@@ -163,10 +197,7 @@ async function resolveInventoryRoots(
       absolutePath,
       root.path,
     );
-    if (!pathExists) {
-      if (!root.recursive) continue;
-      throw new Error(`Asset inventory root is missing: ${root.path}.`);
-    }
+    if (!pathExists) continue;
 
     const details = await lstat(absolutePath);
     if (root.recursive && !details.isDirectory()) {
@@ -337,6 +368,7 @@ export async function collectAssetBudget(
   const categoryBytes: Record<AssetCategory, number> = {
     image: 0,
     javascript: 0,
+    font: 0,
     other: 0,
     stylesheet: 0,
   };
@@ -357,7 +389,7 @@ export async function assertAssetBudget(
   inventory: readonly AssetInventoryRoot[] = ASSET_INVENTORY,
 ): Promise<AssetBudgetReport> {
   const report = await collectAssetBudget(assetDirectory, inventory);
-  const violations = [
+  const violations: Array<[string, number, number]> = [
     ["total", report.totalBytes, ASSET_BUDGET.totalBytes],
     [
       "javascript",
@@ -369,11 +401,60 @@ export async function assertAssetBudget(
       report.categoryBytes.stylesheet,
       ASSET_BUDGET.stylesheetBytes,
     ],
-    ["image", report.categoryBytes.image, ASSET_BUDGET.imageBytes],
-  ].filter(([, actual, maximum]) => actual > maximum);
+    ["font", report.categoryBytes.font, ASSET_BUDGET.fontBytes],
+    [
+      "editorial images",
+      report.files
+        .filter(
+          (file) =>
+            file.category === "image" && file.path.startsWith("images/"),
+        )
+        .reduce((total, file) => total + file.bytes, 0),
+      ASSET_BUDGET.editorialImageBytes,
+    ],
+  ];
 
-  if (violations.length > 0) {
-    const details = violations
+  // QA honesty gate: the editorial distribution and the dated qa overlay must
+  // be present in the build — they may never be silently excluded.
+  for (const requiredRoot of ["fonts", "images", "qa"] as const) {
+    const present = report.files.some((file) =>
+      file.path.startsWith(`${requiredRoot}/`),
+    );
+    if (!present) {
+      violations.push([`required ${requiredRoot}/ distribution missing`, 1, 0]);
+    }
+  }
+
+  // Gate C: estimated initial page transfer (Home critical set).
+  const heroFile = report.files.find(
+    (file) => file.path === INITIAL_TRANSFER_REFERENCE_ASSET,
+  );
+  if (heroFile === undefined) {
+    violations.push([
+      `initial transfer reference asset missing (expected ${INITIAL_TRANSFER_REFERENCE_ASSET})`,
+      1,
+      0,
+    ]);
+  } else {
+    const initialTransfer =
+      report.categoryBytes.javascript +
+      report.categoryBytes.stylesheet +
+      report.categoryBytes.font +
+      heroFile.bytes;
+    violations.push([
+      "initial transfer (css+js+fonts+eager hero)",
+      initialTransfer,
+      ASSET_BUDGET.initialTransferBytes,
+    ]);
+  }
+
+  const realViolations = violations.filter(([, actual, maximum]) => {
+    if (maximum === 0 && actual === 1) return true;
+    return actual > maximum;
+  });
+
+  if (realViolations.length > 0) {
+    const details = realViolations
       .map(
         ([category, actual, maximum]) =>
           `${category} ${actual}/${maximum} bytes`,

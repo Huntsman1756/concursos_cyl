@@ -12,7 +12,16 @@ import {
   loadPublicEmploymentCalls,
 } from "../../data/generatedDataClient";
 import { ExternalLink } from "../../components/ExternalLink";
+import { ResultSectionNav } from "../../components/ResultSectionNav";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
+import { PageEyebrow } from "../../components/PageEyebrow";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import {
+  longDateFromCalendarDay,
+  readableOfficialTitle,
+} from "../../domain/displayFormat";
+import { todayCalendarDay } from "../../domain/currentDate";
+import { selectOpenPublicCalls } from "./openPublicCalls";
 import "./ecylResources.css";
 
 type State =
@@ -25,11 +34,17 @@ type State =
       publicCalls: PublicEmploymentCall[];
       publicCallsSourceUrl: string | null;
       publicCallsUpdatedAt: string | null;
+      publicCallsReferenceDate: string;
     };
 
-const COURSE_PAGE_SIZE = 40;
-const CERTIFICATE_PAGE_SIZE = 60;
+const COURSE_PAGE_SIZE = 8;
+const CERTIFICATE_PAGE_SIZE = 8;
 const MISSING_COURSE_METADATA = "No publicado en la ficha";
+const RESOURCE_SECTIONS = [
+  { href: "#public-calls-heading", label: "Convocatorias" },
+  { href: "#courses-heading", label: "Cursos ECYL" },
+  { href: "#certificates-heading", label: "Certificados" },
+] as const;
 
 const PROFESSIONAL_FAMILY_LABELS: Readonly<Record<string, string>> = {
   ADG: "Administración y Gestión",
@@ -68,18 +83,7 @@ function normalized(value: string): string {
 }
 
 function displayDate(value: string | null): string | null {
-  if (value === null) return null;
-  return new Intl.DateTimeFormat("es-ES", { dateStyle: "medium" }).format(
-    new Date(`${value}T00:00:00Z`),
-  );
-}
-
-function readableOfficialTitle(value: string): string {
-  if (value !== value.toLocaleUpperCase("es-ES")) return value;
-  const lower = value.toLocaleLowerCase("es-ES");
-  return lower.replace(/\p{Letter}/u, (letter) =>
-    letter.toLocaleUpperCase("es-ES"),
-  );
+  return longDateFromCalendarDay(value);
 }
 
 function readableFamilyCode(code: string): string {
@@ -149,6 +153,9 @@ export function EcylResourcesPage() {
               >
             >
         ).publicEmploymentCalls;
+        if (publicCallsSnapshot === undefined) {
+          throw new Error("Public employment calls snapshot is missing.");
+        }
         if (!signal.aborted)
           setState({
             status: "ready",
@@ -160,6 +167,10 @@ export function EcylResourcesPage() {
               publicCallsSnapshot?.sourceUpdatedAt ??
               publicCallsSnapshot?.snapshotFetchedAt ??
               null,
+            // This is a historical copy. "Open" must be evaluated at the
+            // copy's reference date, not against the browser's wall clock.
+            publicCallsReferenceDate:
+              publicCallsSnapshot.snapshotFetchedAt.slice(0, 10),
           });
       })
       .catch(() => {
@@ -201,31 +212,41 @@ export function EcylResourcesPage() {
         )
       : [];
   const visibleCertificates = matchingCertificates.slice(0, certificateLimit);
-  const today = new Date().toISOString().slice(0, 10);
   const openPublicCalls =
     state.status === "ready"
-      ? state.publicCalls.filter(
-          (call) =>
-            call.applicationDeadline !== null &&
-            call.applicationDeadline >= today &&
-            (call.applicationStart === null || call.applicationStart <= today),
-        )
+      ? selectOpenPublicCalls(state.publicCalls, state.publicCallsReferenceDate)
       : [];
 
   return (
     <section className="resources-page" aria-labelledby="resources-heading">
-      <header className="resources-page__intro">
-        <p className="resources-page__eyebrow">Recursos de Castilla y León</p>
-        <h1 id="resources-heading">Formación para seguir avanzando</h1>
-        <p>
-          Consulta formación complementaria y convocatorias públicas abiertas.
-          Cada opción conserva su alcance y su fuente oficial.
+      <header className="page-masthead resources-page__intro">
+        <PageEyebrow>Recursos de Castilla y León</PageEyebrow>
+        <h1 className="h1" id="resources-heading">
+          Formación para seguir avanzando
+        </h1>
+        <p className="page-lede">
+          Consulta formación complementaria y convocatorias que figuraban
+          abiertas en la copia consultada. Cada opción conserva su alcance y su
+          fuente oficial.
         </p>
+        {state.status === "ready" && state.publicCallsUpdatedAt !== null && (
+          <p className="caption resources-page__copy-date">
+            Copia de datos del{" "}
+            <time dateTime={state.publicCallsUpdatedAt}>
+              {displayDate(state.publicCallsUpdatedAt.slice(0, 10))}
+            </time>
+            . Comprueba el estado actual en cada fuente oficial.
+          </p>
+        )}
       </header>
+
+      {state.status === "ready" && (
+        <ResultSectionNav links={RESOURCE_SECTIONS} />
+      )}
 
       <div className="resources-filters">
         <label>
-          <span>Buscar por nombre, localidad o código</span>
+          <span>Buscar en cursos y certificados</span>
           <input
             type="search"
             value={query}
@@ -234,11 +255,12 @@ export function EcylResourcesPage() {
               setCourseLimit(COURSE_PAGE_SIZE);
               setCertificateLimit(CERTIFICATE_PAGE_SIZE);
             }}
-            placeholder="Ej.: administración, León o ADG"
+            placeholder="Nombre, localidad o código"
+            aria-describedby="resources-search-scope"
           />
         </label>
         <label>
-          <span>Familia profesional</span>
+          <span>Familia de los certificados</span>
           <select
             value={family}
             onChange={(event) => {
@@ -256,10 +278,15 @@ export function EcylResourcesPage() {
         </label>
       </div>
 
+      <p className="resources-section-help" id="resources-search-scope">
+        La búsqueda se aplica a cursos y certificados. La familia solo filtra
+        certificados. Las convocatorias se muestran sin estos filtros.
+      </p>
+
       {state.status === "loading" ? (
-        <p role="status" aria-live="polite">
-          Cargando recursos…
-        </p>
+        <div aria-busy="true">
+          <LoadingSkeleton status="Cargando recursos…" layout="page" />
+        </div>
       ) : null}
       {state.status === "error" ? (
         <p role="alert">No se han podido cargar estos recursos.</p>
@@ -271,7 +298,12 @@ export function EcylResourcesPage() {
             aria-labelledby="public-calls-heading"
           >
             <div className="resources-section-heading">
-              <h2 id="public-calls-heading">Empleo público abierto ahora</h2>
+              <h2 id="public-calls-heading" tabIndex={-1}>
+                Convocatorias que figuraban abiertas en la copia del{" "}
+                {state.publicCallsReferenceDate !== null
+                  ? displayDate(state.publicCallsReferenceDate)
+                  : ""}
+              </h2>
               <span>
                 {openPublicCalls.length}{" "}
                 {openPublicCalls.length === 1
@@ -280,37 +312,51 @@ export function EcylResourcesPage() {
               </span>
             </div>
             <p className="resources-section-help">
-              Procesos con plazo publicado todavía abierto. Comprueba siempre
-              los requisitos completos antes de presentar la solicitud.
+              «Abiertas» se refiere al día de la copia, no a hoy: aparece una
+              convocatoria si su plazo de solicitud cubría la fecha de la copia.
+              Comprueba siempre el estado actual y los requisitos completos en
+              la convocatoria oficial.
             </p>
             {openPublicCalls.length === 0 ? (
-              <p>No hay convocatorias con plazo abierto en la copia actual.</p>
+              <p className="resource-empty-state">
+                Ninguna convocatoria de esta copia tiene el plazo de solicitud
+                abierto a la fecha de la copia. Los plazos publicados ya habían
+                cerrado o todavía no empezaban; comprueba la fuente oficial por
+                si se han publicado procesos nuevos.
+              </p>
             ) : (
               <div className="public-call-list">
-                {openPublicCalls.map((call) => (
-                  <article className="public-call" key={call.id}>
-                    <p className="resource-card__code">
-                      {call.accessType === "open"
-                        ? "Turno libre"
-                        : call.accessType === "internal"
-                          ? "Promoción interna"
-                          : "Consulta el tipo de acceso"}
-                    </p>
-                    <h3>{readableOfficialTitle(call.title)}</h3>
-                    <p>
-                      {call.places === null
-                        ? "Plazas no publicadas"
-                        : `${call.places} ${call.places === 1 ? "plaza" : "plazas"}`}
-                      {call.municipality ? ` · ${call.municipality}` : ""}
-                    </p>
-                    <p>
-                      Plazo hasta el {displayDate(call.applicationDeadline)}
-                    </p>
-                    <ExternalLink href={call.officialUrl}>
-                      Ver convocatoria oficial
-                    </ExternalLink>
-                  </article>
-                ))}
+                {openPublicCalls.map((call) => {
+                  const deadlinePassed =
+                    call.applicationDeadline !== null &&
+                    call.applicationDeadline < todayCalendarDay();
+                  return (
+                    <article className="public-call" key={call.id}>
+                      <p className="resource-card__code">
+                        {call.accessType === "open"
+                          ? "Turno libre"
+                          : call.accessType === "internal"
+                            ? "Promoción interna"
+                            : "Consulta el tipo de acceso"}
+                      </p>
+                      <h3>{readableOfficialTitle(call.title)}</h3>
+                      <p>
+                        {call.places === null
+                          ? "Plazas no publicadas"
+                          : `${call.places} ${call.places === 1 ? "plaza" : "plazas"}`}
+                        {call.municipality ? ` · ${call.municipality}` : ""}
+                      </p>
+                      <p>
+                        {deadlinePassed
+                          ? `El plazo publicado ya pasó: cerró el ${displayDate(call.applicationDeadline)}.`
+                          : `Plazo hasta el ${displayDate(call.applicationDeadline)}`}
+                      </p>
+                      <ExternalLink href={call.officialUrl}>
+                        Ver convocatoria oficial
+                      </ExternalLink>
+                    </article>
+                  );
+                })}
               </div>
             )}
             <footer className="public-calls__source">
@@ -320,12 +366,7 @@ export function EcylResourcesPage() {
                 </ExternalLink>
               )}
               {state.publicCallsUpdatedAt !== null && (
-                <span>
-                  Copia del{" "}
-                  {new Intl.DateTimeFormat("es-ES", {
-                    dateStyle: "medium",
-                  }).format(new Date(state.publicCallsUpdatedAt))}
-                </span>
+                <span>Copia del {displayDate(state.publicCallsUpdatedAt)}</span>
               )}
             </footer>
           </section>
@@ -333,9 +374,11 @@ export function EcylResourcesPage() {
           <div className="resources-columns">
             <section aria-labelledby="courses-heading">
               <div className="resources-section-heading">
-                <h2 id="courses-heading">Cursos del ECYL</h2>
-                <span>
-                  {visibleCourses.length} de {matchingCourses.length} resultados
+                <h2 id="courses-heading" tabIndex={-1}>
+                  Cursos del ECYL
+                </h2>
+                <span role="status" aria-atomic="true">
+                  {`Cursos: ${visibleCourses.length} de ${matchingCourses.length}`}
                 </span>
               </div>
               <p className="resources-section-help">
@@ -346,24 +389,36 @@ export function EcylResourcesPage() {
                 {visibleCourses.length === 0 ? (
                   <p className="resource-empty-state">
                     {term === ""
-                      ? "No hay cursos publicados en la copia actual."
+                      ? "No hay cursos publicados en la copia activa."
                       : "No hay cursos que coincidan con tu búsqueda. Prueba con otro término, localidad o identificador."}
                   </p>
                 ) : (
                   visibleCourses.map((course) => (
                     <article className="resource-card" key={course.id}>
-                      <p className="resource-card__code">
-                        Identificador ECYL: {course.id}
-                      </p>
                       <h3>{readableOfficialTitle(course.title)}</h3>
-                      <p className="resource-card__summary">
-                        {displayCourseText(course.locality)} ·{" "}
-                        {displayCourseText(course.modality)}
-                      </p>
-                      <p className="resource-card__summary">
-                        {displayCourseText(course.subject)} ·{" "}
-                        {displayCourseDuration(course.durationHours)}
-                      </p>
+                      <dl className="resource-card__metadata resource-card__facts">
+                        <div>
+                          <dt>Localidad</dt>
+                          <dd>{course.locality ?? "No publicada"}</dd>
+                        </div>
+                        <div>
+                          <dt>Modalidad</dt>
+                          <dd>{course.modality ?? "No publicada"}</dd>
+                        </div>
+                        <div>
+                          <dt>Duración</dt>
+                          <dd>
+                            {course.durationHours === null
+                              ? "No publicada"
+                              : displayCourseDuration(course.durationHours)}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt>Materia</dt>
+                          <dd>{course.subject ?? "No publicada"}</dd>
+                        </div>
+                      </dl>
+                      <p className="caption">Identificador ECYL: {course.id}</p>
                       {course.startDate !== null && (
                         <p className="resource-card__summary">
                           Inicio: {displayCourseDate(course.startDate)}
@@ -457,12 +512,11 @@ export function EcylResourcesPage() {
 
             <section aria-labelledby="certificates-heading">
               <div className="resources-section-heading">
-                <h2 id="certificates-heading">
+                <h2 id="certificates-heading" tabIndex={-1}>
                   Certificados de profesionalidad
                 </h2>
-                <span>
-                  {visibleCertificates.length} de {matchingCertificates.length}{" "}
-                  resultados
+                <span role="status" aria-atomic="true">
+                  {`Certificados: ${visibleCertificates.length} de ${matchingCertificates.length}`}
                 </span>
               </div>
               <p className="resources-section-help">
@@ -473,7 +527,7 @@ export function EcylResourcesPage() {
                 {visibleCertificates.length === 0 ? (
                   <p className="resource-empty-state">
                     {term === "" && family === ""
-                      ? "No hay certificados publicados en la copia actual."
+                      ? "No hay certificados publicados en la copia activa."
                       : "No hay certificados que coincidan con tu búsqueda o familia. Prueba con otros filtros."}
                   </p>
                 ) : (

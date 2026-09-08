@@ -28,12 +28,14 @@ async function createAssetDirectory(
 }
 
 describe("asset budget", () => {
-  it("inventories build assets and root static files while excluding data and index", async () => {
+  it("inventories build assets, fonts, editorial images, qa artifacts and root static files while excluding data and index", async () => {
     const directory = await createAssetDirectory({
       "assets/nested/app.js": 12,
       "assets/styles.css": 8,
-      "assets/hero.webp": 20,
-      "assets/font.woff2": 5,
+      "fonts/font.woff2": 5,
+      "images/hero-career-guidance-960.avif": 9,
+      "images/path-training-640.webp": 11,
+      "qa/center-link-policy.json": 6,
       "salida-cyl-social.png": 7,
       "salida-cyl-icon.png": 3,
       "robots.txt": 4,
@@ -43,18 +45,29 @@ describe("asset budget", () => {
 
     try {
       await expect(collectAssetBudget(directory)).resolves.toMatchObject({
-        totalBytes: 59,
+        totalBytes: 65,
         categoryBytes: {
           javascript: 12,
           stylesheet: 8,
           image: 30,
-          other: 9,
+          font: 5,
+          other: 10,
         },
         files: [
-          { path: "assets/font.woff2", bytes: 5, category: "other" },
-          { path: "assets/hero.webp", bytes: 20, category: "image" },
           { path: "assets/nested/app.js", bytes: 12, category: "javascript" },
           { path: "assets/styles.css", bytes: 8, category: "stylesheet" },
+          { path: "fonts/font.woff2", bytes: 5, category: "font" },
+          {
+            path: "images/hero-career-guidance-960.avif",
+            bytes: 9,
+            category: "image",
+          },
+          {
+            path: "images/path-training-640.webp",
+            bytes: 11,
+            category: "image",
+          },
+          { path: "qa/center-link-policy.json", bytes: 6, category: "other" },
           { path: "robots.txt", bytes: 4, category: "other" },
           { path: "salida-cyl-icon.png", bytes: 3, category: "image" },
           { path: "salida-cyl-social.png", bytes: 7, category: "image" },
@@ -69,12 +82,14 @@ describe("asset budget", () => {
     expect(DEFAULT_ASSET_DIRECTORY).toBe("dist");
   });
 
-  it("keeps deliberately rounded caps for the measured Expansion V1 build", () => {
+  it("keeps deliberately rounded caps for the redesign build (three documented gates)", () => {
     expect(ASSET_BUDGET).toEqual({
-      totalBytes: 1_800_000,
-      javascriptBytes: 582_500,
-      stylesheetBytes: 90_000,
-      imageBytes: 1_150_000,
+      totalBytes: 3_600_000,
+      javascriptBytes: 621_000,
+      stylesheetBytes: 158_000,
+      fontBytes: 110_000,
+      editorialImageBytes: 1_700_000,
+      initialTransferBytes: 950_000,
     });
   });
 
@@ -230,12 +245,27 @@ describe("asset budget", () => {
   it("rejects a category that exceeds its deterministic budget", async () => {
     const directory = await createAssetDirectory({
       "assets/oversized.js": ASSET_BUDGET.javascriptBytes + 1,
+      "fonts/font.woff2": 5,
+      "images/hero-career-guidance-960.avif": 9,
+      "qa/policy.json": 6,
     });
 
     try {
       await expect(assertAssetBudget(directory)).rejects.toThrow(
         /javascript/iu,
       );
+    } finally {
+      await rm(directory, { force: true, recursive: true });
+    }
+  });
+
+  it("fails loudly when the editorial distribution is missing from the build", async () => {
+    const directory = await createAssetDirectory({
+      "assets/app.js": 12,
+    });
+
+    try {
+      await expect(assertAssetBudget(directory)).rejects.toThrow(/images/u);
     } finally {
       await rm(directory, { force: true, recursive: true });
     }

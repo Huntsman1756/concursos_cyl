@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import type {
-  LoadableGeneratedManifest,
-  SourceSnapshot,
-} from "../../../data/schemas/generated";
+import type { LoadableGeneratedManifest } from "../../../data/schemas/generated";
 import type { Occupation } from "../../../data/schemas/curatedMappings";
 import { ExternalLink } from "../../components/ExternalLink";
+import { InfoDisclosure } from "../../components/InfoDisclosure";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import { PrintButton } from "../../components/PrintButton";
 import { ResultSectionNav } from "../../components/ResultSectionNav";
 import {
@@ -17,7 +16,10 @@ import {
   type LoadedFoundationResourceSubset,
 } from "../../data/generatedDataClient";
 import { loadApprovedMappings } from "../../domain/occupation";
+import { formatOccupationLabel } from "../../domain/displayFormat";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import { occupationOffersPath } from "../../app/routePaths";
+import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { OccupationMarketEvidence } from "./OccupationMarketEvidence";
 import { TrainingRouteCard } from "./TrainingRouteCard";
 
@@ -108,9 +110,15 @@ export function OccupationResultsPage() {
 
   if (state.status === "loading") {
     return (
-      <p role="status" aria-live="polite">
-        Preparando las rutas revisadas…
-      </p>
+      <section
+        className="container training-page occupation-result-page"
+        aria-busy="true"
+      >
+        <LoadingSkeleton
+          status="Preparando las rutas revisadas…"
+          layout="detail"
+        />
+      </section>
     );
   }
   if (state.status === "failed") {
@@ -120,11 +128,11 @@ export function OccupationResultsPage() {
         role="alert"
         aria-labelledby="occupation-results-load-error-heading"
       >
-        <h1 id="occupation-results-load-error-heading">
+        <h1 className="h1" id="occupation-results-load-error-heading">
           No hemos podido cargar las rutas formativas
         </h1>
         <p>Vuelve a intentarlo dentro de unos minutos.</p>
-        <Link to="/desde-ocupacion">Buscar otra ocupación</Link>
+        <Link to="/desde-ocupacion">Buscar otra profesión</Link>
       </section>
     );
   }
@@ -138,14 +146,15 @@ export function OccupationResultsPage() {
         className="status-panel"
         aria-labelledby="occupation-results-not-found-heading"
       >
-        <h1 id="occupation-results-not-found-heading">
-          Ocupación no encontrada
+        <h1 className="h1" id="occupation-results-not-found-heading">
+          Profesión no encontrada
         </h1>
-        <p>La dirección no corresponde a una ocupación oficial CNO-11.</p>
-        <Link to="/desde-ocupacion">Buscar otra ocupación</Link>
+        <p>La dirección no corresponde a una profesión oficial (CNO-11).</p>
+        <Link to="/desde-ocupacion">Buscar otra profesión</Link>
       </section>
     );
   }
+  const occupationLabel = formatOccupationLabel(occupation.preferredLabel);
 
   const missingPrograms = orderedLinks.filter(
     (link) =>
@@ -159,158 +168,59 @@ export function OccupationResultsPage() {
   const stale =
     state.manifest.qualityStatus === "stale" ||
     trainingSnapshot.qualityStatus === "stale";
-  const linkedProgramKeys = new Set(
-    orderedLinks.map((link) => link.trainingProgramKey),
-  );
-  const linkedOfferings = state.foundation.trainingOfferings.filter(
-    (offering) => linkedProgramKeys.has(offering.programKey),
-  );
-  const linkedCenters = new Set(
-    linkedOfferings.map((offering) => offering.centerCode),
-  );
-  const linkedProvinces = new Set(
-    linkedOfferings.map((offering) => offering.province),
-  );
-  const resourceSnapshots = state.manifest
-    .resourceSnapshots as typeof state.manifest.resourceSnapshots &
-    Partial<
-      Record<
-        "officialOccupations" | "trainingOccupationLinks",
-        SourceSnapshot & { resourcePath: string }
-      >
-    >;
-  const occupationSnapshot = resourceSnapshots.officialOccupations;
-  const occupationSourceUrl =
-    occupationSnapshot?.sourceUrl ?? occupation.sourceUrl;
-  const occupationEvidenceDate =
-    occupationSnapshot?.sourceUpdatedAt ??
-    occupationSnapshot?.snapshotFetchedAt ??
-    occupation.reviewedAt;
-  const relationshipSnapshot = resourceSnapshots.trainingOccupationLinks;
-  const relationshipSourceUrl =
-    orderedLinks[0]?.sourceUrl ?? relationshipSnapshot?.sourceUrl;
-  const relationshipDate =
-    orderedLinks[0]?.reviewedAt ??
-    relationshipSnapshot?.sourceUpdatedAt ??
-    relationshipSnapshot?.snapshotFetchedAt;
   const sectionNavigationLinks = [
+    { href: "#rutas-formativas", label: "FP relacionadas" },
     { href: "#mercado-laboral", label: "Mercado laboral" },
-    ...(orderedLinks.length === 0
-      ? []
-      : [{ href: "#rutas-formativas", label: "Rutas formativas" }]),
   ];
-  const hasOfficialOutput = orderedLinks.some(
-    (link) => link.relationshipType === "official_output",
-  );
-  const hasReviewedRelationship = orderedLinks.some(
-    (link) => link.relationshipType === "reviewed_relationship",
-  );
 
   return (
     <section
       className="training-page occupation-result-page"
       aria-labelledby="occupation-results-heading"
     >
-      <header className="training-page__header">
-        <p className="training-page__eyebrow">
-          Ocupación seleccionada del catálogo oficial
-        </p>
-        <h1 id="occupation-results-heading">{occupation.preferredLabel}</h1>
-        <p>CNO-11 {occupation.classificationCode}</p>
-        <p className="result-summary__source">
-          <ExternalLink href={occupationSourceUrl}>
-            Fuente: catálogo CNO-11 (BOE)
-          </ExternalLink>
-          <time dateTime={occupationEvidenceDate}>
-            Catálogo comprobado el {spanishDate(occupationEvidenceDate)}
-          </time>
-        </p>
-        <div className="result-actions" data-print-hidden="true">
-          <Link className="secondary-button" to="/desde-ocupacion">
-            Buscar otra ocupación
-          </Link>
+      <Breadcrumbs
+        items={[
+          { label: "Inicio", to: "/" },
+          { label: "Buscar profesión", to: "/desde-ocupacion" },
+          { label: occupationLabel },
+        ]}
+      />
+      <header className="training-page__header page-masthead">
+        <Link
+          to="/desde-ocupacion"
+          className="training-page__back"
+          data-print-hidden="true"
+        >
+          Buscar otra profesión
+        </Link>
+        <h1 className="h1" id="occupation-results-heading">
+          {occupationLabel}
+        </h1>
+        <div className="training-page__meta">
+          <span className="training-page__code">
+            CNO-11 {occupation.classificationCode}
+          </span>
+          <InfoDisclosure
+            label="Fuente y revisión de esta profesión"
+            trigger="Fuente y revisión"
+          >
+            <p>Denominación oficial del catálogo CNO-11 (BOE, RD 1591/2010).</p>
+            <ExternalLink href={occupation.sourceUrl}>
+              Ver fuente oficial
+            </ExternalLink>
+            <p>Catálogo comprobado el {spanishDate(occupation.reviewedAt)}.</p>
+          </InfoDisclosure>
+        </div>
+        <div className="training-page__tools" data-print-hidden="true">
           <PrintButton className="secondary-button" />
         </div>
       </header>
-      <p className="decision-direction">
-        Ocupación <span aria-hidden="true">→</span> FP con relación revisada
-      </p>
       <ResultSectionNav links={sectionNavigationLinks} />
-      <section className="decision-basis" aria-labelledby="route-basis-title">
-        <div className="decision-basis__heading">
-          <p>Base para decidir</p>
-          <h2 id="route-basis-title">Disponibilidad de FP</h2>
-        </div>
-        <dl
-          className="result-summary"
-          aria-label="Resumen de disponibilidad de FP"
-        >
-          <div>
-            <dt>FP relacionadas</dt>
-            <dd>
-              <strong>{linkedProgramKeys.size}</strong>
-              <span className="result-summary__unit">rutas revisadas</span>
-              <span className="result-summary__source">
-                {relationshipSourceUrl !== undefined && (
-                  <ExternalLink href={relationshipSourceUrl}>
-                    Fuente: relación FP-ocupación
-                  </ExternalLink>
-                )}
-                {relationshipDate !== undefined && (
-                  <time dateTime={relationshipDate}>
-                    Revisada el {spanishDate(relationshipDate)}
-                  </time>
-                )}
-              </span>
-            </dd>
-          </div>
-          <div>
-            <dt>Centros</dt>
-            <dd>
-              <strong>{linkedCenters.size}</strong>
-              <span className="result-summary__unit">centros publicados</span>
-              <span className="result-summary__source">
-                <ExternalLink href={trainingSnapshot.sourceUrl}>
-                  Fuente: oferta FP JCyL
-                </ExternalLink>
-                <time dateTime={snapshotInstant}>
-                  Copia del {spanishDate(snapshotInstant)}
-                </time>
-              </span>
-            </dd>
-          </div>
-          <div>
-            <dt>Provincias</dt>
-            <dd>
-              <strong>{linkedProvinces.size}</strong>
-              <span className="result-summary__unit">
-                centros en provincias
-              </span>
-              <span className="result-summary__source">
-                <ExternalLink href={trainingSnapshot.sourceUrl}>
-                  Fuente: oferta FP JCyL
-                </ExternalLink>
-                <time dateTime={snapshotInstant}>
-                  Copia del {spanishDate(snapshotInstant)}
-                </time>
-              </span>
-            </dd>
-          </div>
-        </dl>
-      </section>
-      <div
-        id="mercado-laboral"
-        aria-labelledby="occupation-market-evidence-title"
-        tabIndex={-1}
-      >
-        <OccupationMarketEvidence
-          manifest={state.manifest}
-          cnoCode={occupation.classificationCode}
-        />
-      </div>
-      <p className="coverage-note">
-        Cobertura en revisión. Un resultado ausente no demuestra que no exista
-        formación relacionada.
+      <p className="contextual-offers-link">
+        <Link to={occupationOffersPath(occupation.occupationId)}>
+          Ver ofertas relacionadas con esta profesión{" "}
+          <span aria-hidden="true">→</span>
+        </Link>
       </p>
       {stale && (
         <p className="stale-warning" role="status">
@@ -331,12 +241,22 @@ export function OccupationResultsPage() {
       )}
       {orderedLinks.length === 0 ? (
         <div className="status-panel">
-          <p>Aún no hay una ruta formativa revisada para esta ocupación.</p>
+          <h2>
+            Esta copia no contiene relaciones FP revisadas para esta profesión.
+          </h2>
           <p>
-            Esto no significa que no exista formación relacionada: el catálogo
-            solo publica relaciones ya verificadas.
+            SALIDA solo muestra relaciones que ha podido verificar en fuentes
+            oficiales. La ausencia en esta copia no determina qué formación
+            permite acceder a una profesión ni acredita habilitación
+            profesional.
           </p>
-          <Link to="/desde-ocupacion">Probar otra búsqueda</Link>
+          <p>
+            Puedes buscar{" "}
+            <Link to="/desde-oferta">
+              ofertas relacionadas en la copia activa
+            </Link>{" "}
+            o <Link to="/desde-ocupacion">probar con otra profesión</Link>.
+          </p>
         </div>
       ) : (
         <section
@@ -346,24 +266,13 @@ export function OccupationResultsPage() {
           tabIndex={-1}
         >
           <div className="section-heading">
-            <h2 id="training-routes-heading">FP relacionadas</h2>
+            <h2 id="training-routes-heading">
+              FP que te llevan a esta profesión
+            </h2>
             <span>
-              Oferta FP JCyL: copia del {spanishDate(snapshotInstant)}
+              Oferta formativa · copia consultada el{" "}
+              {spanishDate(snapshotInstant)}
             </span>
-          </div>
-          <div className="route-relationship-guides">
-            {hasOfficialOutput && (
-              <p>
-                La salida aparece expresamente en el perfil profesional oficial
-                del ciclo.
-              </p>
-            )}
-            {hasReviewedRelationship && (
-              <p>
-                La relación se apoya en competencias compartidas y ha sido
-                revisada antes de publicarse.
-              </p>
-            )}
           </div>
           <div className="training-route-list">
             {orderedLinks.map((link) => {
@@ -385,6 +294,16 @@ export function OccupationResultsPage() {
           </div>
         </section>
       )}
+      <div
+        id="mercado-laboral"
+        aria-labelledby="occupation-market-evidence-title"
+        tabIndex={-1}
+      >
+        <OccupationMarketEvidence
+          manifest={state.manifest}
+          cnoCode={occupation.classificationCode}
+        />
+      </div>
     </section>
   );
 }

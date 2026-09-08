@@ -1,0 +1,56 @@
+/*
+ * SALIDA CyL — centers screens.
+ * All visual patterns (page header, filter bar/sheet, result table, result
+ * cards, pagination, empty states) come from the shared approved layer in
+ * src/styles/salida.css. This file only adds centers-specific adjustments.
+ */
+
+.center-titularidad-cell {
+  color: var(--color-text);
+}
+
+.center-result-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.center-result-card .rcard-field {
+  min-width: 0;
+  margin: 0;
+}
+
+.center-result-card .rcard-field:nth-child(-n + 3),
+.center-result-card .rcard-actions {
+  grid-column: 1 / -1;
+}
+
+.center-result-card p {
+  margin-bottom: 0;
+}
+
+.center-result-card .rcard-label {
+  margin-top: 0;
+}
+
+.center-result-card .rcard-actions {
+  margin-top: 0;
+}
+
+.centers-source-review {
+  margin-top: var(--space-3);
+  max-width: var(--reading-max);
+  font-size: var(--text-small);
+}
+
+.centers-source-review > summary {
+  width: fit-content;
+  min-height: var(--control-height);
+  padding-block: var(--space-2);
+  color: var(--color-action-text);
+  cursor: pointer;
+}
+
+.centers-source-review p {
+  margin-block: var(--space-2);
+}

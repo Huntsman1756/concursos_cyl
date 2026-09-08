@@ -8,6 +8,7 @@ import {
 } from "../../data/schemas/generated";
 import {
   GENERATED_RESOURCE_KEYS,
+  immutableDerivedFpOccupationGraphCsvPath,
   immutableGeneratedResourcePath,
   type GeneratedResourceKey,
 } from "../../data/schemas/generatedResourceCatalog";
@@ -15,6 +16,7 @@ import {
   OFFER_EVIDENCE_SNAPSHOT_ID,
   OfferEvidenceResourceSchema,
 } from "../../data/schemas/offerEvidence";
+import { OpenDataCatalogResourceSchema } from "../../data/schemas/openData";
 
 const ROOT = resolve(".");
 const MANIFEST_PATH = resolve(ROOT, "public/data/v1/manifest.json");
@@ -56,6 +58,41 @@ function snapshotIdFromPath(resourcePath: string): string {
 
 function sha256(bytes: Buffer): string {
   return createHash("sha256").update(bytes).digest("hex");
+}
+
+const CANDIDATE_CSV_PATH = immutableDerivedFpOccupationGraphCsvPath(
+  CANDIDATE_SNAPSHOT_ID,
+);
+
+async function materializeOpenDataCatalog(
+  sourceCatalogPath: string,
+  targetCatalogPath: string,
+): Promise<Buffer> {
+  const sourceCatalogBytes = await readFile(localPublicPath(sourceCatalogPath));
+  const [sourceCatalog] = OpenDataCatalogResourceSchema.parse(
+    JSON.parse(sourceCatalogBytes.toString("utf8")) as unknown,
+  );
+  if (sourceCatalog === undefined) {
+    throw new Error("Open-data catalog must contain one dataset record.");
+  }
+
+  const sourceCsvPath = localPublicPath(sourceCatalog.csvResourcePath);
+  const targetCsvPath = localPublicPath(CANDIDATE_CSV_PATH);
+  await mkdir(dirname(targetCsvPath), { recursive: true });
+  if (resolve(sourceCsvPath) !== resolve(targetCsvPath)) {
+    await copyFile(sourceCsvPath, targetCsvPath);
+  }
+
+  const targetCatalog = [
+    { ...sourceCatalog, csvResourcePath: CANDIDATE_CSV_PATH },
+  ];
+  const targetBytes = Buffer.from(
+    `${JSON.stringify(targetCatalog, null, 2)}\n`,
+    "utf8",
+  );
+  await mkdir(dirname(localPublicPath(targetCatalogPath)), { recursive: true });
+  await writeFile(localPublicPath(targetCatalogPath), targetBytes);
+  return targetBytes;
 }
 
 function sourceResourceKeys(
@@ -132,9 +169,22 @@ export async function activateOfferEvidenceCandidate(): Promise<GeneratedManifes
       sha256: sha256(sidecarBytes),
       snapshotFetchedAt: sidecar.generatedAt,
     };
+    const openDataCatalogPath = immutableGeneratedResourcePath(
+      "openDataCatalog",
+      CANDIDATE_SNAPSHOT_ID,
+    );
+    const openDataCatalogBytes = await materializeOpenDataCatalog(
+      manifest.resourceSnapshots.openDataCatalog.resourcePath,
+      openDataCatalogPath,
+    );
     const canonicalResourceSnapshots = Object.fromEntries(
       Object.entries({
         ...manifest.resourceSnapshots,
+        openDataCatalog: {
+          ...manifest.resourceSnapshots.openDataCatalog,
+          resourcePath: openDataCatalogPath,
+          sha256: sha256(openDataCatalogBytes),
+        },
         [DERIVED_RESOURCE_KEY]: refreshedDerivedDescriptor,
       }).sort(([left], [right]) => left.localeCompare(right, "en")),
     );
@@ -156,13 +206,14 @@ export async function activateOfferEvidenceCandidate(): Promise<GeneratedManifes
     if (JSON.stringify(nextManifest) !== JSON.stringify(manifest)) {
       await writeFile(
         MANIFEST_PATH,
-        JSON.stringify(nextManifest, null, 2) + "\n",
+        `${JSON.stringify(nextManifest, null, 2)}\n`,
         "utf8",
       );
       return GeneratedManifestSchema.parse(nextManifest);
     }
     return manifest;
   }
+
   const sourceKeys = sourceResourceKeys(manifest);
   const sourceSnapshotId = snapshotIdFromPath(
     manifest.resourceSnapshots.jobOffers.resourcePath,
@@ -192,7 +243,21 @@ export async function activateOfferEvidenceCandidate(): Promise<GeneratedManifes
         const targetPath = localPublicPath(candidatePath);
         await mkdir(dirname(targetPath), { recursive: true });
         await copyFile(sourcePath, targetPath);
-        return [key, { ...source, resourcePath: candidatePath }] as const;
+        if (key !== "openDataCatalog") {
+          return [key, { ...source, resourcePath: candidatePath }] as const;
+        }
+        const targetBytes = await materializeOpenDataCatalog(
+          source.resourcePath,
+          candidatePath,
+        );
+        return [
+          key,
+          {
+            ...source,
+            resourcePath: candidatePath,
+            sha256: sha256(targetBytes),
+          },
+        ] as const;
       }),
     ),
   );

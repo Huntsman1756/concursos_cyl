@@ -1,17 +1,23 @@
 import type {
   OfferEvidenceRecord,
+  OfferEvidenceRelation,
   OfferEvidenceRequirementCategory,
   OfferEvidenceStatus,
 } from "../../data/schemas/offerEvidence";
+import {
+  OfferDisplayMatchSchema,
+  type OfferDisplayMatch,
+} from "./offerMatching";
+import type { OfferPublishedRequirements } from "./requirements";
 
 export const OFFER_EVIDENCE_STATUS_LABELS: Readonly<
   Record<OfferEvidenceStatus, string>
 > = {
-  reviewed_fp_relationship: "Relación revisada",
-  explicit_training_requirement: "Requisito explícito",
-  university_or_regulatory_route: "Vía regulada",
+  reviewed_fp_relationship: "Relación FP revisada",
+  explicit_training_requirement: "Requisito formativo explícito",
+  university_or_regulatory_route: "Vía universitaria o regulada",
   alternative_vocational_route: "Alternativa de cualificación",
-  ambiguous_requirement: "No confirmado",
+  ambiguous_requirement: "Requisito ambiguo o sin clasificar",
   no_reviewed_relationship: "Sin relación revisada",
 };
 
@@ -45,6 +51,27 @@ export interface OfferEvidenceFilters {
   province?: string | "all";
 }
 
+/** Adapts one manifest-backed sidecar relation for the shared offer card. */
+export function createOfferEvidenceMatch(
+  record: Pick<OfferEvidenceRecord, "offerId" | "publishedAt">,
+  relation: OfferEvidenceRelation,
+  publishedRequirements: readonly OfferPublishedRequirements[],
+): OfferDisplayMatch {
+  const requirements = publishedRequirements.find(
+    ({ offerId }) => offerId === record.offerId,
+  )?.requirements;
+  return OfferDisplayMatchSchema.parse({
+    offerId: record.offerId,
+    occupationId: relation.occupationId,
+    programKey: relation.programKey,
+    publishedAt: record.publishedAt,
+    relationshipType: relation.relationshipType,
+    requirements: requirements ?? [],
+    matchRule: relation.matchRule,
+    sidecarEvidence: relation,
+  });
+}
+
 function normalized(value: string): string {
   return value
     .normalize("NFD")
@@ -75,14 +102,6 @@ function searchableRecordText(record: OfferEvidenceRecord): string {
           occupationLabel,
           occupationId,
         ],
-      ),
-      ...record.nextActions.flatMap((nextAction) =>
-        (nextAction.certificateEvidence ?? []).flatMap(
-          ({ certificateCode, certificateTitle }) => [
-            certificateCode,
-            certificateTitle,
-          ],
-        ),
       ),
     ].join(" "),
   );

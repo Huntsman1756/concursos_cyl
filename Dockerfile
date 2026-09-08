@@ -5,8 +5,10 @@ COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
 ARG VITE_PUBLIC_BASE_PATH=/
+ARG RELEASE_COMMIT
 ENV VITE_PUBLIC_BASE_PATH=${VITE_PUBLIC_BASE_PATH}
-RUN npm run build
+RUN npm run build \
+  && ./node_modules/.bin/tsx scripts/release/writeVersionMetadata.ts dist "${RELEASE_COMMIT}"
 
 # caddy:2-alpine, pinned 2026-08-09
 FROM caddy:2-alpine@sha256:5f5c8640aae01df9654968d946d8f1a56c497f1dd5c5cda4cf95ab7c14d58648

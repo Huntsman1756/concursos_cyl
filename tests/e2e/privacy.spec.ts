@@ -1,4 +1,6 @@
-import { expect, test, type Page } from "@playwright/test";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 import {
   installDecisionFlowFixture,
   syntheticQuotes,
@@ -70,6 +72,13 @@ async function expectNoPrivacyEvents(
   privacyEvents.splice(0);
 }
 
+async function openRequirements(card: Locator): Promise<void> {
+  const requirements = card.locator("details.offer-row__more");
+  if ((await requirements.getAttribute("open")) === null) {
+    await requirements.locator(":scope > summary").click();
+  }
+}
+
 function expectNoSerializedRequestState(url: string): void {
   const location = new URL(url);
   const decodedPath = decodeURIComponent(location.pathname);
@@ -85,8 +94,13 @@ function expectNoSerializedRequestState(url: string): void {
       expect(decodedPath).not.toContain(answerValue);
     }
   }
+  // A build hash can incidentally contain a short value such as "12".
+  // Exempt only an exact file present in this build, never an arbitrary asset URL.
+  const knownBuildAsset =
+    /^\/assets\/[^/]+$/u.test(decodedPath) &&
+    existsSync(resolve("dist", `.${decodedPath}`));
   for (const normalizedValue of syntheticRequirementValues) {
-    expect(decodedPath).not.toContain(normalizedValue);
+    if (!knownBuildAsset) expect(decodedPath).not.toContain(normalizedValue);
     expect(decodedQueryAndHash).not.toContain(normalizedValue);
   }
 }
@@ -213,21 +227,12 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   privacyEvents.splice(0);
   domStorageMutations.splice(0);
   const interactionRequests: { method: string; url: string }[] = [];
-  const recordRequest = (request: {
-    method(): string;
-    url(): string;
-    resourceType(): string;
-  }) => {
-    // Content-hashed static bundle names can contain synthetic values by chance;
-    // only document/data requests can serialize the in-memory decision state.
-    if (!new Set(["document", "fetch", "xhr"]).has(request.resourceType())) {
-      return;
-    }
+  const recordRequest = (request: { method(): string; url(): string }) => {
     interactionRequests.push({ method: request.method(), url: request.url() });
   };
   page.on("request", recordRequest);
 
-  await card.getByText("Ver evidencia y requisitos", { exact: true }).click();
+  await openRequirements(card);
 
   await card
     .getByRole("radio", {
@@ -244,7 +249,7 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   await page.getByRole("button", { name: "Quitar filtro" }).click();
   await expectPrivateLocation(page);
 
-  await card.getByText("Ver evidencia y requisitos", { exact: true }).click();
+  await openRequirements(card);
 
   await card
     .getByRole("radio", {
@@ -276,7 +281,7 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
 
   await page.reload();
   await expect(card).toBeVisible();
-  await card.getByText("Ver evidencia y requisitos", { exact: true }).click();
+  await openRequirements(card);
   await expect(
     card.getByRole("radio", {
       name: `No lo tengo: ${syntheticQuotes.experienceQuote}`,

@@ -1,0 +1,127 @@
+[
+  {
+    "width": 1440,
+    "height": 900,
+    "initial": {
+      "image": {
+        "x": 810.796875,
+        "y": 226,
+        "width": 529.203125,
+        "height": 661.5
+      },
+      "overflow": 0
+    },
+    "selected": {
+      "image": {
+        "x": 810.796875,
+        "y": 226,
+        "width": 529.203125,
+        "height": 661.5
+      },
+      "overflow": 0
+    },
+    "axe": [],
+    "errors": [],
+    "failures": []
+  },
+  {
+    "width": 1280,
+    "height": 900,
+    "initial": {
+      "image": {
+        "x": 730.390625,
+        "y": 225.1875,
+        "width": 525.609375,
+        "height": 657
+      },
+      "overflow": 0
+    },
+    "selected": {
+      "image": {
+        "x": 730.390625,
+        "y": 225.1875,
+        "width": 525.609375,
+        "height": 657
+      },
+      "overflow": 0
+    },
+    "axe": [],
+    "errors": [],
+    "failures": []
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "initial": {
+      "image": {
+        "x": 16,
+        "y": 1005.390625,
+        "width": 358,
+        "height": 268.5
+      },
+      "overflow": 0
+    },
+    "selected": {
+      "image": {
+        "x": 16,
+        "y": 1232.375,
+        "width": 358,
+        "height": 268.5
+      },
+      "overflow": 0
+    },
+    "axe": [],
+    "errors": [],
+    "failures": []
+  },
+  {
+    "width": 360,
+    "height": 800,
+    "initial": {
+      "image": {
+        "x": 16,
+        "y": 1005.390625,
+        "width": 328,
+        "height": 246
+      },
+      "overflow": 0
+    },
+    "selected": {
+      "image": {
+        "x": 16,
+        "y": 1232.375,
+        "width": 328,
+        "height": 246
+      },
+      "overflow": 0
+    },
+    "axe": [],
+    "errors": [],
+    "failures": []
+  },
+  {
+    "width": 320,
+    "height": 568,
+    "initial": {
+      "image": {
+        "x": 16,
+        "y": 1033.28125,
+        "width": 288,
+        "height": 216
+      },
+      "overflow": 0
+    },
+    "selected": {
+      "image": {
+        "x": 16,
+        "y": 1309.859375,
+        "width": 288,
+        "height": 216
+      },
+      "overflow": 0
+    },
+    "axe": [],
+    "errors": [],
+    "failures": []
+  }
+]

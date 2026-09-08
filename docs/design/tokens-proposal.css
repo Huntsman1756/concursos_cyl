@@ -1,0 +1,250 @@
+/**
+ * SALIDA CyL — design tokens proposal (Phase: design system, pre-implementation).
+ *
+ * This file is the single machine-readable contract for the SALIDA visual
+ * redesign. It intentionally mirrors docs/design/SALIDA-DESIGN.md. It is a
+ * PROPOSAL: nothing in src/ consumes it yet. When implementation starts, this
+ * file becomes src/styles/tokens.css (replacing the current set) and the
+ * @font-face block is wired to self-hosted Public Sans under public/fonts/.
+ *
+ * Decisions locked by this proposal:
+ * - Family: Public Sans (self-hosted, OFL) — never Inter-as-declared-undistributed.
+ * - Weights: 400 / 600 / 700 only.
+ * - Two radii, zero default card shadows, one popover shadow.
+ * - Warm paper surfaces instead of cool SaaS greys.
+ */
+
+/* ==========================================================================
+   1. TYPE — Public Sans, self-hosted
+   Implementation contract: place the subset woff2 files in public/fonts/
+   (weights 400, 600, 700; latin subset covering Spanish: á é í ó ú ñ ü ¿ ¡).
+   `font-display: swap` is mandatory. Fallback stack is metric-similar system
+   UI so the swap causes no layout shock. Do NOT add a CDN link.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/public-sans-latin-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/public-sans-latin-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/public-sans-latin-700.woff2") format("woff2");
+}
+
+:root {
+  --font-sans:
+    "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* -- Type levels (the only ten; no ad-hoc sizes in components) ---------- */
+
+  /* DISPLAY — hero promise. 36→48px fluid. */
+  --text-display: clamp(2.25rem, 1.5rem + 2.5vw, 3rem);
+  --text-display-weight: 700;
+  --text-display-line-height: 1.1;
+  --text-display-tracking: -0.02em;
+
+  /* H1 — page title. 28→32px fluid. */
+  --text-h1: clamp(1.75rem, 1.5rem + 0.8vw, 2rem);
+  --text-h1-weight: 700;
+  --text-h1-line-height: 1.15;
+  --text-h1-tracking: -0.015em;
+
+  /* H2 — section title. 22→24px fluid. */
+  --text-h2: clamp(1.375rem, 1.25rem + 0.4vw, 1.5rem);
+  --text-h2-weight: 700;
+  --text-h2-line-height: 1.25;
+  --text-h2-tracking: -0.01em;
+
+  /* H3 — card title, subsection. Fixed 19px. */
+  --text-h3: 1.1875rem;
+  --text-h3-weight: 600;
+  --text-h3-line-height: 1.35;
+  --text-h3-tracking: 0;
+
+  /* BODY LARGE — lede / intro paragraphs. 18px. */
+  --text-body-large: 1.125rem;
+  --text-body-large-weight: 400;
+  --text-body-large-line-height: 1.55;
+  --text-body-large-tracking: 0;
+
+  /* BODY — default reading size. 16px. */
+  --text-body: 1rem;
+  --text-body-weight: 400;
+  --text-body-line-height: 1.55;
+  --text-body-tracking: 0;
+
+  /* SMALL — metadata, secondary facts. 14px floor for all UI text. */
+  --text-small: 0.875rem;
+  --text-small-weight: 400;
+  --text-small-line-height: 1.45;
+  --text-small-tracking: 0;
+
+  /* LABEL — form labels, chips, eyebrows. 14px/600. */
+  --text-label: 0.875rem;
+  --text-label-weight: 600;
+  --text-label-line-height: 1.3;
+  --text-label-tracking: 0.01em;
+
+  /* CAPTION — provenance, legal, photo notes. 12px floor. */
+  --text-caption: 0.75rem;
+  --text-caption-weight: 400;
+  --text-caption-line-height: 1.35;
+  --text-caption-tracking: 0;
+
+  /* BUTTON — never below 16px. */
+  --text-button: 1rem;
+  --text-button-weight: 600;
+  --text-button-line-height: 1;
+  --text-button-tracking: 0.01em;
+}
+
+/* ==========================================================================
+   2. COLOR — identity roles. Every hex is here; components never invent one.
+   Family metaphor: "Azul Duero" (trust, water, public) + "Trigo" (Castilian
+   fields, warmth, optimism). Contrast ratios measured (WCAG relative
+   luminance) — see SALIDA-DESIGN.md §Color for the full table.
+   ========================================================================== */
+
+:root {
+  /* Primary — Azul Duero. White text on PRIMARY: 9.2:1. */
+  --color-primary: #0e4e63;
+  --color-primary-strong: #083a4a; /* hover/active; 12.3:1 on white */
+  --color-primary-soft: #e4eef1; /* tint surfaces; TEXT on it: 13.9:1 */
+
+  /* Accent — Trigo (paths, eyebrows, reviewed-marks). 5.1:1 on white. */
+  --color-accent: #8a6a1c;
+  --color-accent-soft: #f4ebd3;
+
+  /* Accent warm — Terracota (offer path only). 5.8:1 on white. */
+  --color-accent-warm: #a14e12;
+  --color-accent-warm-soft: #f6e8de;
+
+  /* Text */
+  --color-text: #1c2b31; /* 14.6:1 on white */
+  --color-text-muted: #56666d; /* 5.97:1 on white — AA for body */
+
+  /* Surfaces — warm paper, not cool SaaS grey */
+  --color-surface: #ffffff;
+  --color-surface-alt: #f7f5f1; /* 13.4:1 for TEXT on it */
+
+  /* Borders. BORDER is decorative hairlines; BORDER_STRONG is the
+     interactive-control border (3.5:1 — meets 3:1 non-text). */
+  --color-border: #dcd8d0;
+  --color-border-strong: #8f887e;
+
+  /* State colors. Each pairs a text color with a surface tint. */
+  --color-success: #1e6b3c; /* 6.5:1 on white; 5.7:1 on its surface */
+  --color-success-surface: #e7f2ea;
+  --color-warning: #7e4e00; /* 7.1:1 on white; 6.2:1 on its surface */
+  --color-warning-surface: #fbefd9;
+  --color-error: #b3261e; /* 6.5:1 on white; 5.7:1 on its surface */
+  --color-error-surface: #faebea;
+
+  /* Focus — bronze gold, distinct from PRIMARY and from link color.
+     5.9:1 on white, 5.4:1 on surface-alt (≥3:1 required). */
+  --color-focus: #8a5b0e;
+  --focus-ring: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-focus);
+}
+
+/* ==========================================================================
+   3. SPACING — closed 4px-base scale. Components consume these tokens only.
+   ========================================================================== */
+
+:root {
+  --space-1: 0.25rem; /* 4 */
+  --space-2: 0.5rem; /* 8 */
+  --space-3: 0.75rem; /* 12 */
+  --space-4: 1rem; /* 16 */
+  --space-5: 1.5rem; /* 24 */
+  --space-6: 2rem; /* 32 */
+  --space-7: 3rem; /* 48 */
+  --space-8: 4rem; /* 64 */
+  --space-9: 5rem; /* 80 */
+  --space-10: 6rem; /* 96 — section rhythm cap */
+
+  /* Semantic aliases (component contracts reference these) */
+  --inset-card: var(--space-5); /* card padding */
+  --inset-control: var(--space-3) var(--space-4); /* inputs, buttons */
+  --stack-related: var(--space-2); /* heading ↔ text inside a block */
+  --stack-block: var(--space-4); /* paragraph ↔ paragraph */
+  --stack-section: var(--space-8); /* section ↔ section (desktop) */
+  --grid-gutter: var(--space-4); /* mobile gutter; 24px from tablet up */
+}
+
+/* ==========================================================================
+   4. RADIUS + SHADOW — deliberately limited.
+   ========================================================================== */
+
+:root {
+  --radius-small: 6px; /* inputs, buttons, chips, small media */
+  --radius-medium: 10px; /* cards, editorial images, panels */
+
+  /* The only elevation shadow. No floating cards by default. */
+  --shadow-popover: 0 12px 32px rgb(28 43 49 / 18%);
+}
+
+/* ==========================================================================
+   5. LAYOUT — grid and breakpoints.
+   Breakpoints cannot be custom properties; the values below are the canon:
+   mobile base 320–767 · tablet ≥768 · desktop ≥1080 · wide ≥1440.
+   ========================================================================== */
+
+:root {
+  --content-max: 77.5rem; /* 1240px content canvas */
+  --reading-max: 44rem; /* 704px measure for prose */
+  --header-height: 4rem; /* 64px desktop; 56px under 768px */
+}
+
+/* ==========================================================================
+   6. MOTION — microinteractions only. Reduced-motion kills all of it.
+   ========================================================================== */
+
+:root {
+  --motion-fast: 140ms;
+  --motion-mid: 200ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   7. EDITORIAL IMAGE TOKENS — photography behaves as a system, not per-page.
+   Budgets live in SALIDA-DESIGN.md §Asset budget policy (they are QA
+   contracts, not CSS). Ratios reserve space pre-load (CLS = 0).
+   ========================================================================== */
+
+:root {
+  --editorial-ratio-hero: 3 / 2; /* desktop hero stage */
+  --editorial-ratio-card: 4 / 3; /* task cards */
+  --editorial-ratio-wide: 16 / 9; /* centers intro band */
+  --editorial-object-hero: 67% 22%;
+  --editorial-object-card-training: 57% 35%;
+  --editorial-object-card-occupation: 47% 25%;
+  --editorial-object-card-offer: 48% 38%;
+  --editorial-object-centers: 66% 36%;
+}

@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import { execFileSync } from "node:child_process";
 import path from "node:path";
+import { assertFreezeGitBoundary } from "./assertFreezeGitBoundary";
 
 import { format as formatPrettier } from "prettier";
 
@@ -14,6 +15,7 @@ import {
   type CandidateResourceKey,
 } from "../../data/schemas/candidateResourceAllowlist";
 import type { TrainingProgram } from "../../data/schemas/generated";
+import { OfferEvidenceResourceSchema } from "../../data/schemas/offerEvidence";
 import { matchOffersForProgram } from "../../src/domain/offerMatching";
 import {
   validateCuratedMappings,
@@ -78,23 +80,16 @@ const FREEZE_KEYS = [
 ] as const;
 
 const CANONICAL_MANIFEST_PATH = "public/data/v1/manifest.json";
-const CANONICAL_SNAPSHOT_ID = "20260822085631889-fc9bf2ba23f9";
-const CANONICAL_MANIFEST_SHA256 =
-  "b41189db5e116bb83f2ec07e865909e6114c31622324e5c5f0f268161f2381e1";
 export const CONTEST_FREEZE_SOURCE_COMMIT_SHA =
-  "032426013a88c35bad348f3c443dae7d9a1639a3";
+  "136a08859f387427b74605bdcf8c19ea9584aebc";
 
 const CANONICAL_RESOURCE_KEYS: readonly CandidateResourceKey[] = (() => {
   const keys: string[] = [...CANDIDATE_RESOURCE_KEYS];
   assertCandidateResourceSet(keys);
   return keys;
 })();
-const HISTORICAL_RESOURCE_KEYS = CANONICAL_RESOURCE_KEYS.filter(
-  (key) => key !== "offerEvidence",
-);
-const HISTORICAL_GENERATED_AT = "2026-08-22T08:56:31.889Z";
 
-export const EXPECTED_CONTEST_RESOURCE_COUNT = HISTORICAL_RESOURCE_KEYS.length;
+export const EXPECTED_CONTEST_RESOURCE_COUNT = CANONICAL_RESOURCE_KEYS.length;
 export const EXPECTED_SEPE_RECORD_COUNT = 116;
 
 /**
@@ -116,24 +111,6 @@ export const CONTEST_FREEZE_SOURCE_PATHS = [
   "src/domain/requirements.ts",
 ] as const;
 
-// The coverage freeze intentionally remains a historical 21-resource
-// artifact while the offer-evidence overlay is certified separately. Keep
-// its source boundary limited to the inputs that actually feed the frozen
-// coverage computation; candidate runtime/schema additions must not rewrite
-// that historical boundary.
-const HISTORICAL_FREEZE_SOURCE_PATHS = [
-  "analysis/fp_coverage_expansion_results.json",
-  "analysis/fp_one_word_publication_reviews.json",
-  "data/catalogs",
-  "data/curated/occupation-aliases.json",
-  "data/curated/occupations.json",
-  "data/curated/training-occupation-links.json",
-  "scripts/analysis/validateFpOneWordPublicationReview.ts",
-  "scripts/data/validateCuratedMappings.ts",
-  "src/domain/offerMatching.ts",
-  "src/domain/requirements.ts",
-] as const;
-
 type ResourceSnapshot = {
   resourcePath: string;
   sha256: string;
@@ -147,7 +124,7 @@ type FreezeManifest = {
   snapshotId: string;
   qualityStatus: "passed";
   qualityCounts: Record<string, number>;
-  resourceSnapshots: Record<string, ResourceSnapshot>;
+  resourceSnapshots: Record<CandidateResourceKey, ResourceSnapshot>;
 };
 
 export type ContestFreezeV2 = {
@@ -370,31 +347,16 @@ function parseJsonText(text: string, label: string): unknown {
   }
 }
 
-function assertResourceKeyOrder(
-  keys: readonly string[],
-  label: string,
-  expectedKeys: readonly string[] = CANONICAL_RESOURCE_KEYS,
-): void {
-  const expected = new Set(expectedKeys);
-  const seen = new Set<string>();
-  const duplicates = keys.filter((key) => {
-    const duplicate = seen.has(key);
-    seen.add(key);
-    return duplicate;
-  });
-  const extra = keys.filter((key) => !expected.has(key));
-  const missing = expectedKeys.filter((key) => !seen.has(key));
-  if (duplicates.length > 0) {
+function assertResourceKeyOrder(keys: readonly string[], label: string): void {
+  try {
+    assertCandidateResourceSet(keys);
+  } catch (error) {
     throw new Error(
-      `${label} must match the candidate resource set: duplicate key(s) ${[...new Set(duplicates)].join(", ")}`,
+      `${label} must match the candidate resource set: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
     );
   }
-  if (extra.length > 0 || missing.length > 0) {
-    throw new Error(
-      `${label} must match the candidate resource set: ${missing.length > 0 ? `missing ${missing.join(", ")}` : ""}${extra.length > 0 && missing.length > 0 ? "; " : ""}${extra.length > 0 ? `extra ${extra.join(", ")}` : ""}`,
-    );
-  }
-  if (JSON.stringify(keys) !== JSON.stringify(expectedKeys)) {
+  if (JSON.stringify(keys) !== JSON.stringify(CANONICAL_RESOURCE_KEYS)) {
     throw new Error(`${label} must use canonical candidate resource order`);
   }
 }
@@ -431,39 +393,6 @@ export function assertContestFreezeWritePreflight(
   if (dirty.length > 0) {
     throw new Error(
       `Refusing coverage freeze --write while source paths are dirty: ${dirty.join("; ")}`,
-    );
-  }
-}
-
-function assertContestFreezeWriteSourceBoundary(
-  rootDir: string,
-  sourceCommitSha: string,
-): void {
-  try {
-    execFileSync(
-      "git",
-      ["rev-parse", "--verify", `${sourceCommitSha}^{commit}`],
-      { cwd: rootDir, stdio: "pipe" },
-    );
-    execFileSync(
-      "git",
-      ["merge-base", "--is-ancestor", sourceCommitSha, "HEAD"],
-      { cwd: rootDir, stdio: "pipe" },
-    );
-    execFileSync(
-      "git",
-      [
-        "diff",
-        "--quiet",
-        sourceCommitSha,
-        "--",
-        ...CONTEST_FREEZE_SOURCE_PATHS,
-      ],
-      { cwd: rootDir, stdio: "pipe" },
-    );
-  } catch {
-    throw new Error(
-      "Refusing coverage freeze --write while the source boundary differs from the approved commit",
     );
   }
 }
@@ -550,18 +479,12 @@ function parseFreeze(value: unknown): ContestFreezeV2 {
     manifest.resourceSnapshots,
     "manifest.resourceSnapshots",
   );
-  const freezeResourceKeys = Object.keys(resourceSnapshotRecord).includes(
-    "offerEvidence",
-  )
-    ? CANONICAL_RESOURCE_KEYS
-    : HISTORICAL_RESOURCE_KEYS;
   assertResourceKeyOrder(
     Object.keys(resourceSnapshotRecord),
     "manifest.resourceSnapshots candidate resource set",
-    freezeResourceKeys,
   );
   const resourceSnapshotEntries = Object.fromEntries(
-    freezeResourceKeys.map((key) => {
+    CANONICAL_RESOURCE_KEYS.map((key) => {
       const snapshot = exactKeys(
         resourceSnapshotRecord[key],
         RESOURCE_SNAPSHOT_KEYS,
@@ -606,7 +529,7 @@ function parseFreeze(value: unknown): ContestFreezeV2 {
       integerValue(value, `manifest.qualityCounts.${key}`),
     ]),
   );
-  const snapshotIds = freezeResourceKeys.map(
+  const snapshotIds = CANONICAL_RESOURCE_KEYS.map(
     (key) =>
       resourceSnapshotEntries[key].resourcePath.match(
         /\/snapshots\/([a-z0-9]+(?:-[a-z0-9-]*[a-z0-9])?)\//u,
@@ -786,12 +709,15 @@ function readCurrentManifest(rootDir: string): {
     value.resourceSnapshots,
     "public manifest.resourceSnapshots",
   );
-  assertResourceKeyOrder(
-    Object.keys(resourceSnapshotRecord),
-    "public manifest.resourceSnapshots candidate resource set",
-    CANONICAL_RESOURCE_KEYS,
-  );
-  const parsedCandidateSnapshots = Object.fromEntries(
+  try {
+    assertCandidateResourceSet(Object.keys(resourceSnapshotRecord));
+  } catch (error) {
+    throw new Error(
+      `public manifest.resourceSnapshots must match the candidate resource set: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
+    );
+  }
+  const parsedSnapshots = Object.fromEntries(
     CANONICAL_RESOURCE_KEYS.map((key) => {
       const snapshot = record(
         resourceSnapshotRecord[key],
@@ -827,7 +753,7 @@ function readCurrentManifest(rootDir: string): {
   ) as FreezeManifest["resourceSnapshots"];
   const snapshotIds = CANONICAL_RESOURCE_KEYS.map(
     (key) =>
-      parsedCandidateSnapshots[key].resourcePath.match(
+      parsedSnapshots[key].resourcePath.match(
         /\/snapshots\/([a-z0-9]+(?:-[a-z0-9-]*[a-z0-9])?)\//u,
       )?.[1],
   );
@@ -837,6 +763,7 @@ function readCurrentManifest(rootDir: string): {
   if (new Set(snapshotIds).size !== 1) {
     throw new Error("public manifest resources must share one snapshot ID");
   }
+  const snapshotId = snapshotIds[0];
   const qualityReport = record(
     value.qualityReport,
     "public manifest.qualityReport",
@@ -851,80 +778,20 @@ function readCurrentManifest(rootDir: string): {
       integerValue(count, `public manifest.qualityReport.counts.${key}`),
     ]),
   );
-  const historicalQualityCounts = Object.fromEntries(
-    ["centers", "offerings", "offers", "programs"].map((key) => [
-      key,
-      parsedQualityCounts[key],
-    ]),
-  );
-  const activeSnapshotId = snapshotIds[0]!;
-  const activeManifestSha256 = hashText(text);
-  if (activeSnapshotId === CANONICAL_SNAPSHOT_ID) {
-    return {
-      text,
-      manifest: {
-        path: CANONICAL_MANIFEST_PATH,
-        sha256: activeManifestSha256,
-        generatedAt: stringValue(
-          value.generatedAt,
-          "public manifest.generatedAt",
-        ),
-        snapshotId: activeSnapshotId,
-        qualityStatus: "passed",
-        qualityCounts: parsedQualityCounts,
-        resourceSnapshots: parsedCandidateSnapshots,
-      },
-    };
-  }
-  const activationProvenance = record(
-    value.activationProvenance,
-    "public manifest.activationProvenance",
-  );
-  const sourceSnapshotId = stringValue(
-    activationProvenance.sourceSnapshotId,
-    "public manifest.activationProvenance.sourceSnapshotId",
-  );
-  if (sourceSnapshotId !== CANONICAL_SNAPSHOT_ID) {
-    throw new Error(
-      `public manifest source snapshot must be ${CANONICAL_SNAPSHOT_ID}; got ${sourceSnapshotId}`,
-    );
-  }
-  assertResourceKeyOrder(
-    stringArray(
-      activationProvenance.sourceResourceKeys,
-      "public manifest.activationProvenance.sourceResourceKeys",
-    ),
-    "public manifest.activationProvenance.sourceResourceKeys",
-    HISTORICAL_RESOURCE_KEYS,
-  );
-  const historicalResourceSnapshots = Object.fromEntries(
-    HISTORICAL_RESOURCE_KEYS.map((key) => {
-      const candidateSnapshot = parsedCandidateSnapshots[key];
-      const fileName = candidateSnapshot.resourcePath.split("/").at(-1);
-      if (fileName === undefined) {
-        throw new Error(
-          `public manifest resource filename is missing for ${key}`,
-        );
-      }
-      return [
-        key,
-        {
-          ...candidateSnapshot,
-          resourcePath: `/data/v1/snapshots/${CANONICAL_SNAPSHOT_ID}/${fileName}`,
-        },
-      ];
-    }),
-  );
+  const manifestSha256 = hashText(text);
   return {
     text,
     manifest: {
       path: CANONICAL_MANIFEST_PATH,
-      sha256: CANONICAL_MANIFEST_SHA256,
-      generatedAt: HISTORICAL_GENERATED_AT,
-      snapshotId: CANONICAL_SNAPSHOT_ID,
+      sha256: manifestSha256,
+      generatedAt: stringValue(
+        value.generatedAt,
+        "public manifest.generatedAt",
+      ),
+      snapshotId: stringValue(snapshotId, "public manifest.snapshotId"),
       qualityStatus: "passed",
-      qualityCounts: historicalQualityCounts,
-      resourceSnapshots: historicalResourceSnapshots,
+      qualityCounts: parsedQualityCounts,
+      resourceSnapshots: parsedSnapshots,
     },
   };
 }
@@ -943,11 +810,13 @@ function readResourceSnapshot(
   const recordCount =
     key === "sepeOccupationMarket"
       ? assertCanonicalSepeCandidateResource(value).records.length
-      : Array.isArray(value)
-        ? value.length
-        : (() => {
-            throw new Error(`public resource ${key} must be a JSON array`);
-          })();
+      : key === "offerEvidence"
+        ? OfferEvidenceResourceSchema.parse(value).records.length
+        : Array.isArray(value)
+          ? value.length
+          : (() => {
+              throw new Error(`public resource ${key} must be a JSON array`);
+            })();
   const actualHash = hashText(text);
   if (actualHash !== specification.sha256) {
     throw new Error(
@@ -968,7 +837,7 @@ function recomputeFreeze(
 ): ContestFreezeV2 {
   const current = readCurrentManifest(rootDir);
   const resources = new Map<CandidateResourceKey, unknown>();
-  for (const key of HISTORICAL_RESOURCE_KEYS) {
+  for (const key of CANONICAL_RESOURCE_KEYS) {
     resources.set(
       key,
       readResourceSnapshot(rootDir, current.manifest, key).value,
@@ -1054,22 +923,84 @@ function recomputeFreeze(
     publishedRequirements: resources.get("publishedRequirements") as never[],
     humanOverrides: [],
   };
-  const matchedOfferIdsSet = new Set<string>();
-  const matchedRelationKeysSet = new Set<string>();
-  const matchedProgramKeys: string[] = [];
-  for (const program of programs) {
-    const matches = matchOffersForProgram(program.programKey, data);
-    if (matches.length === 0) continue;
-    matchedProgramKeys.push(program.programKey);
-    for (const match of matches) {
-      matchedOfferIdsSet.add(match.offerId);
-      matchedRelationKeysSet.add(`${program.programKey}|${match.occupationId}`);
+  const offerEvidence = OfferEvidenceResourceSchema.parse(
+    resources.get("offerEvidence"),
+  );
+  const sidecarOfferIdsSet = new Set<string>();
+  const sidecarRelationKeysSet = new Set<string>();
+  const sidecarProgramKeysSet = new Set<string>();
+  for (const record of offerEvidence.records) {
+    if (record.relations.length === 0) continue;
+    sidecarOfferIdsSet.add(record.offerId);
+    for (const relation of record.relations) {
+      const relationKey = `${relation.programKey}|${relation.occupationId}`;
+      if (!approvedRelationKeys.includes(relationKey)) {
+        throw new Error(
+          `Offer evidence contains an unapproved relation: ${relationKey}.`,
+        );
+      }
+      sidecarRelationKeysSet.add(relationKey);
+      sidecarProgramKeysSet.add(relation.programKey);
     }
   }
-  const matchedOfferIds = sortedUnique([...matchedOfferIdsSet]);
-  const matchedRelationKeys = sortedUnique([...matchedRelationKeysSet]);
+  const baselineOfferIdsSet = new Set<string>();
+  for (const program of programs) {
+    const matches = matchOffersForProgram(program.programKey, data);
+    for (const match of matches) {
+      const relationKey = `${program.programKey}|${match.occupationId}`;
+      const record = offerEvidence.records.find(
+        ({ offerId }) => offerId === match.offerId,
+      );
+      if (
+        record === undefined ||
+        !record.relations.some(
+          (relation) =>
+            `${relation.programKey}|${relation.occupationId}` === relationKey,
+        )
+      ) {
+        throw new Error(
+          `Offer evidence does not preserve the runtime matcher relation: ${match.offerId}/${relationKey}.`,
+        );
+      }
+      baselineOfferIdsSet.add(match.offerId);
+    }
+  }
+  if (
+    !Number.isInteger(offerEvidence.counts.offersWithReviewedFpRelationship)
+  ) {
+    throw new Error("Offer evidence reviewed-offer count is invalid.");
+  }
+  if (
+    offerEvidence.counts.offersWithReviewedFpRelationship !==
+    sidecarOfferIdsSet.size
+  ) {
+    throw new Error(
+      "Offer evidence reviewed-offer count does not match its relations.",
+    );
+  }
+  if (
+    offerEvidence.counts.reviewedRelationCount !==
+    offerEvidence.records.reduce(
+      (count, record) => count + record.relations.length,
+      0,
+    )
+  ) {
+    throw new Error(
+      "Offer evidence relation count does not match its records.",
+    );
+  }
+  for (const offerId of baselineOfferIdsSet) {
+    if (!sidecarOfferIdsSet.has(offerId)) {
+      throw new Error(
+        `Offer evidence does not preserve the runtime matcher offer: ${offerId}.`,
+      );
+    }
+  }
+  const matchedOfferIds = sortedUnique([...sidecarOfferIdsSet]);
+  const matchedRelationKeys = sortedUnique([...sidecarRelationKeysSet]);
+  const matchedProgramKeys = sortedUnique([...sidecarProgramKeysSet]);
   const zeroReviewedRelationKeys = approvedRelationKeys.filter(
-    (key) => !matchedRelationKeysSet.has(key),
+    (key) => !sidecarRelationKeysSet.has(key),
   );
   const reviewedProgramKeys = sortedUnique(
     approvedRelationKeys.map((key) => key.split("|", 1)[0]),
@@ -1221,30 +1152,14 @@ function assertSourceCommitBoundary(
     );
   }
   try {
-    execFileSync(
-      "git",
-      ["rev-parse", "--verify", `${sourceCommitSha}^{commit}`],
-      { cwd: rootDir, stdio: "pipe" },
-    );
-    execFileSync(
-      "git",
-      ["merge-base", "--is-ancestor", sourceCommitSha, "HEAD"],
-      { cwd: rootDir, stdio: "pipe" },
-    );
-    execFileSync(
-      "git",
-      [
-        "diff",
-        "--quiet",
-        sourceCommitSha,
-        "--",
-        ...HISTORICAL_FREEZE_SOURCE_PATHS,
-      ],
-      { cwd: rootDir, stdio: "pipe" },
+    assertFreezeGitBoundary(
+      rootDir,
+      sourceCommitSha,
+      CONTEST_FREEZE_SOURCE_PATHS,
     );
   } catch {
     throw new Error(
-      "sourceCommitSha cannot prove an ancestor boundary without source/public data mutations",
+      "sourceCommitSha cannot prove a Git boundary without source/public data mutations",
     );
   }
 }
@@ -1279,14 +1194,9 @@ function assertManifestIdentity(
       "manifest.qualityCounts does not match the current public manifest",
     );
   }
-  for (const key of Object.keys(expected.resourceSnapshots)) {
+  for (const key of CANONICAL_RESOURCE_KEYS) {
     const actualResource = actual.resourceSnapshots[key];
     const expectedResource = expected.resourceSnapshots[key];
-    if (actualResource === undefined || expectedResource === undefined) {
-      throw new Error(
-        `manifest.resourceSnapshots.${key} does not match the current public manifest`,
-      );
-    }
     if (actualResource.resourcePath !== expectedResource.resourcePath) {
       throw new Error(
         `manifest.resourceSnapshots.${key}.resourcePath does not match the current public manifest`,
@@ -1343,7 +1253,6 @@ export async function writeContestFreeze(
   freezePath = path.resolve(rootDir, "docs/contest/coverage-freeze.json"),
 ): Promise<void> {
   assertContestFreezeWritePreflight(rootDir);
-  assertContestFreezeWriteSourceBoundary(rootDir, sourceCommitSha);
   // This private marker read intentionally does not call the schema-2 parser;
   // legacy deployment, paths, hashes, counts and derived values are discarded.
   assertLegacyFreezeMarker(

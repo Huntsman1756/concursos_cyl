@@ -8,6 +8,7 @@ import type {
   ProfessionalCertificate,
 } from "../../../data/schemas/ecylResources";
 import { currentManifestFixture } from "../../../tests/fixtures/generatedManifest";
+import { setTodayForTests } from "../../domain/currentDate";
 import { EcylResourcesPage } from "./EcylResourcesPage";
 
 const SNAPSHOT_PREFIX = "/data/v1/snapshots/build-1";
@@ -94,6 +95,25 @@ function certificate(): ProfessionalCertificate {
   };
 }
 
+function publicCall(overrides: Record<string, unknown> = {}) {
+  return {
+    id: "call-001",
+    title: "Convocatoria de prueba",
+    organization: "Junta de Castilla y León",
+    places: 10,
+    municipality: "Valladolid",
+    applicationStart: "2026-07-28",
+    applicationDeadline: "2026-08-24",
+    requirements: null,
+    deadlineCopy: null,
+    accessType: "open",
+    applicationUrl: null,
+    officialUrl: "https://empleo.jcyl.es/convocatoria",
+    sourceUpdatedAt: null,
+    ...overrides,
+  };
+}
+
 function requestPath(input: RequestInfo | URL): string {
   if (typeof input === "string") return input;
   if (input instanceof URL) return input.pathname;
@@ -110,20 +130,27 @@ function responseFor(value: unknown): Response {
 function renderResources({
   courses = [course()],
   certificates = [certificate()],
+  publicCalls = [] as Array<Record<string, unknown>>,
+  holdManifest = false,
 }: {
   courses?: EcylCourse[];
   certificates?: ProfessionalCertificate[];
+  publicCalls?: Array<Record<string, unknown>>;
+  holdManifest?: boolean;
 } = {}) {
   const manifest = resourceManifest();
   const assets = new Map<string, unknown>([
     ["/data/v1/manifest.json", manifest],
     [`${SNAPSHOT_PREFIX}/ecyl-courses.json`, courses],
     [`${SNAPSHOT_PREFIX}/professional-certificates.json`, certificates],
-    [`${SNAPSHOT_PREFIX}/public-employment-calls.json`, []],
+    [`${SNAPSHOT_PREFIX}/public-employment-calls.json`, publicCalls],
   ]);
   vi.stubGlobal(
     "fetch",
     vi.fn((input: RequestInfo | URL) => {
+      if (holdManifest) {
+        return new Promise<Response>(() => undefined);
+      }
       const value = assets.get(requestPath(input));
       return Promise.resolve(
         value === undefined
@@ -146,11 +173,128 @@ afterEach(() => {
 });
 
 describe("EcylResourcesPage", () => {
+  it("never renders a public-calls count while data is still loading", () => {
+    renderResources({ holdManifest: true });
+
+    expect(screen.getByRole("status")).toHaveTextContent("Cargando recursos…");
+    expect(
+      screen.queryByRole("heading", {
+        name: /Convocatorias que figuraban abiertas en la copia del /u,
+      }),
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText(/convocatorias?$/u)).not.toBeInTheDocument();
+    expect(screen.queryByText("0 convocatorias")).not.toBeInTheDocument();
+  });
+
+  it("shows an honest zero only after the runtime derivation returns zero", async () => {
+    renderResources({
+      publicCalls: [publicCall({ applicationDeadline: "2026-08-03" })],
+    });
+
+    await screen.findByRole("heading", {
+      name: /Convocatorias que figuraban abiertas en la copia del /u,
+    });
+    expect(screen.getByText("0 convocatorias")).toBeVisible();
+    expect(
+      screen.getByText(
+        "Ninguna convocatoria de esta copia tiene el plazo de solicitud abierto a la fecha de la copia. Los plazos publicados ya habían cerrado o todavía no empezaban; comprueba la fuente oficial por si se han publicado procesos nuevos.",
+      ),
+    ).toBeVisible();
+  });
+
+  it("uses the copy reference date for the contractual open-call total", async () => {
+    renderResources({
+      publicCalls: [
+        publicCall({ id: "call-001" }),
+        publicCall({ id: "call-002" }),
+        publicCall({ id: "call-003" }),
+        publicCall({ id: "call-004" }),
+      ],
+    });
+
+    await screen.findByRole("heading", {
+      name: /Convocatorias que figuraban abiertas en la copia del /u,
+    });
+    expect(screen.getByText("4 convocatorias")).toBeVisible();
+  });
+
+  it("renders open calls with their deadline and source provenance", async () => {
+    renderResources({
+      publicCalls: [
+        {
+          id: "1285666453332",
+          title: "ATS/DUE (2023/24/25)",
+          organization: "Sanidad",
+          places: 363,
+          municipality: "Valladolid",
+          applicationStart: "2026-07-28",
+          applicationDeadline: "2026-12-31",
+          requirements: null,
+          deadlineCopy: null,
+          accessType: "open",
+          applicationUrl: null,
+          officialUrl: "https://empleo.jcyl.es/convocatoria-1",
+          sourceUpdatedAt: null,
+        },
+      ],
+    });
+
+    await screen.findByRole("heading", { name: "ATS/DUE (2023/24/25)" });
+    expect(screen.getByText("1 convocatoria")).toBeVisible();
+    expect(screen.getByText(/Plazo hasta el/u)).toBeVisible();
+  });
+
+  it("marks a call whose published deadline already passed before today", async () => {
+    setTodayForTests("2026-09-04");
+    try {
+      renderResources({
+        publicCalls: [
+          publicCall({
+            id: "call-closed",
+            applicationDeadline: "2026-08-24",
+          }),
+        ],
+      });
+
+      await screen.findByRole("heading", {
+        name: /Convocatorias que figuraban abiertas en la copia del /u,
+      });
+      expect(
+        screen.getByText(
+          "El plazo publicado ya pasó: cerró el 24 de agosto de 2026.",
+        ),
+      ).toBeVisible();
+    } finally {
+      setTodayForTests(null);
+    }
+  });
+
+  it("treats the deadline day itself as not yet passed", async () => {
+    setTodayForTests("2026-08-24");
+    try {
+      renderResources({
+        publicCalls: [
+          publicCall({
+            id: "call-boundary",
+            applicationDeadline: "2026-08-24",
+          }),
+        ],
+      });
+
+      await screen.findByRole("heading", {
+        name: /Convocatorias que figuraban abiertas en la copia del /u,
+      });
+      expect(screen.getByText(/Plazo hasta el/u)).toBeVisible();
+    } finally {
+      setTodayForTests(null);
+    }
+  });
+
   it("presents the certificate family as an official code and readable label", async () => {
     renderResources();
 
     const familyFilter = await screen.findByRole("combobox", {
-      name: "Familia profesional",
+      name: "Familia de los certificados",
     });
 
     expect(
@@ -163,6 +307,53 @@ describe("EcylResourcesPage", () => {
     ).toBeVisible();
   });
 
+  it("keeps courses and calls outside the explicitly certificate-only family filter", async () => {
+    const user = userEvent.setup();
+    renderResources({
+      certificates: [
+        certificate(),
+        {
+          ...certificate(),
+          code: "IFCD0110",
+          familyCode: "IFC",
+          title: "Programación",
+        },
+      ],
+      publicCalls: [publicCall()],
+    });
+    const family = await screen.findByRole("combobox", {
+      name: "Familia de los certificados",
+    });
+    await user.selectOptions(family, "IFC");
+    expect(
+      screen.getByRole("heading", { name: "Curso de prueba" }),
+    ).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Programación" })).toBeVisible();
+    expect(
+      screen.queryByRole("heading", { name: /Gestión Contable/iu }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText(/Las convocatorias se muestran sin estos filtros/u),
+    ).toBeVisible();
+    const calls = screen.getByRole("region", {
+      name: /Convocatorias que figuraban abiertas/u,
+    });
+    const before = calls.textContent;
+    await user.type(
+      screen.getByRole("searchbox", {
+        name: "Buscar en cursos y certificados",
+      }),
+      "zzzinexistente",
+    );
+    expect(calls.textContent).toBe(before);
+    expect(
+      screen.queryByRole("heading", { name: "Curso de prueba" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("heading", { name: "Programación" }),
+    ).not.toBeInTheDocument();
+  });
+
   it("finds a course when the search term is its stable ECYL identifier", async () => {
     const user = userEvent.setup();
     renderResources({
@@ -173,8 +364,9 @@ describe("EcylResourcesPage", () => {
     });
 
     const search = await screen.findByRole("searchbox", {
-      name: "Buscar por nombre, localidad o código",
+      name: "Buscar en cursos y certificados",
     });
+    expect(search).toHaveAttribute("placeholder", "Nombre, localidad o código");
     await user.type(search, "course-002");
 
     expect(
@@ -189,7 +381,7 @@ describe("EcylResourcesPage", () => {
         name: "Curso que no coincide",
       }),
     ).not.toBeInTheDocument();
-    expect(screen.getByText("1 de 1 resultados")).toBeVisible();
+    expect(screen.getByText("Cursos: 1 de 1")).toBeVisible();
   });
 
   it("keeps course identity and primary published fields visible while details stay collapsed", async () => {
@@ -203,8 +395,16 @@ describe("EcylResourcesPage", () => {
     if (card === null) throw new Error("Expected the course card.");
 
     expect(screen.getByText("Identificador ECYL: course-001")).toBeVisible();
-    expect(within(card).getByText("León · Presencial")).toBeVisible();
-    expect(within(card).getByText("Administración · 100 h")).toBeVisible();
+    for (const [label, value] of [
+      ["Localidad", "León"],
+      ["Modalidad", "Presencial"],
+      ["Materia", "Administración"],
+      ["Duración", "100 h"],
+    ]) {
+      const row = within(card).getAllByText(label)[0].closest("div");
+      expect(row).toHaveTextContent(value);
+      expect(row).toBeVisible();
+    }
     const summary = within(card).getByText("Ver todos los datos publicados");
     const details = summary.closest("details");
     if (details === null) throw new Error("Expected a metadata disclosure.");
@@ -248,6 +448,11 @@ describe("EcylResourcesPage", () => {
     expect(within(card).getByText(/Datos no publicados:/u)).toHaveTextContent(
       "Datos no publicados: fecha de inicio, plazo de inscripción, fecha de fin, requisitos.",
     );
+    for (const label of ["Localidad", "Modalidad", "Duración", "Materia"]) {
+      const row = within(card).getAllByText(label)[0].closest("div");
+      expect(row).toHaveTextContent("No publicada");
+      expect(row).toBeVisible();
+    }
 
     for (const label of [
       "Modalidad",
@@ -323,7 +528,7 @@ describe("EcylResourcesPage", () => {
     renderResources();
 
     const search = await screen.findByRole("searchbox", {
-      name: "Buscar por nombre, localidad o código",
+      name: "Buscar en cursos y certificados",
     });
     await user.type(search, "no existe");
 

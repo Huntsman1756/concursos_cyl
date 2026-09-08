@@ -19,5 +19,6 @@
     "data/schemas/**/*.ts",
     "scripts/**/*.ts",
     "tests/fixtures/**/*.ts"
-  ]
+  ],
+  "exclude": ["scripts/analysis/carril*.ts", "scripts/analysis/ds_*.ts"]
 }

@@ -1,0 +1,56 @@
+/* Supporting explanations: the hero remains the Home entry selector. */
+.home-page .path {
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.home-page .path-media {
+  width: min(100%, 10rem);
+  border-radius: var(--radius-card);
+}
+
+.home-page .path-body {
+  padding: var(--space-3) 0 0;
+}
+
+.home-page .path-actions .link-action {
+  font-weight: 400;
+}
+
+/* Reach the primary search sooner on a phone without shrinking controls. */
+.task-tab__compact {
+  display: none;
+}
+
+@media (max-width: 639px) {
+  .home-page .task-selector-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .task-tab__full {
+    display: none;
+  }
+
+  .task-tab__compact {
+    display: inline;
+  }
+
+  .home-page .task-tab {
+    padding-inline: var(--space-1);
+  }
+
+  .home-page .hero-grid {
+    padding-block: var(--space-5);
+  }
+
+  .home-page .hero .display {
+    font-size: clamp(1.75rem, 7.5vw, 2rem);
+    line-height: 1.15;
+  }
+
+  .home-page .task-selector {
+    margin-top: var(--space-4);
+  }
+}

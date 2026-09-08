@@ -12,38 +12,226 @@ import { currentManifestFixture } from "../../../tests/fixtures/generatedManifes
 import { HomePage } from "./HomePage";
 
 const program = {
-  programKey: "IFC03S",
-  programTitle: "Desarrollo de Aplicaciones Web",
+  programKey: "ADG02S",
+  programTitle: "Administración y Finanzas",
   level: "higher",
-  familyCode: "IFC",
-  familyName: "Informática y Comunicaciones",
+  familyCode: "ADG",
+  familyName: "Administración y Gestión",
 } as const;
 
-const exampleProgram = {
-  programKey: "SAN21",
-  programTitle: "Cuidados Auxiliares de Enfermería",
-  level: "intermediate",
-  familyCode: "SAN",
-  familyName: "Sanidad",
+const occupation = {
+  occupationId: "occupation:cno11:2713",
+  preferredLabel: "Analistas, programadores y diseñadores web y multimedia",
+  confirmationLabel: "Programación y desarrollo web",
+  classificationSystem: "CNO-11",
+  classificationCode: "2713",
+  reviewStatus: "approved",
+  sourceUrl: "https://www.boe.es/eli/es/rd/2010/11/26/1591",
+  reviewedAt: "2026-08-11",
+  catalogVersion: "2.0.0",
 } as const;
 
-function responseFor(data: unknown): Response {
-  return new Response(JSON.stringify(data), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+const accountingOccupation = {
+  occupationId: "occupation:cno11:4111",
+  preferredLabel: "Empleados de contabilidad",
+  confirmationLabel: "Contabilidad",
+  classificationSystem: "CNO-11",
+  classificationCode: "4111",
+  reviewStatus: "approved",
+  sourceUrl: "https://www.boe.es/eli/es/rd/2010/11/26/1591",
+  reviewedAt: "2026-08-11",
+  catalogVersion: "2.0.0",
+} as const;
+
+const center = {
+  centerCode: "5000001",
+  centerName: "CIFP EJEMPLO",
+  centerOwnership: "education",
+  address: "C/ Ejemplo 1",
+  email: "x@example.es",
+  locality: "Zaragoza",
+  phone: "000 000 000",
+  province: "Zaragoza",
+  website: null,
+};
+
+const offering = {
+  centerCode: "5000001",
+  centerName: "CIFP EJEMPLO",
+  centerOwnership: "education",
+  familyCode: "ADG",
+  familyName: "Administración y Gestión",
+  level: "higher",
+  locality: "Zaragoza",
+  modality: "on_site",
+  offeringId: "ADG02S:5000001:on_site:public:education",
+  programKey: "ADG02S",
+  programTitle: "Administración y Finanzas",
+  province: "Zaragoza",
+  teachingType: "public",
+};
+
+const graphRow = {
+  trainingProgramKey: "ADG02S",
+  occupationId: "occupation:cno11:4111",
+  relationshipType: "official_output",
+  reviewStatus: "approved",
+  sourceUrl:
+    "https://www.todofp.es/que-estudiar/familias-profesionales/adg/administracion-y-finanzas.html",
+  sourceQuote: "Administrativa / administrativo contable.",
+  reviewedAt: "2026-08-12",
+  mappingVersion: "1.0.0",
+  reviewNote: "Relación oficial revisada contra TodoFP.",
+};
+
+const offerEvidenceFixture = {
+  schemaVersion: "1.0.0",
+  snapshotId: "20260830120000000-8c6c79fbd2a1",
+  baseSnapshotId: "build-1",
+  generatedAt: "2026-08-04T10:00:00.000Z",
+  reviewVersion: "1.0.0",
+  sourceSnapshots: [
+    {
+      snapshotId: "offers",
+      sourceUrl: "https://example.es/offers",
+      recordCount: 1,
+      sha256:
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    },
+  ],
+  counts: {
+    offerCount: 1,
+    offersWithPublishedRequirements: 0,
+    requirementCount: 0,
+    classifiedRequirementCount: 0,
+    unclassifiedRequirementCount: 0,
+    offersWithReviewedFpRelationship: 1,
+    reviewedRelationCount: 1,
+    offersWithAlternativePathway: 0,
+    offersWithAmbiguity: 0,
+  },
+  notes: ["Nota de prueba"],
+  records: [
+    {
+      offerId: "1285665634571",
+      title: "EMPLEADOS ADMINISTRATIVOS DE CONTABILIDAD, EN GENERAL",
+      occupationLabel: "Empleados administrativos de contabilidad, en general",
+      province: "Zamora",
+      locality: "Zamora",
+      sourceName: "ECYL",
+      employer: null,
+      status: "published_in_snapshot",
+      publishedAt: "2026-07-23T00:00:00.000Z",
+      sourceDate: "2026-07-23T00:00:00.000Z",
+      freshnessDate: "2026-07-23T00:00:00.000Z",
+      sourceUrl: "https://example.es/offers",
+      originalUrl: "https://empleo.jcyl.es/oferta/1285665634571",
+      evidenceStatus: "reviewed_fp_relationship",
+      hasAmbiguousRequirements: false,
+      requirements: [],
+      relations: [
+        {
+          programKey: "ADG02S",
+          programTitle: "Administración y Finanzas",
+          occupationId: "occupation:cno11:4111",
+          occupationLabel: "Empleados de contabilidad",
+          relationshipType: "official_output",
+          matchRule: "reviewed_title_alias_exact",
+          sourceUrl: "https://www.todofp.es/adg/administracion-y-finanzas.html",
+          sourceQuote: "Administrativa / administrativo contable.",
+          reviewedAt: "2026-08-12",
+          mappingVersion: "1.0.0",
+        },
+      ],
+      nextActions: [
+        {
+          actionType: "open_original_offer",
+          targetKind: "external",
+          label: "Abrir la oferta original",
+          href: "https://empleo.jcyl.es/oferta/1285665634571",
+          reason: "Comprueba la publicación.",
+        },
+      ],
+    },
+  ],
+};
+
+function relationshipAwareManifest() {
+  const base = currentManifestFixture();
+  const snapshot = base.resourceSnapshots.programs;
+  return {
+    ...base,
+    resourceSnapshots: {
+      ...base.resourceSnapshots,
+      occupations: {
+        ...snapshot,
+        resourcePath: "/data/v1/snapshots/build-1/occupations.json",
+      },
+      occupationAliases: {
+        ...snapshot,
+        resourcePath: "/data/v1/snapshots/build-1/occupation-aliases.json",
+      },
+      trainingOccupationLinks: {
+        ...snapshot,
+        resourcePath:
+          "/data/v1/snapshots/build-1/training-occupation-links.json",
+      },
+      derivedFpOccupationGraph: {
+        ...snapshot,
+        resourcePath:
+          "/data/v1/snapshots/build-1/derived-fp-occupation-graph.json",
+      },
+      offerEvidence: {
+        ...snapshot,
+        resourcePath:
+          "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/offer-evidence.json",
+      },
+    },
+  };
 }
 
-function installHomeFetch(): void {
-  const manifest = currentManifestFixture();
+function installHomeFetch({
+  manifest = relationshipAwareManifest(),
+  coverage = [] as unknown[],
+  programs = [program],
+  occupations = [occupation, accountingOccupation] as unknown[],
+  aliases = [] as unknown[],
+  links = [graphRow] as unknown[],
+  centers = [center] as unknown[],
+  offerings = [offering] as unknown[],
+  evidence = offerEvidenceFixture as unknown,
+  omitEvidence = false,
+}: {
+  manifest?: { resourceSnapshots: Record<string, { resourcePath: string }> };
+  coverage?: unknown[];
+  programs?: unknown[];
+  occupations?: unknown[];
+  aliases?: unknown[];
+  links?: unknown[];
+  centers?: unknown[];
+  offerings?: unknown[];
+  evidence?: unknown;
+  omitEvidence?: boolean;
+} = {}) {
   const resources = new Map<string, unknown>([
     ["/data/v1/manifest.json", manifest],
-    [
-      manifest.resourceSnapshots.programs.resourcePath,
-      [program, exampleProgram],
-    ],
-    [manifest.resourceSnapshots.mappingCoverage.resourcePath, []],
+    [manifest.resourceSnapshots.programs.resourcePath, programs],
+    [manifest.resourceSnapshots.centers.resourcePath, centers],
+    [manifest.resourceSnapshots.trainingOfferings.resourcePath, offerings],
+    [manifest.resourceSnapshots.occupations.resourcePath, occupations],
+    [manifest.resourceSnapshots.occupationAliases.resourcePath, aliases],
+    [manifest.resourceSnapshots.trainingOccupationLinks.resourcePath, links],
   ]);
+  const snapshots = manifest.resourceSnapshots as Record<
+    string,
+    { resourcePath: string }
+  >;
+  if (snapshots.mappingCoverage?.resourcePath !== undefined) {
+    resources.set(snapshots.mappingCoverage.resourcePath, coverage);
+  }
+  if (!omitEvidence) {
+    resources.set(snapshots.offerEvidence.resourcePath, evidence);
+  }
   vi.stubGlobal(
     "fetch",
     vi.fn((input: RequestInfo | URL) => {
@@ -52,7 +240,10 @@ function installHomeFetch(): void {
       return Promise.resolve(
         payload === undefined
           ? new Response(null, { status: 404 })
-          : responseFor(payload),
+          : new Response(JSON.stringify(payload), {
+              status: 200,
+              headers: { "Content-Type": "application/json" },
+            }),
       );
     }),
   );
@@ -60,7 +251,12 @@ function installHomeFetch(): void {
 
 function LocationProbe() {
   const location = useLocation();
-  return <output data-testid="location">{location.pathname}</output>;
+  return (
+    <output data-testid="location">
+      {location.pathname}
+      {location.search}
+    </output>
+  );
 }
 
 afterEach(() => {
@@ -69,8 +265,59 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe("HomePage", () => {
-  it("uses a searchable FP combobox and navigates only after official confirmation", async () => {
+describe("HomePage task selector", () => {
+  it("explains outcomes below the selector while preserving the three route links", async () => {
+    installHomeFetch();
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    const explanation = screen.getByRole("region", {
+      name: "Qué puedes entender con SALIDA",
+    });
+    expect(
+      within(explanation).getAllByRole("heading", { level: 3 }),
+    ).toHaveLength(3);
+    for (const [name, href] of [
+      ["Salidas de FP", "/desde-fp"],
+      ["Profesiones y formación", "/desde-ocupacion"],
+      ["Requisitos de ofertas", "/desde-oferta"],
+    ]) {
+      expect(within(explanation).getByRole("link", { name })).toHaveAttribute(
+        "href",
+        href,
+      );
+    }
+    expect(within(explanation).queryByRole("tablist")).not.toBeInTheDocument();
+    expect(within(explanation).queryByRole("button")).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("tablist", { name: "Elige tu punto de partida" }),
+    ).toBeVisible();
+    const transparency = screen.getByRole("region", {
+      name: "Sobre los datos",
+    });
+    expect(
+      within(transparency).getByRole("link", { name: "Ver metodología" }),
+    ).toHaveAttribute("href", "/metodologia");
+    expect(
+      within(transparency).getByRole("link", { name: /datos abiertos/u }),
+    ).toHaveAttribute("href", "/datos-abiertos");
+    expect(
+      within(transparency).getByText(
+        /Junta de Castilla y León \(ECYL\), SEPE, TodoFP y BOE/u,
+      ),
+    ).toBeVisible();
+    expect(
+      within(transparency).getByText(
+        /no representan personas, empresas, ofertas ni centros reales/u,
+      ),
+    ).toBeVisible();
+    await screen.findByRole("combobox", { name: "Busca tu ciclo" });
+  });
+
+  it("starts on the FP tab and navigates after choosing an official cycle", async () => {
     installHomeFetch();
     const user = userEvent.setup();
 
@@ -80,38 +327,76 @@ describe("HomePage", () => {
         <LocationProbe />
       </MemoryRouter>,
     );
+
+    const tablist = screen.getByRole("tablist", {
+      name: "Elige tu punto de partida",
+    });
+    const fpTab = within(tablist).getByRole("tab", { name: "Tengo una FP" });
+    expect(fpTab).toHaveAttribute("aria-selected", "true");
+    expect(
+      within(tablist).getByRole("tab", { name: "Busco una profesión" }),
+    ).toHaveAttribute("aria-selected", "false");
 
     const combobox = await screen.findByRole("combobox", {
-      name: /título de formación/i,
+      name: "Busca tu ciclo",
     });
     expect(combobox).toHaveAttribute("aria-autocomplete", "list");
-    expect(screen.queryAllByRole("option")).toHaveLength(0);
-    expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: "Elige desde dónde empiezas.",
-      }),
-    ).toBeVisible();
-    expect(
-      screen.getByText("Datos públicos con fecha y fuente visibles."),
-    ).toBeVisible();
 
-    const submit = screen.getByRole("button", {
-      name: /ver ocupaciones con relación revisada/i,
+    await user.type(combobox, "ADG02S");
+    const option = await screen.findByRole("option", {
+      name: /Administración y Finanzas/u,
     });
-    await user.type(combobox, "IFC03S");
-    expect(submit).toBeDisabled();
-
-    await user.keyboard("{ArrowDown}{Enter}");
-    expect(submit).toBeEnabled();
-
-    await user.click(submit);
+    await user.click(option);
+    await user.click(screen.getByRole("button", { name: "Ver mis salidas" }));
     expect(screen.getByTestId("location")).toHaveTextContent(
-      "/desde-fp/IFC03S",
+      "/desde-fp/ADG02S?query=Administraci%C3%B3n+y+Finanzas",
     );
   });
 
-  it("offers a third offer-first journey without loading relationship catalogs", async () => {
+  it("moves between intentions with Arrow keys (roving tabindex)", async () => {
+    installHomeFetch();
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    const tablist = screen.getByRole("tablist", {
+      name: "Elige tu punto de partida",
+    });
+    const fpTab = within(tablist).getByRole("tab", { name: "Tengo una FP" });
+    const occupationTab = within(tablist).getByRole("tab", {
+      name: "Busco una profesión",
+    });
+    const offerTab = within(tablist).getByRole("tab", {
+      name: "Estoy mirando una oferta",
+    });
+
+    await user.click(fpTab);
+    expect(fpTab).toHaveAttribute("aria-selected", "true");
+    expect(occupationTab).toHaveAttribute("tabindex", "-1");
+
+    await user.keyboard("{ArrowRight}");
+    await waitFor(() =>
+      expect(occupationTab).toHaveAttribute("aria-selected", "true"),
+    );
+    expect(fpTab).toHaveAttribute("aria-selected", "false");
+    expect(fpTab).toHaveAttribute("tabindex", "-1");
+    expect(occupationTab).toHaveAttribute("tabindex", "0");
+    await waitFor(() => expect(occupationTab).toHaveFocus());
+
+    await user.keyboard("{ArrowRight}");
+    expect(offerTab).toHaveAttribute("aria-selected", "true");
+    await waitFor(() => expect(offerTab).toHaveFocus());
+
+    await user.keyboard("{Home}");
+    await waitFor(() => expect(fpTab).toHaveAttribute("aria-selected", "true"));
+    await waitFor(() => expect(fpTab).toHaveFocus());
+  });
+
+  it("reaches the occupation route from the profession journey", async () => {
     installHomeFetch();
     const user = userEvent.setup();
 
@@ -122,149 +407,122 @@ describe("HomePage", () => {
       </MemoryRouter>,
     );
 
-    await screen.findByRole("combobox", {
-      name: /título de formación/i,
+    await user.click(screen.getByRole("tab", { name: "Busco una profesión" }));
+    const combobox = await screen.findByRole("combobox", {
+      name: "Busca una profesión",
     });
-    await user.click(
-      screen.getByRole("radio", { name: /Estoy mirando una oferta/i }),
+    await user.type(combobox, "programación web");
+    const option = await screen.findByRole("option", {
+      name: /Analistas, programadores y diseñadores web y multimedia/u,
+    });
+    await user.click(option);
+    await user.click(screen.getByRole("button", { name: "Buscar profesión" }));
+    expect(screen.getByTestId("location")).toHaveTextContent(
+      "/desde-ocupacion/occupation%3Acno11%3A2713?query=Analistas%2C+programadores+y+dise%C3%B1adores+web+y+multimedia",
     );
-    const query = screen.getByRole("searchbox", {
-      name: /título, ocupación o localidad/i,
-    });
-    await user.type(query, "cocina");
-    await user.click(screen.getByRole("button", { name: /Comprobar oferta/i }));
-
-    expect(screen.getByTestId("location")).toHaveTextContent("/desde-oferta");
-    expect(fetch).not.toHaveBeenCalledWith(
-      expect.stringContaining("occupation-aliases"),
-      expect.anything(),
+    expect(fetch).toHaveBeenCalledWith(
+      "/data/v1/snapshots/build-1/occupations.json",
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
   });
 
-  it("presents manifest-addressed reviewed coverage and excludes unsupported programs", async () => {
-    const baseManifest = currentManifestFixture();
-    const manifest = {
-      ...baseManifest,
-      resourceSnapshots: {
-        ...baseManifest.resourceSnapshots,
-        mappingCoverage: {
-          ...baseManifest.resourceSnapshots.programs,
-          resourcePath: "/data/v1/snapshots/build-1/mapping-coverage.json",
-        },
-        occupations: {
-          ...baseManifest.resourceSnapshots.programs,
-          resourcePath: "/data/v1/snapshots/build-1/occupations.json",
-        },
-        occupationAliases: {
-          ...baseManifest.resourceSnapshots.programs,
-          resourcePath: "/data/v1/snapshots/build-1/occupation-aliases.json",
-        },
-        trainingOccupationLinks: {
-          ...baseManifest.resourceSnapshots.programs,
-          resourcePath:
-            "/data/v1/snapshots/build-1/training-occupation-links.json",
-        },
-      },
-    };
-    const coverage = [
-      {
-        scope: "program",
-        programKey: "IFC03S",
-        programTitle: "Desarrollo de Aplicaciones WEB",
-        familyCode: "IFC",
-        familyName: "Informática y Comunicaciones",
-        approvedMappings: 1,
-        draftMappings: 0,
-        rejectedMappings: 0,
-        uncoveredPrograms: 0,
-        coverageStatus: "reviewed",
-        coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
-      },
-      {
-        scope: "program",
-        programKey: "IFC03SD",
-        programTitle: "Desarrollo de Aplicaciones WEB (distancia)",
-        familyCode: "IFC",
-        familyName: "Informática y Comunicaciones",
-        approvedMappings: 1,
-        draftMappings: 0,
-        rejectedMappings: 0,
-        uncoveredPrograms: 0,
-        coverageStatus: "reviewed",
-        coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
-      },
-      ...["SAN21", "HOT01M", "SSC01M", "EOC01M"].map((programKey) => ({
-        scope: "program" as const,
-        programKey,
-        programTitle: programKey,
-        familyCode: "PILOT",
-        familyName: "Pilot",
-        approvedMappings: 1,
-        draftMappings: 0,
-        rejectedMappings: 0,
-        uncoveredPrograms: 0,
-        coverageStatus: "reviewed" as const,
-        coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
-      })),
-      {
-        scope: "program",
-        programKey: "COM01M",
-        programTitle: "Actividades Comerciales",
-        familyCode: "COM",
-        familyName: "Comercio y Marketing",
-        approvedMappings: 0,
-        draftMappings: 0,
-        rejectedMappings: 0,
-        uncoveredPrograms: 1,
-        coverageStatus: "uncovered",
-        coverageNote: "Aún no hay una relación ocupacional aprobada.",
-      },
-    ];
-    const program = {
-      programKey: "IFC03S",
-      programTitle: "Desarrollo de Aplicaciones Web",
-      level: "higher",
-      familyCode: "IFC",
-      familyName: "Informática y Comunicaciones",
-    };
-    const occupation = {
-      occupationId: "occupation:cno11:2713",
-      preferredLabel: "Analistas, programadores y diseñadores web y multimedia",
-      confirmationLabel: "Programación y desarrollo web",
-      classificationSystem: "CNO-11",
-      classificationCode: "2713",
-      reviewStatus: "approved",
-      sourceUrl: "https://www.boe.es/eli/es/rd/2010/11/26/1591",
-      reviewedAt: "2026-08-11",
-      catalogVersion: "2.0.0",
-    };
+  it("uses free text to reach the offer explorer", async () => {
+    installHomeFetch();
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+        <LocationProbe />
+      </MemoryRouter>,
+    );
+
+    await user.click(
+      screen.getByRole("tab", { name: "Estoy mirando una oferta" }),
+    );
+    const query = await screen.findByRole("searchbox", {
+      name: "Pega el título de la oferta",
+    });
+    await user.type(query, "cocina");
+    await user.click(
+      screen.getByRole("button", { name: "Buscar esta oferta" }),
+    );
+    expect(screen.getByTestId("location")).toHaveTextContent(
+      "/desde-oferta?query=cocina",
+    );
+  });
+});
+
+describe("HomePage proof rail (runtime derived)", () => {
+  it("derives ciclos, centros and reviewed offers from the runtime snapshot", async () => {
+    installHomeFetch();
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    const rail = await screen.findByRole("region", {
+      name: "Datos y actualización de la copia activa",
+    });
+    expect(within(rail).getByText("programas y modalidades")).toBeVisible();
+    await waitFor(() =>
+      expect(
+        within(rail).getByText("ofertas con relación FP revisada"),
+      ).toBeVisible(),
+    );
+    expect(within(rail).getByText("centros")).toBeVisible();
+    // every value comes from the fixture runtime, never a hardcoded 187/138/229
+    await waitFor(() => expect(within(rail).getAllByText("1")).toHaveLength(3));
+    // audit closure: each counter exposes its own dataset date instead of one
+    // global "copia activa" date that reads as the data date.
+    await waitFor(() =>
+      expect(within(rail).getAllByText(/fuente consultada el/u)).toHaveLength(
+        2,
+      ),
+    );
+    expect(within(rail).getByText(/evidencia generada el/u)).toBeVisible();
+    expect(within(rail).getAllByText("4 de agosto de 2026")).toHaveLength(3);
+    expect(
+      screen.getByText(/Copia activa generada el 4 de agosto de 2026/u),
+    ).toBeVisible();
+    expect(
+      screen.getByText("Relaciones entre ciclos y profesiones"),
+    ).toBeVisible();
+  });
+  it("marks the reviewed-offer stat as busy while the evidence loads", async () => {
+    const manifest = relationshipAwareManifest();
+    let resolveEvidence!: (response: Response) => void;
+    const evidenceResponse = new Promise<Response>((resolve) => {
+      resolveEvidence = resolve;
+    });
     vi.stubGlobal(
       "fetch",
       vi.fn((input: RequestInfo | URL) => {
         const path = typeof input === "string" ? input : input.toString();
-        const payload =
-          path === "/data/v1/manifest.json"
-            ? manifest
-            : path === manifest.resourceSnapshots.mappingCoverage.resourcePath
-              ? coverage
-              : path === manifest.resourceSnapshots.programs.resourcePath
-                ? [program]
-                : path === manifest.resourceSnapshots.centers.resourcePath ||
-                    path ===
-                      manifest.resourceSnapshots.trainingOfferings
-                        .resourcePath ||
-                    path ===
-                      manifest.resourceSnapshots.jobOffers.resourcePath ||
-                    path ===
-                      manifest.resourceSnapshots.occupationAliases
-                        .resourcePath ||
-                    path ===
-                      manifest.resourceSnapshots.trainingOccupationLinks
-                        .resourcePath
-                  ? []
-                  : path === manifest.resourceSnapshots.occupations.resourcePath
-                    ? [occupation]
-                    : undefined;
+        if (path.endsWith("/offer-evidence.json")) {
+          return evidenceResponse;
+        }
+        const payload = new Map<string, unknown>([
+          ["/data/v1/manifest.json", manifest],
+          [manifest.resourceSnapshots.programs.resourcePath, [program]],
+          [manifest.resourceSnapshots.centers.resourcePath, [center]],
+          [
+            manifest.resourceSnapshots.trainingOfferings.resourcePath,
+            [offering],
+          ],
+          [
+            manifest.resourceSnapshots.occupations.resourcePath,
+            [occupation, accountingOccupation],
+          ],
+          [manifest.resourceSnapshots.occupationAliases.resourcePath, []],
+          [
+            manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
+            [graphRow],
+          ],
+          [manifest.resourceSnapshots.mappingCoverage.resourcePath, []],
+        ]).get(path);
         return Promise.resolve(
           payload === undefined
             ? new Response(null, { status: 404 })
@@ -272,6 +530,97 @@ describe("HomePage", () => {
         );
       }),
     );
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    const rail = screen.getByRole("region", {
+      name: "Datos y actualización de la copia activa",
+    });
+    expect(within(rail).getAllByText("…")).toHaveLength(3);
+    resolveEvidence(
+      new Response(JSON.stringify(offerEvidenceFixture), { status: 200 }),
+    );
+    await waitFor(() =>
+      expect(within(rail).queryAllByText("…")).toHaveLength(0),
+    );
+    expect(
+      within(rail).getByText("ofertas con relación FP revisada"),
+    ).toBeVisible();
+  });
+});
+
+describe("HomePage real example (approved only)", () => {
+  it("shows the approved ADG02S example derived from runtime data", async () => {
+    installHomeFetch();
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    const section = await screen.findByRole("region", {
+      name: "Comprueba cómo funciona",
+    });
+    expect(
+      await within(section).findByRole("heading", {
+        name: "Administración y Finanzas",
+      }),
+    ).toBeVisible();
+    expect(
+      within(section).getByText("Empleados de contabilidad"),
+    ).toBeVisible();
+    expect(
+      await within(section).findByText(
+        "Empleados Administrativos de Contabilidad, en General",
+      ),
+    ).toBeVisible();
+    expect(
+      within(section).getByRole("link", { name: "Ver el ejemplo completo" }),
+    ).toHaveAttribute("href", "/desde-fp/ADG02S");
+  });
+
+  it("hides the example when the approved relationship is not in the runtime copy", async () => {
+    installHomeFetch({ links: [] });
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("region", { name: "Comprueba cómo funciona" }),
+      ).not.toBeInTheDocument();
+    });
+  });
+});
+
+describe("HomePage freshness and lifecycle", () => {
+  it("presents the reviewed-relationship freshness", async () => {
+    installHomeFetch({
+      coverage: [
+        {
+          scope: "program",
+          programKey: "ADG02S",
+          programTitle: "Administración y Finanzas",
+          familyCode: "ADG",
+          familyName: "Administración y Gestión",
+          approvedMappings: 1,
+          draftMappings: 0,
+          rejectedMappings: 0,
+          uncoveredPrograms: 0,
+          coverageStatus: "reviewed",
+          coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
+        },
+      ],
+    });
+
     render(
       <MemoryRouter>
         <HomePage />
@@ -279,188 +628,80 @@ describe("HomePage", () => {
     );
 
     expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: /Elige desde dónde empiezas/i,
+      await screen.findByRole("region", {
+        name: "Fecha de relaciones revisadas",
       }),
-    ).toBeVisible();
-    const coveragePanel = screen.getByRole("region", {
-      name: "Cobertura revisada",
-    });
-    await waitFor(() =>
-      expect(
-        within(coveragePanel).getByRole("list", {
-          name: "Ciclos revisados destacados",
-        }),
-      ).toBeVisible(),
-    );
-    expect(
-      screen.getByRole("region", { name: "Fecha de relaciones revisadas" }),
-    ).toHaveTextContent("Relaciones revisadas: copia del 31/07/2026");
-    expect(
-      screen.queryByText("Actualizado: 31/07/2026"),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "Ejemplos de ciclos con relaciones revisadas; no es el catálogo completo.",
-      ),
-    ).toBeVisible();
-    expect(within(coveragePanel).getAllByRole("listitem")).toHaveLength(2);
-    expect(coveragePanel).toHaveTextContent("Desarrollo de Aplicaciones WEB");
-    expect(coveragePanel).toHaveTextContent(/EOC01M|HOT01M|SAN21|SSC01M/);
-    expect(coveragePanel).not.toHaveTextContent("IFC03SD");
-    expect(coveragePanel).not.toHaveTextContent("COM01M");
-    expect(screen.queryByText(/Administración/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/educación infantil/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/soldadura/i)).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(/Junta de Castilla y León/i),
-    ).not.toBeInTheDocument();
-    expect(
-      await screen.findByLabelText("Título de Formación Profesional"),
-    ).toBeVisible();
-    expect(fetch).toHaveBeenCalledWith(
-      manifest.resourceSnapshots.programs.resourcePath,
-      expect.objectContaining({ signal: expect.any(AbortSignal) }),
-    );
-    expect(fetch).not.toHaveBeenCalledWith(
-      manifest.resourceSnapshots.centers.resourcePath,
-      expect.anything(),
-    );
-    expect(fetch).not.toHaveBeenCalledWith(
-      manifest.resourceSnapshots.trainingOfferings.resourcePath,
-      expect.anything(),
-    );
-    expect(fetch).not.toHaveBeenCalledWith(
-      manifest.resourceSnapshots.jobOffers.resourcePath,
-      expect.anything(),
-    );
-    expect(fetch).not.toHaveBeenCalledWith(
-      manifest.resourceSnapshots.occupationAliases.resourcePath,
-      expect.anything(),
-    );
-    expect(fetch).not.toHaveBeenCalledWith(
-      manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
-      expect.anything(),
-    );
-    expect(fetch).not.toHaveBeenCalledWith(
-      manifest.resourceSnapshots.occupations.resourcePath,
-      expect.anything(),
-    );
-    expect(
-      screen.queryByRole("combobox", { name: "Ocupación que te interesa" }),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.getByRole("button", {
-        name: "Ver ocupaciones con relación revisada",
-      }),
-    ).toBeDisabled();
-    expect(screen.getByText("Tengo un título de FP")).toBeVisible();
-    expect(screen.getByText("Elige un título.")).toBeVisible();
-    expect(
-      screen.getByText("Ver ocupaciones con relación revisada."),
-    ).toBeVisible();
-    expect(screen.getByText("Ver FP con relación revisada.")).toBeVisible();
-    expect(
-      screen.getByText("Comprobar requisito, evidencia y siguiente acción."),
-    ).toBeVisible();
-
-    const user = userEvent.setup();
-    const fpMode = screen.getByRole("radio", {
-      name: /Tengo un título de FP/i,
-    });
-    fpMode.focus();
-    await user.keyboard("{ArrowRight}");
-    expect(
-      screen.getByRole("radio", { name: /Tengo una ocupación en mente/i }),
-    ).toHaveFocus();
-    expect(
-      screen.queryByLabelText("Título de Formación Profesional"),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.getByRole("combobox", { name: "Ocupación que te interesa" }),
-    ).toBeVisible();
-    await waitFor(() => {
-      expect(fetch).toHaveBeenCalledWith(
-        manifest.resourceSnapshots.occupationAliases.resourcePath,
-        expect.objectContaining({ signal: expect.any(AbortSignal) }),
-      );
-      expect(fetch).toHaveBeenCalledWith(
-        manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
-        expect.objectContaining({ signal: expect.any(AbortSignal) }),
-      );
-      expect(fetch).toHaveBeenCalledWith(
-        manifest.resourceSnapshots.occupations.resourcePath,
-        expect.objectContaining({ signal: expect.any(AbortSignal) }),
-      );
-    });
-    expect(
-      screen.getByRole("button", {
-        name: "Ver FP con relación revisada",
-      }),
-    ).toBeDisabled();
-    expect(screen.getByText("Elige una ocupación de la lista.")).toBeVisible();
-    expect(
-      screen.queryByRole("button", {
-        name: "Ver ocupaciones con relación revisada",
-      }),
-    ).not.toBeInTheDocument();
-    expect(window.localStorage.getItem("salida-cyl:home-search-mode")).toBe(
-      "occupation",
-    );
-    expect(
-      screen.getByRole("link", { name: "Método y límites" }),
-    ).toHaveAttribute("href", "/metodologia");
-    const commitments = screen.getByRole("region", {
-      name: "Compromisos del proyecto",
-    });
-    expect(commitments).toHaveTextContent(
-      "Fuentes públicasRelaciones revisadasSin cuentas ni cookiesMétodo y límites",
-    );
-    expect(
-      screen.getByRole("link", { name: /Comparar ingresos/u }),
-    ).toHaveAttribute("href", "/comparar");
-    expect(
-      screen.queryByRole("link", { name: /Buscar por tu título/u }),
-    ).not.toBeInTheDocument();
-    expect(commitments).not.toHaveTextContent(
-      /Datos de administraciones|Vínculos publicados|Sin registro/i,
+    ).toHaveTextContent(
+      "Relaciones revisadas · fuente actualizada el 31 de julio de 2026",
     );
   });
 
-  it("restores a valid saved search mode and ignores invalid values", () => {
-    window.localStorage.setItem("salida-cyl:home-search-mode", "occupation");
-    vi.stubGlobal(
-      "fetch",
-      vi.fn(() => new Promise<Response>(() => undefined)),
+  it("labels legacy freshness with the job-offer fallback scope", async () => {
+    const baseManifest = relationshipAwareManifest();
+    const legacyResourceSnapshots = Object.fromEntries(
+      Object.entries(baseManifest.resourceSnapshots).filter(
+        ([key]) => key !== "mappingCoverage",
+      ),
     );
+    const legacyManifest = {
+      ...baseManifest,
+      resourceSnapshots: legacyResourceSnapshots,
+    };
+    installHomeFetch({ manifest: legacyManifest });
 
-    const { unmount } = render(
-      <MemoryRouter>
-        <HomePage />
-      </MemoryRouter>,
-    );
-    expect(
-      screen.getByRole("radio", { name: /Tengo una ocupación en mente/i }),
-    ).toBeChecked();
-    expect(
-      screen.getByText("FP con relación revisada", { selector: "strong" }),
-    ).toBeVisible();
-
-    unmount();
-    window.localStorage.setItem("salida-cyl:home-search-mode", "invalid");
     render(
       <MemoryRouter>
         <HomePage />
       </MemoryRouter>,
     );
+
+    const freshness = await screen.findByRole("region", {
+      name: "Fecha de ofertas laborales",
+    });
+    expect(freshness).toHaveTextContent(
+      "Ofertas laborales · fuente actualizada el 31 de julio de 2026",
+    );
+  });
+
+  it("announces a pending manifest before rendering the reviewed-relationship date", async () => {
+    let resolveManifest!: (response: Response) => void;
+    const manifestResponse = new Promise<Response>((resolve) => {
+      resolveManifest = resolve;
+    });
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(() => manifestResponse),
+    );
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    const freshness = screen.getByRole("region", {
+      name: "Fecha de relaciones revisadas",
+    });
+    expect(freshness).toHaveAttribute("aria-busy", "true");
+    expect(within(freshness).getByText("Comprobando fecha…")).toBeVisible();
+
+    resolveManifest(
+      new Response(JSON.stringify(relationshipAwareManifest()), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }),
+    );
+
+    await waitFor(() =>
+      expect(freshness).toHaveAttribute("aria-busy", "false"),
+    );
     expect(
-      screen.getByRole("radio", { name: /Tengo un título de FP/i }),
-    ).toBeChecked();
+      within(freshness).queryByText("Comprobando fecha…"),
+    ).not.toBeInTheDocument();
   });
 
   it("requests the manifest once per mount", async () => {
-    const manifest = currentManifestFixture();
+    const manifest = relationshipAwareManifest();
     const isManifestRequest = (input: RequestInfo | URL) => {
       const path = typeof input === "string" ? input : input.toString();
       return path.endsWith("/data/v1/manifest.json");
@@ -487,86 +728,8 @@ describe("HomePage", () => {
     );
   });
 
-  it("labels legacy freshness with the job-offer fallback scope", async () => {
-    const currentManifest = currentManifestFixture();
-    const legacyResourceSnapshots = Object.fromEntries(
-      Object.entries(currentManifest.resourceSnapshots).filter(
-        ([key]) => key !== "mappingCoverage",
-      ),
-    );
-    const legacyManifest = {
-      ...currentManifest,
-      resourceSnapshots: legacyResourceSnapshots,
-    };
-    vi.stubGlobal(
-      "fetch",
-      vi.fn((input: RequestInfo | URL) => {
-        const path = typeof input === "string" ? input : input.toString();
-        return Promise.resolve(
-          path.endsWith("/data/v1/manifest.json")
-            ? new Response(JSON.stringify(legacyManifest), { status: 200 })
-            : new Response(null, { status: 404 }),
-        );
-      }),
-    );
-
-    render(
-      <MemoryRouter>
-        <HomePage />
-      </MemoryRouter>,
-    );
-
-    const freshness = await screen.findByRole("region", {
-      name: "Fecha de ofertas laborales",
-    });
-    expect(freshness).toHaveTextContent(
-      "Ofertas laborales: copia del 31/07/2026",
-    );
-    expect(
-      screen.queryByText("Relaciones revisadas: copia del 31/07/2026"),
-    ).not.toBeInTheDocument();
-  });
-
-  it("announces a pending manifest before rendering the reviewed-relationship date", async () => {
-    let resolveManifest!: (response: Response) => void;
-    const manifestResponse = new Promise<Response>((resolve) => {
-      resolveManifest = resolve;
-    });
-    vi.stubGlobal(
-      "fetch",
-      vi.fn(() => manifestResponse),
-    );
-
-    render(
-      <MemoryRouter>
-        <HomePage />
-      </MemoryRouter>,
-    );
-
-    const freshness = screen.getByRole("region", {
-      name: "Fecha de relaciones revisadas",
-    });
-    expect(freshness).toHaveAttribute("aria-busy", "true");
-    expect(within(freshness).getByText("Comprobando fecha…")).toBeVisible();
-
-    resolveManifest(
-      new Response(JSON.stringify(currentManifestFixture()), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }),
-    );
-
-    await waitFor(() =>
-      expect(freshness).toHaveAttribute("aria-busy", "false"),
-    );
-    expect(
-      within(freshness).queryByText("Comprobando fecha…"),
-    ).not.toBeInTheDocument();
-    expect(within(freshness).getByText("31/07/2026")).toBeVisible();
-  });
-
   it("aborts pending generated-data work when Home unmounts", async () => {
-    const manifest = currentManifestFixture();
+    const manifest = relationshipAwareManifest();
     let programSignal: AbortSignal | undefined;
     vi.stubGlobal(
       "fetch",

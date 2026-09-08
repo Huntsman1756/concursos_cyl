@@ -135,7 +135,7 @@ export function TrainingOutcomeEvidence({
   if (program.level !== "intermediate" && program.level !== "higher") {
     return (
       <UnavailableOutcome>
-        La fuente solo publica referencias para Grado Medio y Grado Superior.
+        La fuente solo publica referencias para grado medio y grado superior.
       </UnavailableOutcome>
     );
   }
@@ -174,7 +174,7 @@ export function TrainingOutcomeEvidence({
   if (view === null) {
     return (
       <UnavailableOutcome source={outcomeSource} onRetry={onRequestLoad}>
-        La fuente solo publica referencias para Grado Medio y Grado Superior.
+        La fuente solo publica referencias para grado medio y grado superior.
       </UnavailableOutcome>
     );
   }

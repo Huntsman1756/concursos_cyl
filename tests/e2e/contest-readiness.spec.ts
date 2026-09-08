@@ -189,34 +189,25 @@ test.describe("contest readiness journeys", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Elige desde dónde empiezas\./i,
+        name: /Tu FP, tus salidas profesionales y dónde dar el siguiente paso\./i,
       }),
     ).toBeVisible();
     if (testInfo.project.name === "chromium-mobile") {
-      await expect(
-        page.getByRole("button", { name: "Abrir menú principal" }),
-      ).toBeVisible();
+      await expect(page.getByRole("button", { name: "Menú" })).toBeVisible();
     } else {
-      await expect(page.locator(".site-nav--desktop")).toBeVisible();
+      await expect(page.locator(".global-nav-list")).toBeVisible();
     }
-    await expect(
-      page.getByRole("region", { name: "Cobertura revisada" }),
-    ).toHaveAttribute("aria-busy", "false");
     await expect(
       page.getByRole("region", { name: "Fecha de relaciones revisadas" }),
     ).toHaveAttribute("aria-busy", "false");
     await expect(
-      page
-        .getByRole("list", { name: "Ciclos revisados destacados" })
-        .getByRole("listitem"),
-    ).toHaveCount(3);
-    await expect(
-      page.getByRole("combobox", { name: "Título de Formación Profesional" }),
+      page.getByRole("tablist", { name: "Elige tu punto de partida" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("button", {
-        name: "Ver ocupaciones con relación revisada",
-      }),
+      page.getByRole("combobox", { name: "Busca tu ciclo" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Ver mis salidas" }),
     ).toHaveCount(1);
     await expectStableRoute(page, diagnostics);
   });
@@ -282,7 +273,7 @@ test.describe("contest readiness journeys", () => {
     );
     await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute(
       "content",
-      "#7f1734",
+      "#102a43",
     );
 
     const [faviconResponse, socialResponse, robotsResponse] = await Promise.all(
@@ -314,25 +305,14 @@ test.describe("contest readiness journeys", () => {
       "http://127.0.0.1:4173/?tab=coverage#freshness",
     );
 
-    const menuButton = page.getByRole("button", {
-      name: "Abrir menú principal",
-    });
-    const mobileNavigation = page.getByRole("navigation", {
-      name: "Principal móvil",
-      includeHidden: true,
-    });
-    await expect(mobileNavigation).toHaveAttribute(
-      "id",
-      "mobile-primary-navigation",
-    );
+    const menuButton = page.getByRole("button", { name: "Menú" });
+    const mobileNavigation = page.locator("#mobile-menu");
+    await expect(mobileNavigation).toHaveAttribute("id", "mobile-menu");
     await expect(menuButton).toHaveAttribute("aria-expanded", "false");
-    await expect(menuButton).toHaveAttribute(
-      "aria-controls",
-      "mobile-primary-navigation",
-    );
+    await expect(menuButton).toHaveAttribute("aria-controls", "mobile-menu");
     await expect(mobileNavigation).toHaveAttribute("hidden");
     const mobileAnchors = mobileNavigation.locator("a");
-    await expect(mobileAnchors).toHaveCount(7);
+    await expect(mobileAnchors).toHaveCount(8);
     expect(
       await mobileAnchors.evaluateAll((anchors) =>
         anchors.every((anchor) => anchor.getClientRects().length === 0),
@@ -357,9 +337,12 @@ test.describe("contest readiness journeys", () => {
       name: "Fecha de relaciones revisadas",
     });
     await expect(freshness).toBeVisible();
+    await freshness.scrollIntoViewIfNeeded();
     await expectWithinViewport(
       page,
-      freshness.getByText(/Relaciones revisadas: copia del/u),
+      freshness.getByText(
+        /Relaciones revisadas.*(?:fuente actualizada|copia consultada) el/u,
+      ),
     );
     await expectWithinViewport(page, freshness.locator("time"));
     await expectNoHorizontalOverflow(page);
@@ -367,21 +350,16 @@ test.describe("contest readiness journeys", () => {
     await expectStableRoute(page, diagnostics);
 
     await menuButton.click();
-    const closeMenuButton = page.getByRole("button", {
-      name: "Cerrar menú principal",
-    });
+    const closeMenuButton = page.getByRole("button", { name: "Menú" });
     await expect(closeMenuButton).toBeVisible();
     await expect(closeMenuButton).toHaveAttribute("aria-expanded", "true");
     await expect(closeMenuButton).toHaveAttribute(
       "aria-controls",
-      "mobile-primary-navigation",
+      "mobile-menu",
     );
     await expect(mobileNavigation).toBeVisible();
-    await expect(
-      mobileNavigation.getByRole("link", { name: "Inicio" }),
-    ).toHaveAttribute("aria-current", "page");
     const menuButtonBox = await page
-      .getByRole("button", { name: "Cerrar menú principal" })
+      .getByRole("button", { name: "Menú" })
       .boundingBox();
     expect(menuButtonBox?.width ?? 0).toBeGreaterThanOrEqual(44);
     expect(menuButtonBox?.height ?? 0).toBeGreaterThanOrEqual(44);
@@ -396,10 +374,7 @@ test.describe("contest readiness journeys", () => {
     await page.keyboard.press("Escape");
     await expect(menuButton).toBeFocused();
     await expect(menuButton).toHaveAttribute("aria-expanded", "false");
-    await expect(menuButton).toHaveAttribute(
-      "aria-controls",
-      "mobile-primary-navigation",
-    );
+    await expect(menuButton).toHaveAttribute("aria-controls", "mobile-menu");
     await expect(mobileNavigation).toHaveAttribute("hidden");
     await expectNoHorizontalOverflow(page);
     await expectCriticalAxe(page);
@@ -425,7 +400,7 @@ test.describe("contest readiness journeys", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Elige desde dónde empiezas\./i,
+        name: /Tu FP, tus salidas profesionales y dónde dar el siguiente paso\./i,
       }),
     ).toBeVisible();
     await expect(mobileNavigation).toHaveAttribute("hidden");
@@ -478,7 +453,7 @@ test.describe("contest readiness journeys", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: "Consulta salidas y ofertas relacionadas con tu FP",
+        name: "¿En qué puedes trabajar con una FP?",
       }),
     ).toBeVisible();
     await expect(
@@ -531,22 +506,26 @@ test.describe("contest readiness journeys", () => {
 
     await chooseTrainingProgram(page, "COM01M");
     await expect(
-      page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
-    ).toContainText("Relaciones revisadas con 7 grupos de ocupación.");
+      page.getByText("Profesiones comprobadas para este ciclo: 7."),
+    ).toContainText("Profesiones comprobadas para este ciclo: 7.");
     await expect(
-      page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
+      page.getByText("Profesiones comprobadas para este ciclo: 7."),
     ).toHaveAttribute("role", "status");
     await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
-    await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
+    await expect(page).toHaveURL(/\/desde-fp\/COM01M\?query=/u);
     await expect(
-      page.getByRole("heading", { name: "Actividades Comerciales" }),
+      page.getByRole("heading", {
+        name: "Actividades Comerciales",
+        exact: true,
+      }),
     ).toBeVisible();
     await expect(
       page.getByRole("heading", {
-        name: "Grupos de ocupación revisados para buscar ofertas",
+        name: "Salidas relacionadas",
+        exact: true,
       }),
     ).toBeVisible();
-    await expect(page.getByRole("article")).toHaveCount(7);
+    await expect(page.getByRole("article")).toHaveCount(6);
     await expect(
       page.getByText(/no hay (empleo|trabajo|puestos)/iu),
     ).toHaveCount(0);
@@ -613,26 +592,18 @@ test.describe("contest readiness journeys", () => {
   }, testInfo) => {
     const diagnostics = installRouteDiagnostics(page);
     await page.goto("/");
-    await chooseTrainingProgram(
-      page,
-      "COM01M",
-      "Título de Formación Profesional",
-    );
-    await page
-      .getByRole("button", {
-        name: "Ver ocupaciones con relación revisada",
-      })
-      .click();
-    await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
+    await chooseTrainingProgram(page, "COM01M", "Busca tu ciclo");
+    await page.getByRole("button", { name: "Ver mis salidas" }).click();
+    await expect(page).toHaveURL(/\/desde-fp\/COM01M\?query=/u);
     if (testInfo.project.name === "chromium-mobile") {
-      await page.getByRole("button", { name: "Abrir menú principal" }).click();
+      await page.getByRole("button", { name: "Menú" }).click();
       await page
-        .locator("#mobile-primary-navigation")
+        .locator("#mobile-menu")
         .getByRole("link", { name: "Comparar estudios" })
         .click();
     } else {
       await page
-        .locator(".site-nav--desktop")
+        .locator(".global-nav-list")
         .getByRole("link", { name: "Comparar estudios" })
         .click();
     }
