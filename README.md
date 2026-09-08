@@ -45,7 +45,7 @@ Se combinan con CNO-11, TodoFP, SEPE y EDUCAbase. El [inventario de fuentes](doc
 
 Categoría **Productos y Servicios** del [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html). La [comprobación de las bases](docs/contest/rules-2026.md) recoge fuentes oficiales, criterios y el límite de 1.000 palabras de la memoria.
 
-El estado público observado y las limitaciones de verificación están en [verification-20260908.md](docs/contest/verification-20260908.md). Los registros de releases anteriores son evidencia histórica, no una garantía del estado actual. GitHub Pages está deshabilitado y no se ofrece como respaldo. El repositorio es privado; la memoria se publicará en la propia aplicación para que su consulta no dependa del acceso al código.
+El estado público observado y las limitaciones de verificación están en [verification-20260908.md](docs/contest/verification-20260908.md). Los registros de releases anteriores son evidencia histórica, no una garantía del estado actual. GitHub Pages está deshabilitado y no se ofrece como respaldo. El repositorio y el canal de incidencias son públicos, verificados sin autenticación el 8 de septiembre. La memoria también se ofrece en la propia aplicación.
 
 ## Desarrollo y calidad
 
