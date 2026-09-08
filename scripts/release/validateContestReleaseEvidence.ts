@@ -786,14 +786,14 @@ export function validateContestReleaseEvidence(
     throw new Error("release evidence schemaVersion must be 1 or 2");
   }
   const schemaVersion: 1 | 2 = root.schemaVersion;
-  const disposition = validateReleaseDisposition(
-    root.releaseDisposition,
-    schemaVersion,
-    root.status,
-  );
   const status = root.status;
   if (status !== "pending" && status !== "verified")
     throw new Error("release evidence status must be pending or verified");
+  const disposition = validateReleaseDisposition(
+    root.releaseDisposition,
+    schemaVersion,
+    status,
+  );
   const recordedAt = isoUtc(root.recordedAt, "recordedAt");
   void recordedAt;
   const expectedRootUrl = nonEmptyString(
@@ -1111,14 +1111,19 @@ export function validateContestReleaseEvidence(
       throw new Error("verified deployment evidence is incomplete");
     }
     assertEqual(deploymentCommitSha, publicationSha, "deployment.commitSha");
-    if (workflowRequired && !/^\d+$/u.test(deploymentWorkflowRunId)) {
+    if (
+      workflowRequired &&
+      (deploymentWorkflowRunId === null ||
+        !/^\d+$/u.test(deploymentWorkflowRunId))
+    ) {
       throw new Error("deployment.workflowRunId must be numeric");
     }
     if (
       workflowRequired &&
-      !/^https:\/\/github\.com\/[^/]+\/[^/]+\/actions\/runs\/\d+$/u.test(
-        deploymentWorkflowUrl,
-      )
+      (deploymentWorkflowUrl === null ||
+        !/^https:\/\/github\.com\/[^/]+\/[^/]+\/actions\/runs\/\d+$/u.test(
+          deploymentWorkflowUrl,
+        ))
     ) {
       throw new Error(
         "deployment.workflowUrl must identify a GitHub Actions run",

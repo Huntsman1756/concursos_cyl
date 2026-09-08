@@ -45,9 +45,6 @@ import {
 
 const REVIEW_CATALOG_PATH = resolve("data/curated/offer-evidence-reviews.json");
 const MANIFEST_PATH = resolve("public/data/v1/manifest.json");
-const OUTPUT_PATH = resolve(
-  `public/data/v1/snapshots/${OFFER_EVIDENCE_SNAPSHOT_ID}/offer-evidence.json`,
-);
 const GENERATED_AT = "2026-08-30T12:00:00.000Z";
 const FP_ADMISSION_URL = "https://www.educa.jcyl.es/fp/es/admision-alumnado";
 const ACCREDITATION_URL =
@@ -827,18 +824,32 @@ export async function buildOfferEvidenceResource(
 
 async function main(): Promise<void> {
   const resource = await buildOfferEvidenceResource();
-  await mkdir(resolve("public/data/v1/snapshots", OFFER_EVIDENCE_SNAPSHOT_ID), {
+  const outputPath = resolve(
+    "public/data/v1/snapshots",
+    resource.snapshotId,
+    "offer-evidence.json",
+  );
+  const content = `${JSON.stringify(resource, null, 2)}\n`;
+  let existing: string | undefined;
+  try {
+    existing = await readFile(outputPath, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+  if (existing !== undefined && existing !== content) {
+    throw new Error(
+      "Refusing to overwrite immutable offer evidence; create a new candidate snapshot.",
+    );
+  }
+  await mkdir(resolve("public/data/v1/snapshots", resource.snapshotId), {
     recursive: true,
   });
-  await writeFile(
-    OUTPUT_PATH,
-    `${JSON.stringify(resource, null, 2)}\n`,
-    "utf8",
-  );
+  if (existing === undefined)
+    await writeFile(outputPath, content, { encoding: "utf8", flag: "wx" });
   console.log(
     JSON.stringify(
       {
-        output: OUTPUT_PATH,
+        output: outputPath,
         counts: resource.counts,
       },
       null,
