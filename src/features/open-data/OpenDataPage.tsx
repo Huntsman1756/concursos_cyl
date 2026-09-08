@@ -211,6 +211,10 @@ export function OpenDataPage() {
         </p>
         <p>
           <Link to="/metodologia">Ver fuentes, proceso y limitaciones</Link>
+          {" · "}
+          <a href="https://github.com/Huntsman1756/concursos_cyl">
+            Consultar el código y el pipeline
+          </a>
         </p>
       </section>
     </article>

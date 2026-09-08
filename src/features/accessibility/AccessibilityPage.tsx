@@ -88,9 +88,8 @@ export function AccessibilityPage() {
         <div>
           <h2 id="contact-title">Comunicar una barrera</h2>
           <p>
-            El canal de incidencias requiere acceso al repositorio privado. Si
-            tienes acceso, describe la página, el problema y el navegador o
-            ayuda técnica utilizada. La incidencia no se publica abiertamente.
+            Describe la página, el problema y, si puedes, el navegador o ayuda
+            técnica utilizada. La incidencia quedará pública y trazable.
           </p>
         </div>
         <a className="primary-button" href={ISSUES_URL}>
@@ -102,7 +101,7 @@ export function AccessibilityPage() {
         <Link to="/metodologia">Consultar metodología y fuentes</Link>
         {" · "}
         <a href="https://github.com/Huntsman1756/concursos_cyl">
-          Revisar pruebas y código (requiere acceso)
+          Revisar las pruebas y el código
         </a>
       </p>
     </article>

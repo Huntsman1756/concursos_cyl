@@ -79,9 +79,7 @@ export function OrganizationsPage() {
         <h2 id="reuse-title">Qué se puede reutilizar hoy</h2>
         <ul>
           <li>Grafo FP↔ocupación en CSV y JSON con licencia abierta.</li>
-          <li>
-            Metodología documentada con fuentes y límites de cada relación.
-          </li>
+          <li>Código del pipeline y validaciones en el repositorio público.</li>
           <li>
             Enlaces estables a resultados, centros, fuentes y metodología.
           </li>
@@ -90,9 +88,12 @@ export function OrganizationsPage() {
           <Link className="primary-button" to="/datos-abiertos">
             Descargar datos abiertos
           </Link>
-          <Link className="secondary-button" to="/metodologia">
-            Consultar metodología y fuentes
-          </Link>
+          <a
+            className="secondary-button"
+            href="https://github.com/Huntsman1756/concursos_cyl"
+          >
+            Consultar código y pipeline
+          </a>
         </div>
       </section>
 
