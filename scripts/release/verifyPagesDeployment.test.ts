@@ -90,9 +90,9 @@ function successfulFetch(
     if (path.startsWith(`/concursos_cyl/data/v1/snapshots/${snapshotId}/`)) {
       return responseFor(path, { body: "[]" });
     }
-    if (path === "/concursos_cyl/comparar") {
+    if (path === "/concursos_cyl/comparar/") {
       return responseFor(path, {
-        status: 404,
+        status: 200,
         body: '<!doctype html><html><head><title>SALIDA CyL</title></head><body><div id="root"></div></body></html>',
       });
     }
@@ -132,7 +132,7 @@ describe("verifyPagesDeployment", () => {
     expect(new Set(requestedPaths.slice(3, -1))).toEqual(
       new Set(expectedResourcePaths),
     );
-    expect(requestedPaths.at(-1)).toBe("/concursos_cyl/comparar");
+    expect(requestedPaths.at(-1)).toBe("/concursos_cyl/comparar/");
     expect(
       fetchImpl.mock.calls.every(([, init]) => init?.redirect === "error"),
     ).toBe(true);
@@ -351,8 +351,8 @@ describe("verifyPagesDeployment", () => {
 
   it("rejects a deep link body that is not the application fallback", async () => {
     const fetchImpl = successfulFetch({
-      "/concursos_cyl/comparar": responseFor("comparar", {
-        status: 404,
+      "/concursos_cyl/comparar/": responseFor("comparar", {
+        status: 200,
         body: "Not found",
       }),
     });
@@ -366,6 +366,23 @@ describe("verifyPagesDeployment", () => {
         retryDelayMs: 0,
       }),
     ).rejects.toThrow(/comparar.*fallback/iu);
+  });
+
+  it("rejects a known directory route served through the 404 fallback", async () => {
+    const fetchImpl = successfulFetch({
+      "/concursos_cyl/comparar/": responseFor("comparar/", {
+        status: 404,
+        body: '<html><head><title>SALIDA CyL</title></head><body><div id="root"></div></body></html>',
+      }),
+    });
+    await expect(
+      verifyPagesDeployment({
+        baseUrl,
+        expectedCommit,
+        fetchImpl,
+        attempts: 1,
+      }),
+    ).rejects.toThrow(/comparar returned HTTP 404/iu);
   });
 
   it("retries the complete check after a transient failure", async () => {
