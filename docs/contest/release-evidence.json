@@ -44,11 +44,11 @@
     },
     "fullVitestCi": {
       "status": "passed",
-      "command": "npm run test:release -- --testTimeout=60000 (GitHub Actions 34272898039)",
+      "command": "npm run test:release -- --testTimeout=60000",
       "checkedCommitSha": "ca8289ebe12c888af7765a212ce44b3754f838ca",
-      "verifiedAt": "2026-09-08T20:15:11.557368Z",
+      "verifiedAt": "2026-09-08T20:18:48.868200Z",
       "executionCommitSha": "ca8289ebe12c888af7765a212ce44b3754f838ca",
-      "note": "The full unit-test step passed in GitHub Actions against this exact product commit."
+      "note": "Exact immutable product commit: 1377 passed, 178 skipped in the clean external worktree."
     },
     "playwright": {
       "status": "passed",
