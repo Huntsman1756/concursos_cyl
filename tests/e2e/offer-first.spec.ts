@@ -186,9 +186,9 @@ test("offer-evidence is a manifest-addressed candidate dataset", async ({
       { recordCount: number; resourcePath: string; sha256: string }
     >;
   };
-  expect(manifest.snapshotId).toBe("20260908152239149-2a613b74a192");
+  expect(manifest.snapshotId).toBe("20260908155911229-c72920ec4fed");
   expect(manifest.activationProvenance.sourceSnapshotId).toBe(
-    "20260908152129609-c2af85e78ea6",
+    "20260908155756789-9f32ef85469d",
   );
   expect(manifest.activationProvenance.derivedResourceKeys).toContain(
     "offerEvidence",
@@ -197,7 +197,7 @@ test("offer-evidence is a manifest-addressed candidate dataset", async ({
   const descriptor = manifest.resourceSnapshots.offerEvidence;
   expect(descriptor.recordCount).toBe(1032);
   expect(descriptor.resourcePath).toMatch(
-    /\/data\/v1\/snapshots\/20260908152239149-2a613b74a192\/offer-evidence\.json$/u,
+    /\/data\/v1\/snapshots\/20260908155911229-c72920ec4fed\/offer-evidence\.json$/u,
   );
   const resourceResponse = await request.get(descriptor.resourcePath);
   expect(resourceResponse.ok()).toBe(true);

@@ -38,6 +38,6 @@ La aplicación ofrece entradas por formación, profesión y oferta, búsquedas y
 
 El candidato contiene 320 relaciones aprobadas: 185 de las 187 claves de programa tienen alguna relación revisada (98,9 %). Las modalidades se cuentan por separado; no son 185 titulaciones diferentes. Dos programas siguen pendientes de evidencia precisa.
 
-307 de las 1.032 ofertas de la instantánea tienen relación FP revisada (29,7 %). Se cuentan ofertas distintas; no representan todo el mercado laboral. Las fuentes JCyL se descargaron el 8 de septiembre de 2026; las ofertas incluyen publicaciones hasta el 4 de septiembre. El recurso derivado se generó el 8 de septiembre. Las revisiones nacionales conservan sus fechas originales. La vigencia se contrasta en la fuente oficial.
+301 de las 1.032 ofertas de la instantánea tienen relación FP revisada (29,2 %). Se cuentan ofertas distintas; no representan todo el mercado laboral. Las fuentes JCyL se descargaron el 8 de septiembre de 2026; las ofertas incluyen publicaciones hasta el 4 de septiembre. El recurso derivado se generó el 8 de septiembre. Las revisiones nacionales conservan sus fechas originales. La vigencia se contrasta en la fuente oficial.
 
 El proyecto dispone de pruebas de datos e interfaz, control de licencias y verificación de integridad de recursos. La metodología, el inventario de fuentes y los datos descargables están accesibles desde la aplicación. La evidencia técnica detallada se conserva en el repositorio para su comprobación.

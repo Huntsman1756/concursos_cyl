@@ -2795,8 +2795,12 @@
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-mantenimiento-vehiculos-electricos-hibridos.html",
     "sourceQuote": "Técnico de mantenimiento de vehículos eléctricos.",
     "reviewedAt": "2026-09-08",
-    "mappingVersion": "1.1.0",
-    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+    "mappingVersion": "1.1.1",
+    "reviewNote": "Relación limitada al mantenimiento de vehículos eléctricos. Un alias general de automoción no acredita las funciones o requisitos de una oferta concreta.",
+    "functionalBoundary": {
+      "roleLevel": "adjacent",
+      "fullOccupationQualification": false
+    }
   },
   {
     "trainingProgramKey": "AFD01M",
@@ -2990,8 +2994,12 @@
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-aeronaves-drones.html",
     "sourceQuote": "Comercial de venta y asesoramiento sobre drones.",
     "reviewedAt": "2026-09-08",
-    "mappingVersion": "1.1.0",
-    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+    "mappingVersion": "1.1.1",
+    "reviewNote": "Relación limitada a venta y asesoramiento sobre drones. Un alias comercial general no acredita encaje con ofertas inmobiliarias o de otros sectores.",
+    "functionalBoundary": {
+      "roleLevel": "adjacent",
+      "fullOccupationQualification": false
+    }
   },
   {
     "trainingProgramKey": "TMV04S",

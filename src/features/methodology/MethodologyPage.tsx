@@ -571,11 +571,13 @@ export function MethodologyPage() {
               orientación profesional.
             </p>
             <p>
-              Algunas ofertas se conectan mediante su denominación completa
-              exacta en el catálogo SISPE del SEPE. Compartir un grupo CNO no
-              autoriza a relacionar todas sus especialidades. Estas conexiones
-              no significan que la oferta exija ese título ni que quien lo tenga
-              cumpla todos sus requisitos.
+              El{" "}
+              <a href="https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf">
+                catálogo SISPE del SEPE (2018)
+              </a>{" "}
+              permite revisar denominaciones exactas. Compartir un código CNO no
+              acredita encaje entre especialidades, titulación exigida ni
+              cumplimiento de requisitos.
             </p>
           </section>
           <section>

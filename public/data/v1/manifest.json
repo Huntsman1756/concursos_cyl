@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-08T15:22:39.149Z",
+  "generatedAt": "2026-09-08T15:59:11.229Z",
   "qualityStatus": "passed",
-  "snapshotId": "20260908152239149-2a613b74a192",
+  "snapshotId": "20260908155911229-c72920ec4fed",
   "activationProvenance": {
     "schemaVersion": "1.0.0",
     "kind": "immutable_candidate",
-    "candidateSnapshotId": "20260908152239149-2a613b74a192",
-    "sourceSnapshotId": "20260908152129609-c2af85e78ea6",
-    "sourceManifestSha256": "206f5ef9e6b800d05bfbfa00fc9c429ca07ea67b4253e635d50c833c6dd0d36c",
+    "candidateSnapshotId": "20260908155911229-c72920ec4fed",
+    "sourceSnapshotId": "20260908155756789-9f32ef85469d",
+    "sourceManifestSha256": "dd66794072c5efa6378ac487b4e12bac74f30e85bb3723ef03dd65d86ff6d22f",
     "sourceResourceKeys": [
       "centers",
       "derivedFpOccupationGraph",
@@ -38,7 +38,7 @@
     "derivedResourceDependencies": [
       {
         "resourceKey": "offerEvidence",
-        "sourceSnapshotId": "20260908152129609-c2af85e78ea6",
+        "sourceSnapshotId": "20260908155756789-9f32ef85469d",
         "sourceResourceKeys": [
           "jobOffers",
           "occupationAliases",
@@ -57,173 +57,173 @@
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 187,
       "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/programs.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/programs.json"
     },
     "centers": {
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 229,
       "sha256": "593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/centers.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/centers.json"
     },
     "trainingOfferings": {
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 1294,
       "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/training-offerings.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/training-offerings.json"
     },
     "jobOffers": {
       "sourceId": "jcyl-employment-offers",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records",
       "sourceUpdatedAt": "2026-09-04T00:00:00.000Z",
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 1032,
-      "sha256": "f8cbc501c422a8b1a3ffa3c7b7012c63fc85e3dd8c9dec27a76c19709b2a8650",
+      "sha256": "17a5642d281ce38e6c5875e60341af04c688f9096297f710104493d22c6a73b9",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/job-offers.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/job-offers.json"
     },
     "derivedFpOccupationGraph": {
       "sourceId": "salida-cyl-derived-fp-occupation-graph",
       "sourceUrl": "https://github.com/Huntsman1756/concursos_cyl",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 320,
-      "sha256": "a208b49866b73c0fe8c67ba9a5270c369765cbab0108e92ac1bc667e23fd476e",
+      "sha256": "91fba443fbb6b2bfc98816ac138103ee22e54d84492d30d949db3ea8caf22dc4",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/derived-fp-occupation-graph.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/derived-fp-occupation-graph.json"
     },
     "ecylCourses": {
       "sourceId": "jcyl-ecyl-training",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/formacion-del-ecyl/records",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 718,
       "sha256": "be9c4c9bddab2953641c7bd8c7f778374cbe6702e9a1adadf7c43dd6f997773f",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/ecyl-courses.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/ecyl-courses.json"
     },
     "educationCenterDirectory": {
       "sourceId": "jcyl-education-center-directory",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/directorio-de-centros-docentes/records?order_by=codigo",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 1742,
       "sha256": "542d733e983ca066265699023e3c84eee2e9ca51709f7a39eac2d24ab12859d6",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/education-center-directory.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/education-center-directory.json"
     },
     "mappingCoverage": {
       "sourceId": "todofp-boe-reviewed-training-occupation-links",
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales.html",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 209,
       "sha256": "06d8c5a57776b95f3267ef35fe6cb91f56343dfbd7bdc83ecb7ab450195fd424",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/mapping-coverage.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/mapping-coverage.json"
     },
     "municipalities": {
       "sourceId": "jcyl-municipal-registry",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/registro-de-municipios-de-castilla-y-leon/records?order_by=cod_ine",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 2248,
       "sha256": "71ac22dfbcc5f95927fd17fa6b0a03bc77d39482fcad1640f9c6b08dec609f10",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/municipalities.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/municipalities.json"
     },
     "occupationAliases": {
       "sourceId": "ine-cno11-reviewed-occupation-catalog",
       "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 35,
       "sha256": "aef5323c01c0e2936a66833fca3f44f413f8d839e36df03baacfe02cb3fff61b",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/occupation-aliases.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/occupation-aliases.json"
     },
     "occupations": {
       "sourceId": "ine-cno11-reviewed-occupation-catalog",
       "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 158,
       "sha256": "7d89989d163495270a0165e701ca4aff14896ad4c01cfd50034c58563be287a2",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/occupations.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/occupations.json"
     },
     "offerEvidence": {
       "sourceId": "salida-cyl-derived-offer-evidence",
       "sourceUrl": "https://github.com/Huntsman1756/concursos_cyl",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:22:39.149Z",
+      "snapshotFetchedAt": "2026-09-08T15:59:11.229Z",
       "schemaVersion": "1.0.0",
       "recordCount": 1032,
-      "sha256": "eba7a775636aac025187c75b9bebd7659f9af41dbbcd16324edca715cd8999f7",
+      "sha256": "4087e9ab3a74d0a5a0a47131e929e542e47462c906a6b9d365a7259c15d8fa85",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/offer-evidence.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/offer-evidence.json"
     },
     "officialOccupations": {
       "sourceId": "boe-cno11-complete-occupation-catalog",
       "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 502,
       "sha256": "76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/official-occupations.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/official-occupations.json"
     },
     "openDataCatalog": {
       "sourceId": "salida-cyl-derived-fp-occupation-graph",
       "sourceUrl": "https://github.com/Huntsman1756/concursos_cyl",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 1,
-      "sha256": "1eb6f8d9d0dea801f494c4d991d61eea64832677a871b65f74c0494d649b0252",
+      "sha256": "fc1af1f8a47e284a046d857a29f54d237eb6d09d95c6b9b67719758a8794bced",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/open-data-catalog.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/open-data-catalog.json"
     },
     "outcomeIndicators": {
       "sourceId": "educabase-fp-income-four-table-bundle",
       "sourceUrl": "https://estadisticas.educacion.gob.es/EducaJaxiPx/",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 22170,
       "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/outcome-indicators.json",
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/outcome-indicators.json",
       "upstreamArtifacts": [
         {
           "tableId": "famprof_2_08",
           "format": "csv",
           "sourceUrl": "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/csv_bdsc/laborales/insercion/famprof/l0/famprof_2_08.csv_bdsc?nocab=1",
           "catalogUrl": "https://datos.gob.es/es/catalogo/e05230301-fp-grado-medio-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-periodo-de-analisis-medida-y-ciclo-grupo-emlin0000090080",
-          "fetchedAt": "2026-09-08T15:21:29.950Z",
+          "fetchedAt": "2026-09-08T15:57:57.113Z",
           "declaredContentType": "text/plain;charset=ISO-8859-15",
           "byteLength": 749058,
           "sha256": "e6a77a5a6ec822bbfc8791c80e6b2c021cfc7e877a49f9ea5e9b058f9d84a748",
@@ -234,7 +234,7 @@
           "format": "px",
           "sourceUrl": "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/px/laborales/insercion/famprof/l0/famprof_2_08.px?nocab=1",
           "catalogUrl": "https://datos.gob.es/es/catalogo/e05230301-fp-grado-medio-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-periodo-de-analisis-medida-y-ciclo-grupo-emlin0000090080",
-          "fetchedAt": "2026-09-08T15:21:29.950Z",
+          "fetchedAt": "2026-09-08T15:57:57.113Z",
           "declaredContentType": "application/pc-axis;charset=ISO-8859-15",
           "byteLength": 67217,
           "sha256": "b86461a303126f6e15a03364cd69358e5fecdb72c249002ddab70dab36b4d33e",
@@ -245,7 +245,7 @@
           "format": "csv",
           "sourceUrl": "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/csv_bdsc/laborales/insercion/famprof/l0/famprof_3_08.csv_bdsc?nocab=1",
           "catalogUrl": "https://datos.gob.es/es/catalogo/e05230301-fp-grado-superior-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-periodo-de-analisis-medida-y-ciclo-grupo-emlin0000090094",
-          "fetchedAt": "2026-09-08T15:21:29.950Z",
+          "fetchedAt": "2026-09-08T15:57:57.113Z",
           "declaredContentType": "text/plain;charset=ISO-8859-15",
           "byteLength": 1479780,
           "sha256": "b23f8c2fe83fbbac47d33c65a99758cebf82b4dc2c238110492f288e66b034b5",
@@ -256,7 +256,7 @@
           "format": "px",
           "sourceUrl": "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/px/laborales/insercion/famprof/l0/famprof_3_08.px?nocab=1",
           "catalogUrl": "https://datos.gob.es/es/catalogo/e05230301-fp-grado-superior-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-periodo-de-analisis-medida-y-ciclo-grupo-emlin0000090094",
-          "fetchedAt": "2026-09-08T15:21:29.950Z",
+          "fetchedAt": "2026-09-08T15:57:57.113Z",
           "declaredContentType": "application/pc-axis;charset=ISO-8859-15",
           "byteLength": 123134,
           "sha256": "0474311685e97eedf878f03453a6d0150c488407ab935c2fb65dfc5d31182890",
@@ -267,7 +267,7 @@
           "format": "csv",
           "sourceUrl": "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/csv_bdsc/laborales/insercion/ccaa/l0/ccaa_2_07.csv_bdsc?nocab=1",
           "catalogUrl": "https://datos.gob.es/es/catalogo/e05230301-fp-grado-medio-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-comunidad-autonoma-sexo-periodo-de-analisis-y-medida-emlin0000090044",
-          "fetchedAt": "2026-09-08T15:21:29.950Z",
+          "fetchedAt": "2026-09-08T15:57:57.113Z",
           "declaredContentType": "text/plain;charset=ISO-8859-15",
           "byteLength": 1112038,
           "sha256": "a1d84634e71726a0a7e6a0ed05a50c63f0b4682c1f0381ece90625a361c12514",
@@ -278,7 +278,7 @@
           "format": "px",
           "sourceUrl": "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/px/laborales/insercion/ccaa/l0/ccaa_2_07.px?nocab=1",
           "catalogUrl": "https://datos.gob.es/es/catalogo/e05230301-fp-grado-medio-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-comunidad-autonoma-sexo-periodo-de-analisis-y-medida-emlin0000090044",
-          "fetchedAt": "2026-09-08T15:21:29.950Z",
+          "fetchedAt": "2026-09-08T15:57:57.113Z",
           "declaredContentType": "application/pc-axis;charset=ISO-8859-15",
           "byteLength": 107122,
           "sha256": "3cc0e185fd98abfa005266a5274fce1408e4b14cececfad45082a977351dad6d",
@@ -289,7 +289,7 @@
           "format": "csv",
           "sourceUrl": "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/csv_bdsc/laborales/insercion/ccaa/l0/ccaa_3_07.csv_bdsc?nocab=1",
           "catalogUrl": "https://datos.gob.es/es/catalogo/e05230301-fp-grado-superior-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-comunidad-autonoma-sexo-periodo-de-analisis-y-medida-emlin0000090057",
-          "fetchedAt": "2026-09-08T15:21:29.950Z",
+          "fetchedAt": "2026-09-08T15:57:57.113Z",
           "declaredContentType": "text/plain;charset=ISO-8859-15",
           "byteLength": 1112303,
           "sha256": "4c21003223ac28b3b70a8268bf3627134c72f542e91cfedb6bbbaced402b88b2",
@@ -300,7 +300,7 @@
           "format": "px",
           "sourceUrl": "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/px/laborales/insercion/ccaa/l0/ccaa_3_07.px?nocab=1",
           "catalogUrl": "https://datos.gob.es/es/catalogo/e05230301-fp-grado-superior-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-comunidad-autonoma-sexo-periodo-de-analisis-y-medida-emlin0000090057",
-          "fetchedAt": "2026-09-08T15:21:29.950Z",
+          "fetchedAt": "2026-09-08T15:57:57.113Z",
           "declaredContentType": "application/pc-axis;charset=ISO-8859-15",
           "byteLength": 107330,
           "sha256": "20fe136ed063261942e4735e16cd8708b18ea6c0c09e6d2ab2a3d71a1b69f6e9",
@@ -312,78 +312,78 @@
       "sourceId": "jcyl-professional-certificates",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/certificados-profesionalidad/records",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 583,
       "sha256": "a66ebe6b4439dca39091b0f06d587bc326389d9f7e2ecfc7a8c88b5a8937a7cb",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/professional-certificates.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/professional-certificates.json"
     },
     "professionalProfiles": {
       "sourceId": "todofp-official-professional-outputs",
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales.html",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 1728,
       "sha256": "2794228570e734a5dca0f8d594a199a67b9b732d7f54ffd56abe3af22f66d22b",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/professional-profiles.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/professional-profiles.json"
     },
     "provincialContracts": {
       "sourceId": "jcyl-provincial-employment-contracts",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/contratos-realizados-en-las-provincias-de-castilla-y-leon/records?where=provincia%21%3D%27CYL%27",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 2340,
       "sha256": "bbfab7de317b259db70661b587de416bfb60f4fec6dc4716c9ae5475b41f94c1",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/provincial-contracts.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/provincial-contracts.json"
     },
     "publicEmploymentCalls": {
       "sourceId": "jcyl-public-employment-calls",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/convocatorias-de-empleo-publico/records",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 307,
       "sha256": "e801d44bf060f5ae2bed0267fe89350a87e12a386aeb3e2adb7a843fe8cbf187",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/public-employment-calls.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/public-employment-calls.json"
     },
     "publishedRequirements": {
       "sourceId": "jcyl-employment-offers",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records",
       "sourceUpdatedAt": "2026-09-04T00:00:00.000Z",
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 382,
       "sha256": "8c3ead0a71c2d9ac2c98c5f4846ef6e0d1486de3442ea727469e657158dbd4d7",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/published-requirements.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/published-requirements.json"
     },
     "sepeOccupationMarket": {
       "sourceId": "sepe-occupation-market",
       "sourceUrl": "https://www.sepe.es/",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 116,
       "sha256": "5adf3bfaff153b5d7739a58805284e8f3c88361804507e52ddbd195e0883e323",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/sepe-occupation-market.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/sepe-occupation-market.json"
     },
     "trainingOccupationLinks": {
       "sourceId": "todofp-boe-reviewed-training-occupation-links",
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales.html",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-09-08T15:21:29.609Z",
+      "snapshotFetchedAt": "2026-09-08T15:57:56.789Z",
       "schemaVersion": "1.0.0",
       "recordCount": 320,
-      "sha256": "7df999c3309dd20eb74f3ac36853f6c3817d95b0ff6b4602354c1060a37ce63e",
+      "sha256": "0dd177ea3f0e45a9b9ecc909a8e15da09452e57b8376b580902b25a1cdaaec0b",
       "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260908152239149-2a613b74a192/training-occupation-links.json"
+      "resourcePath": "/data/v1/snapshots/20260908155911229-c72920ec4fed/training-occupation-links.json"
     }
   },
   "qualityReport": {

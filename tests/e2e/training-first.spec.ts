@@ -127,7 +127,7 @@ test("FP result data stays within the initial budget and loads outcomes on reque
   expect(new Set(initialResponses.map(({ path }) => path)).size).toBe(14);
   expect(
     initialResponses.reduce((total, response) => total + response.bytes, 0),
-  ).toBeLessThanOrEqual(10_100_000); // +1% raw-data allowance for expanded source evidence; outcomes remain deferred.
+  ).toBeLessThanOrEqual(10_000_000);
   const outcomePath = manifest.resourceSnapshots.outcomeIndicators.resourcePath;
   expect(dataResponses.filter(({ path }) => path === outcomePath)).toHaveLength(
     0,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "reviewVersion": "1.2.0",
-  "baseSnapshotId": "20260908152129609-c2af85e78ea6",
+  "baseSnapshotId": "20260908155756789-9f32ef85469d",
   "reviews": [
     {
       "kind": "title_to_occupation",
@@ -17,7 +17,9 @@
     },
     {
       "kind": "exact_requirement_to_program",
-      "offerIds": ["1285671836252"],
+      "offerIds": [
+        "1285671836252"
+      ],
       "literalRequirement": "Técnico en Cocina y Gastronomía.",
       "normalizedValue": "Técnico en Cocina y Gastronomía",
       "programKey": "HOT01M",
@@ -37,7 +39,7 @@
       "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia",
       "reviewedAt": "2026-09-08",
       "mappingVersion": "1.2.0",
-      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 56291025, página 40. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+      "reviewNote": "SISPE (SEPE, 2018): 56291025, página 40. Denominación exacta; no acredita requisitos de la oferta. Catálogo enlazado en Metodología."
     },
     {
       "kind": "title_to_occupation",
@@ -49,7 +51,7 @@
       "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia",
       "reviewedAt": "2026-09-08",
       "mappingVersion": "1.2.0",
-      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 56291025, página 40. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+      "reviewNote": "SISPE (SEPE, 2018): 56291025, página 40. Denominación exacta; no acredita requisitos de la oferta. Catálogo enlazado en Metodología."
     },
     {
       "kind": "title_to_occupation",
@@ -61,7 +63,7 @@
       "sourceQuote": "• Cocinero.",
       "reviewedAt": "2026-09-08",
       "mappingVersion": "1.2.0",
-      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 51101026, página 37. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+      "reviewNote": "SISPE (SEPE, 2018): 51101026, página 37. Denominación exacta; no acredita requisitos de la oferta. Catálogo enlazado en Metodología."
     },
     {
       "kind": "title_to_occupation",
@@ -73,7 +75,7 @@
       "sourceQuote": "Auxiliar de Enfermería/Clínica..",
       "reviewedAt": "2026-09-08",
       "mappingVersion": "1.2.0",
-      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 56111013, página 40. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+      "reviewNote": "SISPE (SEPE, 2018): 56111013, página 40. Denominación exacta; no acredita requisitos de la oferta. Catálogo enlazado en Metodología."
     },
     {
       "kind": "title_to_occupation",
@@ -85,7 +87,7 @@
       "sourceQuote": "Auxiliar de Enfermería/Clínica..",
       "reviewedAt": "2026-09-08",
       "mappingVersion": "1.2.0",
-      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 56111013, página 40. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+      "reviewNote": "SISPE (SEPE, 2018): 56111013, página 40. Denominación exacta; no acredita requisitos de la oferta. Catálogo enlazado en Metodología."
     },
     {
       "kind": "title_to_occupation",
@@ -97,7 +99,7 @@
       "sourceQuote": "Camarera / camarero de pisos, en establecimientos de alojamiento turístico sea cual sea su tipología, modalidad o categoría.",
       "reviewedAt": "2026-09-08",
       "mappingVersion": "1.2.0",
-      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 92101050, página 78. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+      "reviewNote": "SISPE (SEPE, 2018): 92101050, página 78. Denominación exacta; no acredita requisitos de la oferta. Catálogo enlazado en Metodología."
     },
     {
       "kind": "title_to_occupation",
@@ -109,7 +111,7 @@
       "sourceQuote": "Camarera / camarero de bar-cafetería o restaurante.",
       "reviewedAt": "2026-09-08",
       "mappingVersion": "1.2.0",
-      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 51201049, página 37. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+      "reviewNote": "SISPE (SEPE, 2018): 51201049, página 37. Denominación exacta; no acredita requisitos de la oferta. Catálogo enlazado en Metodología."
     }
   ]
 }
