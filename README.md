@@ -4,7 +4,7 @@
 
 SALIDA CyL es una aplicación independiente con código bajo licencia MIT para personas que están eligiendo formación profesional, buscando empleo o acompañando decisiones de orientación en Castilla y León.
 
-[Abrir la aplicación](https://salida-cyl.157-90-22-40.sslip.io/) · [Memoria de candidatura](docs/contest/jury-memo.md) · [Metodología](https://salida-cyl.157-90-22-40.sslip.io/metodologia) · [Datos abiertos](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos)
+[Abrir la aplicación](https://salida-cyl.157-90-22-40.sslip.io/) · [Respaldo alternativo](https://huntsman1756.github.io/concursos_cyl/) · [Memoria de candidatura](docs/contest/jury-memo.md) · [Metodología](https://salida-cyl.157-90-22-40.sslip.io/metodologia) · [Datos abiertos](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos)
 
 ## Qué puedes hacer
 
@@ -74,3 +74,5 @@ Los datos se reconstruyen mediante `npm run data:build`, con revisión previa a 
 Código bajo licencia MIT. Los datos conservan las condiciones de cada editor: [DATA_LICENSE.md](DATA_LICENSE.md).
 
 La versión VPS publicada es `v2026.09.08-candidate.17`. [Memoria PDF](https://salida-cyl.157-90-22-40.sslip.io/candidatura.pdf) · [Demo guiada de dos minutos](docs/contest/evidence/demo-20260908.webm).
+
+La [operativa](docs/operations.md) recoge mantenimiento, recuperación y comprobaciones públicas. La [preparación del piloto](docs/pilot/readiness.md) distingue la versión técnica preparada de las observaciones humanas aún no realizadas.

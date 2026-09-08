@@ -69,8 +69,11 @@ export function OrganizationsPage() {
             contraste y permite reutilizar una explicación común.
           </p>
           <p>
-            No publicamos estimaciones de ahorro, acuerdos ni resultados de
-            adopción que todavía no se han medido.
+            Una vía potencial de sostenibilidad es ofrecer adaptación,
+            integración y mantenimiento a entidades de orientación y centros,
+            conservando gratuito el acceso ciudadano. Es una hipótesis por
+            validar; no implica contratos, clientes ni rentabilidad ya
+            obtenidos.
           </p>
         </div>
       </section>

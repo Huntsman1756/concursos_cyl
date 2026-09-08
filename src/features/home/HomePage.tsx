@@ -259,7 +259,12 @@ export function HomePage() {
   // offer-evidence sidecar. It is the heaviest resource of the app, so the
   // value fills in after first paint instead of blocking the hero.
   useEffect(() => {
-    if (!manifestReady || manifestRef.current === null) return;
+    if (
+      !manifestReady ||
+      searchData.status !== "ready" ||
+      manifestRef.current === null
+    )
+      return;
     const controller = new AbortController();
     const { signal } = controller;
     const idle = window.setTimeout(() => {
@@ -306,7 +311,7 @@ export function HomePage() {
       window.clearTimeout(idle);
       controller.abort();
     };
-  }, [manifestReady]);
+  }, [manifestReady, searchData.status]);
 
   const exampleProvincesLabel = useMemo(() => {
     if (example === null) return "";
@@ -560,7 +565,7 @@ export function HomePage() {
               alt="Joven explorando opciones de formación profesional en un taller técnico."
               width={1536}
               height={1024}
-              sizes="(min-width: 1080px) 45vw, calc(100vw - 2 * var(--grid-gutter))"
+              sizes="(min-width: 1080px) 45vw, calc(100vw - 32px)"
               priority
             />
           </div>
@@ -583,7 +588,7 @@ export function HomePage() {
                   alt="Estudiante de FP consultando su plan de formación en una tableta dentro de un taller."
                   width={640}
                   height={480}
-                  sizes="(min-width: 768px) 33vw, calc(100vw - 2 * var(--grid-gutter))"
+                  sizes="(min-width: 768px) 33vw, calc(100vw - 32px)"
                 />
               </div>
               <div className="path-body">
@@ -607,7 +612,7 @@ export function HomePage() {
                   alt="Dos estudiantes conversando con un formador sobre su futura profesión en un taller de mecanizado."
                   width={640}
                   height={480}
-                  sizes="(min-width: 768px) 33vw, calc(100vw - 2 * var(--grid-gutter))"
+                  sizes="(min-width: 768px) 33vw, calc(100vw - 32px)"
                 />
               </div>
               <div className="path-body">
@@ -631,7 +636,7 @@ export function HomePage() {
                   alt="Persona anotando los requisitos de una oferta de empleo junto a su portátil."
                   width={640}
                   height={480}
-                  sizes="(min-width: 768px) 33vw, calc(100vw - 2 * var(--grid-gutter))"
+                  sizes="(min-width: 768px) 33vw, calc(100vw - 32px)"
                 />
               </div>
               <div className="path-body">
@@ -863,7 +868,7 @@ export function HomePage() {
               alt="Estudiantes de un ciclo de FP montando un prototipo electrónico en un aula-taller."
               width={1280}
               height={720}
-              sizes="(min-width: 1080px) 42vw, calc(100vw - 2 * var(--grid-gutter))"
+              sizes="(min-width: 1080px) 42vw, calc(100vw - 32px)"
             />
           </div>
           <div>

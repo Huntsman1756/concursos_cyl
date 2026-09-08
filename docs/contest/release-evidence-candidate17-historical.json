@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 2,
+  "status": "verified",
+  "recordedAt": "2026-09-08T06:00:19.620Z",
+  "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
+  "auditHeadSha": null,
+  "coverageSourceCommitSha": "136a08859f387427b74605bdcf8c19ea9584aebc",
+  "coverageFreezeDocumentCommitSha": "0dd6f14315a2949776f77d38a1ed9f3dd97d9885",
+  "coverageFreezeCommitSha": "0dd6f14315a2949776f77d38a1ed9f3dd97d9885",
+  "publicationCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+  "localReviewHeadSha": null,
+  "captureProductCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+  "manifest": {
+    "snapshotId": "20260908044344059-f92da75832e9",
+    "sha256": "93010bd8973e244b2687ae6c625e84d0fd2b85d76d4126c2473faf1cb342742e",
+    "qualityStatus": "passed",
+    "programs": 187,
+    "centers": 229,
+    "offerings": 1294,
+    "offers": 1032
+  },
+  "localGates": {
+    "coverageFreeze": {
+      "status": "passed",
+      "command": "npm exec -- tsx scripts/release/validateContestFreeze.ts",
+      "checkedCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "verifiedAt": "2026-09-08T05:42:32.962Z",
+      "executionCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "note": "Comprobación ejecutada sobre el checkout limpio del producto; hora de cierre del registro local."
+    },
+    "submissionPack": {
+      "status": "passed",
+      "command": "npm run contest:submission:check",
+      "checkedCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "verifiedAt": "2026-09-08T06:00:19.620Z",
+      "executionCommitSha": "57b2fa2ff5373f64fb6b08f42e906bfb3eb1b5a7"
+    },
+    "evidenceManifest": {
+      "status": "passed",
+      "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
+      "checkedCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "verifiedAt": "2026-09-08T06:00:19.620Z",
+      "captureCount": 13,
+      "executionCommitSha": "57b2fa2ff5373f64fb6b08f42e906bfb3eb1b5a7"
+    },
+    "fullVitestCi": {
+      "status": "passed",
+      "command": "npm test -- --run --reporter=dot",
+      "checkedCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "verifiedAt": "2026-09-08T05:40:38.439Z",
+      "executionCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "note": "134 archivos superados, 22 omitidos; 1354 pruebas superadas, 178 omitidas, cero fallidas."
+    },
+    "playwright": {
+      "status": "passed",
+      "command": "npm run test:e2e:chromium -- --workers=4; npx tsx scripts/release/runPlaywright.ts firefox webkit tests/e2e/training-first.spec.ts tests/e2e/offer-first.spec.ts tests/e2e/support-pages.spec.ts --workers=2",
+      "checkedCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "verifiedAt": "2026-09-08T05:44:43.046Z",
+      "executionCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "note": "Chromium: 294 superadas y 6 omitidas. Firefox/WebKit: 32 superadas. Cero fallidas."
+    },
+    "lint": {
+      "status": "passed",
+      "command": "npm run lint",
+      "checkedCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "verifiedAt": "2026-09-08T05:41:40.724Z",
+      "executionCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "note": "Comprobación ejecutada sobre el checkout limpio del producto; hora de cierre del registro local."
+    },
+    "build": {
+      "status": "passed",
+      "command": "npm run build",
+      "checkedCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "verifiedAt": "2026-09-08T05:45:58.320Z",
+      "executionCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "note": "Comprobación ejecutada sobre el checkout limpio del producto; hora de cierre del registro local."
+    },
+    "license": {
+      "status": "passed",
+      "command": "npm run license:check",
+      "checkedCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "verifiedAt": "2026-09-08T05:42:25.723Z",
+      "executionCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "note": "Comprobación ejecutada sobre el checkout limpio del producto; hora de cierre del registro local."
+    },
+    "prettier": {
+      "status": "passed",
+      "command": "npm run format:check",
+      "checkedCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "verifiedAt": "2026-09-08T05:42:24.984Z",
+      "executionCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "note": "Comprobación ejecutada sobre el checkout limpio del producto; hora de cierre del registro local."
+    },
+    "gitDiffCheck": {
+      "status": "passed",
+      "command": "git diff --check",
+      "checkedCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+      "verifiedAt": "2026-09-08T06:00:19.620Z",
+      "executionCommitSha": "57b2fa2ff5373f64fb6b08f42e906bfb3eb1b5a7"
+    }
+  },
+  "deployment": {
+    "status": "verified",
+    "commitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+    "workflowRunId": null,
+    "workflowUrl": null,
+    "liveRootVerified": true,
+    "verifiedAt": "2026-09-08T06:00:19.620Z",
+    "releaseTag": "v2026.09.08-candidate.17",
+    "versionJsonUrl": "https://salida-cyl.157-90-22-40.sslip.io/version.json",
+    "versionJsonCommitSha": "2aaef9a1fa545e35b76c9b05f6cf98172175b94d",
+    "versionJsonSchemaVersion": "1.0.0",
+    "versionJsonVerifiedAt": "2026-09-08T06:00:19.620Z"
+  },
+  "publicVerification": {
+    "status": "verified",
+    "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
+    "rootHttpStatus": 200,
+    "manifestSha256": "93010bd8973e244b2687ae6c625e84d0fd2b85d76d4126c2473faf1cb342742e",
+    "verifiedAt": "2026-09-08T06:00:19.620Z"
+  },
+  "humanApproval": {
+    "finalApplicationTextApproved": false,
+    "rootUrlApproved": false,
+    "submissionAuthorized": false
+  },
+  "blockers": [
+    "La solicitud oficial necesita identidad, contacto y declaraciones sobre premios previos. No se ha ejecutado el envío externo.",
+    "El dominio propio requiere concretar nombre, cuenta y presupuesto. No bloquea la disponibilidad del VPS verificado."
+  ],
+  "releaseDisposition": {
+    "occurred": true,
+    "method": "script",
+    "methodNote": "VPS publicado mediante deployVps.ps1 desde el checkout limpio del producto, con tag anotado candidate.17. No usa GitHub Actions. checkedCommitSha identifica el producto y executionCommitSha el árbol confirmado desde el que se comprobó cada gate. La verificación documental inicial se ejecutó antes de promover este registro; se vuelve a validar tras regenerar el paquete. GitHub Pages se registra por separado.",
+    "tagObjectSha": "b47340debb6d06a9f1f4a990afa9d9f113690489",
+    "humanGate": {
+      "identityRecorded": false,
+      "contactRecorded": false,
+      "declarationsRecorded": false,
+      "consentRecorded": false,
+      "finalApplicationTextApproved": false,
+      "externalSubmissionExecuted": false
+    }
+  }
+}

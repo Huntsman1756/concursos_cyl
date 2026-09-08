@@ -1,4 +1,6 @@
-# Deployment
+# Despliegue
+
+La [operativa en español](operations.md) define comprobaciones, mantenimiento, recuperación y límites del seguimiento. La configuración de logs del VPS aplica filtrado y rotación por sitio; su activación se documenta en el informe de cierre.
 
 ## GitHub Pages
 

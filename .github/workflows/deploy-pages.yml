@@ -34,6 +34,7 @@ jobs:
       - run: npm ci
       - run: npm run license:check
       - run: npm run contest:submission:check
+      - run: npm run contest:content:check
       - run: npm run format:check
       - run: npm run lint
       - run: npm run test:release -- --testTimeout=60000

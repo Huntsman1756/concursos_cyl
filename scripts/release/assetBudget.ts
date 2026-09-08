@@ -27,9 +27,9 @@ export const ASSET_BUDGET = {
   // The aggregate cap covers the full raw distribution incl. the pre-existing
   // root social/icon PNGs (1,032,395 measured — optimization follow-up).
   totalBytes: 3_600_000,
-  // September 8: 620,078 measured after the public candidature link and
-  // precise snapshot labels; keep a bounded 922-byte reserve.
-  javascriptBytes: 621_000,
+  // Pre-pilot: 622,380 measured with route metadata, corrected Pages image
+  // paths and contest copy; keep a bounded 620-byte reserve.
+  javascriptBytes: 623_000,
   stylesheetBytes: 158_000,
   fontBytes: 110_000,
   editorialImageBytes: 1_700_000,

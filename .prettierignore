@@ -40,3 +40,7 @@ docs/design/prototypes/product/contact-sheet.html
 
 # Exact archived manifest bytes are provenance, not editable formatting.
 docs/contest/manifest-20260830-historical.json
+
+# Generated memo artifacts, byte-checked by contest:content:check.
+public/candidatura.html
+public/candidatura.css

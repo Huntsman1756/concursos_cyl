@@ -93,7 +93,7 @@ describe("publication metadata", () => {
     expect(result).toContain(
       `<meta name="description" content="${DESCRIPTION}">`,
     );
-    expect(result).toContain(`<link rel="canonical" href="${CANONICAL_URL}">`);
+    expect(result).not.toContain('rel="canonical"');
     expect(result).toContain(
       `<meta property="og:image" content="${CANONICAL_URL}salida-cyl-social.png">`,
     );
@@ -108,7 +108,6 @@ describe("publication metadata", () => {
     const ownedFields = [
       "<title>",
       '<meta name="description"',
-      '<link rel="canonical"',
       '<meta property="og:title"',
       '<meta property="og:description"',
       '<meta property="og:type"',
@@ -142,7 +141,7 @@ describe("publication metadata", () => {
       '<meta name="description" content="Descripción &amp; &lt;tag&gt; &quot;comillas&quot; y &#39;apóstrofe&#39;">',
     );
     expect(result).toContain(
-      '<link rel="canonical" href="https://example.test/?q=one&amp;v=two">',
+      '<meta property="og:url" content="https://example.test/?q=one&amp;v=two">',
     );
     expect(result).toContain(
       '<meta property="og:image" content="https://example.test/social.png?a=one&amp;v=two">',
@@ -167,7 +166,7 @@ describe("publication metadata", () => {
         const result = renderPublicationHead(pagesShapedHtml, metadata);
 
         expect(result).toContain(
-          `<link rel="canonical" href="${CANONICAL_URL}">`,
+          `<meta property="og:url" content="${CANONICAL_URL}">`,
         );
         expect(result).toContain(
           `<meta property="og:image" content="${CANONICAL_URL}salida-cyl-social.png">`,
@@ -232,7 +231,7 @@ describe("publication metadata", () => {
     const transformed = await transformIndexHtml(sourceIndex);
     expect(transformed).not.toContain("<!-- salida-publication-metadata -->");
     expect(transformed).toContain(
-      `<link rel="canonical" href="${CANONICAL_URL}">`,
+      `<meta property="og:url" content="${CANONICAL_URL}">`,
     );
     expect(transformed).toContain(
       `<meta property="og:image" content="${CANONICAL_URL}salida-cyl-social.png">`,
@@ -240,7 +239,7 @@ describe("publication metadata", () => {
     for (const declaration of [
       "<title>SALIDA CyL</title>",
       `<meta name="description" content="${DESCRIPTION}">`,
-      `<link rel="canonical" href="${CANONICAL_URL}">`,
+      `<meta property="og:url" content="${CANONICAL_URL}">`,
       `<meta property="og:title" content="SALIDA CyL">`,
       `<meta property="og:description" content="${DESCRIPTION}">`,
       '<meta property="og:type" content="website">',
@@ -256,7 +255,7 @@ describe("publication metadata", () => {
       expect(transformed).toContain(declaration);
     }
     expect(countOccurrences(transformed, '<meta name="description"')).toBe(1);
-    expect(countOccurrences(transformed, '<link rel="canonical"')).toBe(1);
+    expect(countOccurrences(transformed, '<link rel="canonical"')).toBe(0);
     expect(countOccurrences(transformed, '<meta name="theme-color"')).toBe(1);
   });
 

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "pdfWords": 688,
+  "pdfPages": 2,
+  "sha256": {
+    "docs/contest/jury-memo.md": "8851471db7c4c557a395c7ef1de3fb99d198eda3b2abebad17507b0c7a5b30ab",
+    "scripts/release/renderJuryMemoPdf.py": "19b8e8215247b17605751015ad72efe7ea5b502a45e0a7a659e78acd919e9b43",
+    "config/publication.json": "143340642530d51c67b8befa2d2fbec464d1051ad80d83a762b13cd8be84f0cb",
+    "public/candidatura.html": "8c52fb9edd845d9a2137a3d6c76ac50da85bfae1269a7f37389890051a4d058c",
+    "public/candidatura.css": "e3b7167637e30dc185ec7e298ce7d17a5cb028f88ba401312e2b6738398e7802",
+    "public/candidatura.pdf": "e9b2a1ec78bf8643e7f8b27b79f35f28abc5d12d0b7a066d376118890737e88a"
+  }
+}

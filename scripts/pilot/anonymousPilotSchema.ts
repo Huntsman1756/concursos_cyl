@@ -1,15 +1,19 @@
 import { z } from "zod";
+import pilotRelease from "../../docs/pilot/release-target.json";
 
 export const ANONYMOUS_PILOT_SCHEMA_VERSION = "2.0.0" as const;
 export const ANONYMOUS_PILOT_PROTOCOL_VERSION = "2.0.0" as const;
 export const ANONYMOUS_PILOT_TASK_CATALOG_VERSION = "2.0.0" as const;
 export const ANONYMOUS_PILOT_NOT_RUN = "HUMAN_PILOT_NOT_RUN" as const;
 
-export const ANONYMOUS_PILOT_RELEASE = {
-  rootUrl: "https://huntsman1756.github.io/concursos_cyl/",
-  deployedCommitSha: "886bbf433df7db1e99acf78786286ceee8bc1a06",
-  snapshotId: "20260830120000000-8c6c79fbd2a1",
-} as const;
+export const ANONYMOUS_PILOT_RELEASE = z
+  .object({
+    rootUrl: z.url(),
+    deployedCommitSha: z.string().regex(/^[a-f0-9]{40}$/u),
+    snapshotId: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u),
+  })
+  .strict()
+  .parse(pilotRelease);
 
 export const ANONYMOUS_PILOT_TASK_IDS = [
   "T1_fp_to_occupation",
