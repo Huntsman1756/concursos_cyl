@@ -391,7 +391,8 @@ export async function assertAssetBudget(
 ): Promise<AssetBudgetReport> {
   const report = await collectAssetBudget(assetDirectory, inventory);
   // Pages embeds longer asset URLs. Keep the root cap and allow only a
-  // 100-byte reserve for the known backup path (623,026 bytes measured).
+  // 100-byte reserve per URL-bearing category for the known backup path.
+  // candidate.21 CSS: root 157,984; Pages 158,026 (+42 URL-prefix bytes).
   const pathReserve = publicBasePath === "/concursos_cyl/" ? 100 : 0;
   const violations: Array<[string, number, number]> = [
     ["total", report.totalBytes, ASSET_BUDGET.totalBytes],
@@ -403,7 +404,7 @@ export async function assertAssetBudget(
     [
       "stylesheet",
       report.categoryBytes.stylesheet,
-      ASSET_BUDGET.stylesheetBytes,
+      ASSET_BUDGET.stylesheetBytes + pathReserve,
     ],
     ["font", report.categoryBytes.font, ASSET_BUDGET.fontBytes],
     [
