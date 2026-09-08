@@ -485,17 +485,16 @@ async function verifyOnce(
     );
   }
 
-  const deepLinkUrl = urlForBasePath(base, "comparar");
+  // Known Pages routes are directories; request the final URL without relaxing
+  // the redirect policy used for version metadata and snapshot resources.
+  const deepLinkUrl = urlForBasePath(base, "comparar/");
   const deepLinkContext = await fetchResponse(
     request,
     deepLinkUrl,
     "/comparar",
     requestTimeoutMs,
   );
-  if (
-    deepLinkContext.response.status !== 200 &&
-    deepLinkContext.response.status !== 404
-  ) {
+  if (deepLinkContext.response.status !== 200) {
     deepLinkContext.controller.abort();
     cancelResponseBody(deepLinkContext.response);
     throw new Error(
