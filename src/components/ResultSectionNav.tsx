@@ -92,6 +92,7 @@ export function ResultSectionNav({
           <li key={link.href}>
             <FragmentLink
               href={link.href}
+              tabIndex={0}
               aria-current={activeHref === link.href ? "location" : undefined}
               onClick={() => setActiveHref(link.href)}
             >
