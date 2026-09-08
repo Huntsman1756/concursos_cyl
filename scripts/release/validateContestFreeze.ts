@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import { execFileSync } from "node:child_process";
 import path from "node:path";
+import { assertFreezeGitBoundary } from "./assertFreezeGitBoundary";
 
 import { format as formatPrettier } from "prettier";
 
@@ -1151,30 +1152,14 @@ function assertSourceCommitBoundary(
     );
   }
   try {
-    execFileSync(
-      "git",
-      ["rev-parse", "--verify", `${sourceCommitSha}^{commit}`],
-      { cwd: rootDir, stdio: "pipe" },
-    );
-    execFileSync(
-      "git",
-      ["merge-base", "--is-ancestor", sourceCommitSha, "HEAD"],
-      { cwd: rootDir, stdio: "pipe" },
-    );
-    execFileSync(
-      "git",
-      [
-        "diff",
-        "--quiet",
-        sourceCommitSha,
-        "--",
-        ...CONTEST_FREEZE_SOURCE_PATHS,
-      ],
-      { cwd: rootDir, stdio: "pipe" },
+    assertFreezeGitBoundary(
+      rootDir,
+      sourceCommitSha,
+      CONTEST_FREEZE_SOURCE_PATHS,
     );
   } catch {
     throw new Error(
-      "sourceCommitSha cannot prove an ancestor boundary without source/public data mutations",
+      "sourceCommitSha cannot prove a Git boundary without source/public data mutations",
     );
   }
 }

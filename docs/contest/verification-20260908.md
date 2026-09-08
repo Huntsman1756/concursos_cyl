@@ -42,3 +42,5 @@ El repositorio y GitHub Issues responden sin autenticación. GitHub Pages se hab
 Faltan los datos personales y las declaraciones sobre premios previos para completar la solicitud oficial. No se ha enviado la candidatura. El dominio propio depende de nombre, cuenta y presupuesto; el enlace VPS actual funciona. No se ha realizado una prueba desde una segunda red móvil ni un piloto con usuarios reales.
 
 El paquete documental final pasó lint, formato, comprobación de presentación, validación de release y manifiesto de las 13 capturas sobre el checkout limpio `0ab304008efbf6075da1e6e97f236206d37cb8ed`. GitHub exige pull request, CI aprobada e historial lineal; la integración sigue esas protecciones mediante squash, conservando el tag y la rama de procedencia del producto.
+
+La validación del freeze admite esa integración lineal solo con un registro verificado, el objeto exacto de un tag anotado y una publicación descendiente del commit fuente. Exige igualdad de los datos congelados tanto en la publicación como en el árbol actual. Una publicación pendiente, un tag movido o datos modificados se rechazan.
