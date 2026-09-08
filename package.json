@@ -1,7 +1,7 @@
 {
   "name": "salida-cyl",
   "version": "1.0.0",
-  "description": "Explora relaciones revisadas entre formaciÃƒÂ³n profesional y ocupaciones en Castilla y LeÃƒÂ³n con datos abiertos.",
+  "description": "Explora relaciones revisadas entre formación profesional y ocupaciones en Castilla y León con datos abiertos.",
   "main": "index.js",
   "directories": {
     "doc": "docs"
@@ -68,10 +68,10 @@
     "contest:content:check": "tsx scripts/release/validateMemoArtifacts.ts"
   },
   "keywords": [
-    "formaciÃƒÂ³n profesional",
+    "formación profesional",
     "FP",
     "ocupaciones",
-    "Castilla y LeÃƒÂ³n",
+    "Castilla y León",
     "datos abiertos",
     "empleo"
   ],
