@@ -26,15 +26,17 @@ sigue consultable; una oferta requiere evidencia específica.
 
 Se mantiene el presupuesto inicial de datos de 10.000.000 bytes y el de JavaScript.
 Las notas SISPE comparten la referencia en Metodología para evitar repetir la URL
-completa en cada evidencia. La medición final está pendiente. EDUCAbase se carga
+completa en cada evidencia. La carga inicial comprobada queda por debajo del límite en Chromium, Firefox y WebKit. EDUCAbase se carga
 al solicitarlo; solo la instantánea activa se distribuye en el sitio.
 
 ## Controles
 
 La compilación, integridad de 22 recursos, política de licencias y coherencia de la
 memoria HTML/PDF han pasado. La memoria tiene 692 palabras y dos páginas, inspeccionadas
-sin desbordamientos en la segunda página. La revisión final de navegador y CI se
+sin desbordamientos en ambas páginas. La revisión final de navegador y CI se
 incorpora al registro de publicación una vez completada.
 
 El piloto humano sigue en `HUMAN_PILOT_NOT_RUN`. La revisión de modelos no se cuenta
 como pilotaje ni como certificación profesional de orientación.
+
+Pruebas de los recorridos modificados: 73 superadas en Chromium (una omitida por viewport) y 32 en Firefox/WebKit. La suite completa y la comprobación pública se registran al terminar.
