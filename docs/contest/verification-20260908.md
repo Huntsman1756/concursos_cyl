@@ -37,6 +37,8 @@ Las 13 capturas se renovaron contra el producto publicado: sin errores de red/co
 
 La [demo guiada](evidence/demo-20260908.webm) dura aproximadamente dos minutos y muestra siete recorridos públicos. Es silenciosa, con rótulos en español. La superposición de rótulos utilizó una excepción CSP exclusivamente en su contexto de grabación; no se usa como prueba de seguridad. La comprobación de la memoria y las capturas usa contextos separados.
 
-El repositorio y GitHub Issues responden sin autenticación. GitHub Pages se ha habilitado y espera su primer despliegue de esta revisión; hasta registrar una comprobación satisfactoria no se considera respaldo disponible.
+El repositorio y GitHub Issues responden sin autenticación. GitHub Pages se habilitó durante esta revisión. Su despliegue tiene un ciclo separado del VPS: el resultado de la comprobación posterior se conserva en la [release pública candidate.17](https://github.com/Huntsman1756/concursos_cyl/releases/tag/v2026.09.08-candidate.17), junto con el PDF y el vídeo. El registro VPS no acredita por sí solo la disponibilidad del respaldo.
 
 Faltan los datos personales y las declaraciones sobre premios previos para completar la solicitud oficial. No se ha enviado la candidatura. El dominio propio depende de nombre, cuenta y presupuesto; el enlace VPS actual funciona. No se ha realizado una prueba desde una segunda red móvil ni un piloto con usuarios reales.
+
+El paquete documental final pasó lint, formato, comprobación de presentación, validación de release y manifiesto de las 13 capturas sobre el checkout limpio `0ab304008efbf6075da1e6e97f236206d37cb8ed`. GitHub exige pull request, CI aprobada e historial lineal; la integración sigue esas protecciones mediante squash, conservando el tag y la rama de procedencia del producto.
