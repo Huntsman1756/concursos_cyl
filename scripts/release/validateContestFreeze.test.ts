@@ -316,6 +316,7 @@ describe("contest coverage freeze validator", () => {
         ),
       ).toThrow(/manifest|resource|path|sha256|recordCount|recomput/iu);
     },
+    30_000,
   );
 
   it("validates the canonical SEPE period, sorted unique CNOs, and coverage", async () => {

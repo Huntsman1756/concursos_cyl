@@ -64,7 +64,6 @@ const DOCUMENT_NAMES = [
 ] as const;
 const OUTPUT_DIRECTORY = path.join("docs", "contest");
 const ROOT_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
-const FALLBACK_URL = "https://huntsman1756.github.io/concursos_cyl/";
 const CONTEST_URL =
   "https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html";
 const REGISTRATION_URL =
@@ -454,7 +453,7 @@ function renderSubmissionChecklist(
 ## ${candidatePlan === undefined ? "Campos técnicos" : "Baseline funcional verificada"}
 
 - URL raíz a presentar: [${ROOT_URL}](${ROOT_URL})
-- Dirección de respaldo configurada (comprobar disponibilidad): [${FALLBACK_URL}](${FALLBACK_URL})
+- GitHub Pages está deshabilitado; no se ofrece como respaldo público.
 - Commit fuente del freeze: \`${freeze.sourceCommitSha}\`.
 - Snapshot: \`${freeze.manifest.snapshotId}\`.
 - ${candidatePlan === undefined ? "Commit desplegado" : "Commit de baseline desplegado"}: ${deploymentCommit}.

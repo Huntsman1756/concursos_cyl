@@ -183,7 +183,8 @@ function relationshipAwareManifest() {
       },
       offerEvidence: {
         ...snapshot,
-        resourcePath: "/data/v1/snapshots/build-1/offer-evidence.json",
+        resourcePath:
+          "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/offer-evidence.json",
       },
     },
   };
