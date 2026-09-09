@@ -16,7 +16,7 @@ El servicio se dirige a estudiantes, personas que buscan empleo o un cambio prof
 
 ## Valor económico
 
-El acceso ciudadano es gratuito. Una vía potencial de negocio consiste en ofrecer adaptación, integración y mantenimiento a centros de formación, entidades de orientación y administraciones locales: selección de fuentes, actualización y revisión de relaciones para sus necesidades. La licencia MIT y el grafo abierto permiten esa reutilización. La sostenibilidad dependería de que los ingresos por esos servicios cubrieran el alojamiento, las actualizaciones y la revisión especializada. Es una hipótesis por validar; no se atribuyen clientes, contratos, ingresos, ahorro cuantificado ni rentabilidad observada.
+El acceso ciudadano es gratuito. Se plantea financiar el mantenimiento mediante servicios de adaptación, integración y actualización para centros educativos, entidades de orientación y administraciones locales. El código y el grafo abiertos facilitan su reutilización y mantenimiento por terceros. La viabilidad de este modelo está pendiente de contrastarse.
 
 ## Valor público y social
 
@@ -40,6 +40,6 @@ El candidato contiene 320 relaciones aprobadas: 185 de las 187 claves de program
 
 301 de las 1.032 ofertas de la instantánea tienen relación FP revisada (29,2 %). Se cuentan ofertas distintas; no representan todo el mercado laboral. Las fuentes JCyL se descargaron el 8 de septiembre de 2026; las ofertas incluyen publicaciones hasta el 4 de septiembre. El recurso derivado se generó el 8 de septiembre. Las revisiones nacionales conservan sus fechas originales. La vigencia se contrasta en la fuente oficial.
 
-La revisión documental está asistida por IA, con comprobación adicional del agente coordinador, también de IA, frente a fuentes oficiales. El acuerdo entre modelos no basta para aprobar una relación: se exige evidencia documental y se comprueban exclusiones y límites.
+La revisión documental utiliza modelos de lenguaje para proponer y contrastar relaciones con fuentes oficiales. Las propuestas pasan por una segunda comprobación, también mediante IA, y por controles automáticos de consistencia. La aprobación exige evidencia documental identificada y revisión de límites y exclusiones; el acuerdo entre modelos no es suficiente.
 
 El proyecto dispone de pruebas de datos e interfaz, control de licencias y verificación de integridad de recursos. La metodología, el inventario de fuentes y los datos descargables están accesibles desde la aplicación. La evidencia técnica detallada se conserva en el repositorio para su comprobación.
