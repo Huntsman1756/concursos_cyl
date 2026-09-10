@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "sourceRecordingCommit": "ca8289ebe12c888af7765a212ce44b3754f838ca",
+  "sourceFile": "demo-candidate21-20260908.webm",
+  "sourceSha256": "4f221efc1b0053252eaefd984b0e5056edcb600f06abba8371b3058946163f65",
+  "canonicalUrl": "https://salidacyl.es/",
+  "voiceProvider": "Microsoft Edge TTS",
+  "client": "edge-tts",
+  "clientVersion": "7.2.8",
+  "voice": "es-ES-XimenaNeural",
+  "rate": "+0%",
+  "syntheticNarration": true,
+  "subtitleTimingSource": "Edge TTS WordBoundary",
+  "originalRecordingPreserved": true,
+  "previousMemoSceneReplaced": true,
+  "outputFile": "demo-salidacyl-ximena-20260910.mp4",
+  "outputSha256": "3b745f75b27e5b08d993e2e55594234d00b06ab23dd1936267a197c1bdbf7f98",
+  "durationSeconds": 116.301333,
+  "scenes": [
+    {
+      "id": "01",
+      "route": "/",
+      "startSeconds": 0.0,
+      "durationSeconds": 16.64,
+      "speechStartSeconds": 0.8,
+      "speechDurationSeconds": 13.536,
+      "voiceSha256": "ee58600bda6ddcb2ce39110124fd98b3d0c01724be10b8f5735b41a84bad0bd0",
+      "subtitleCuesSha256": "afa89b33278c04b46a955aa742ef5016e0f40cb89669b933b93f7dca3bb8d477"
+    },
+    {
+      "id": "02",
+      "route": "/desde-fp/ADG02S",
+      "startSeconds": 16.64,
+      "durationSeconds": 16.2,
+      "speechStartSeconds": 17.44,
+      "speechDurationSeconds": 15.0,
+      "voiceSha256": "07212186a68d9ea46f601766123aaeadc808149a5737a2ffd95e30a22a9daced",
+      "subtitleCuesSha256": "15d5b51c8328a01b0349fc9d1bab2eb60628c372fb602bb7966892b3d70f6549"
+    },
+    {
+      "id": "03",
+      "route": "/desde-fp/ADG02S/ofertas",
+      "startSeconds": 32.84,
+      "durationSeconds": 16.0,
+      "speechStartSeconds": 33.64,
+      "speechDurationSeconds": 14.424,
+      "voiceSha256": "1ec5a88cd81c76fcf083e91f0e19616993df2c9e70c9eb06807e5cbb6b5c7b5b",
+      "subtitleCuesSha256": "309a4462fc1edae583451d1bd030b6ecd9742a528d1e24db5e0f378dca46b1b3"
+    },
+    {
+      "id": "04",
+      "route": "/formacion/ADG02S",
+      "startSeconds": 48.84,
+      "durationSeconds": 16.04,
+      "speechStartSeconds": 49.64,
+      "speechDurationSeconds": 14.808,
+      "voiceSha256": "c52be32e7959d07008eb44acb1af2d3bd3b2d7a0d560c4230c296eeb72977069",
+      "subtitleCuesSha256": "e4e60d9a95a7df2029edeba17c2095c45851358ec2552288a020687ae161bc10"
+    },
+    {
+      "id": "05",
+      "route": "/comparar?program=ADG02S",
+      "startSeconds": 64.88,
+      "durationSeconds": 16.76,
+      "speechStartSeconds": 65.67999999999999,
+      "speechDurationSeconds": 15.552,
+      "voiceSha256": "7aeceed07ea1e0421e15e93afcaf5ee8a83d857bb099dbb912263a25fac091ec",
+      "subtitleCuesSha256": "7c6dfa484fa98d8b889fe7a9a6495c18aa67183dcb8bd53e9b7f5fd0fb7945de"
+    },
+    {
+      "id": "06",
+      "route": "/datos-abiertos",
+      "startSeconds": 81.64,
+      "durationSeconds": 16.64,
+      "speechStartSeconds": 82.44,
+      "speechDurationSeconds": 15.432,
+      "voiceSha256": "f5bdc235bee8f40bc97392383beab98861900b16cc9d14f02d927a794fb85183",
+      "subtitleCuesSha256": "1fbde0367c9b60a126b5321af052850762a66a2aa3422c1e2337852c17f8740c"
+    },
+    {
+      "id": "07",
+      "route": "/",
+      "startSeconds": 98.28,
+      "durationSeconds": 18.0,
+      "speechStartSeconds": 99.28,
+      "speechDurationSeconds": 15.096,
+      "voiceSha256": "d7b561b40184a552c019eb6153de288e8d50c7d94357f0951ad0862ba85888b4",
+      "subtitleCuesSha256": "553f7895d544b474ce73fe56960fe3235617eda39236a868d9e78471d44d6ce4"
+    }
+  ],
+  "voiceoverSha256": "f858af9d3c15d3787cbd523b30a3d6d4b529a4dd0314809b61910de3ee016905"
+}

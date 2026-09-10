@@ -75,6 +75,6 @@ Los datos se reconstruyen mediante `npm run data:build`, con revisión previa a 
 
 Código bajo licencia MIT. Los datos conservan las condiciones de cada editor: [DATA_LICENSE.md](DATA_LICENSE.md).
 
-La versión VPS publicada es `v2026.09.10-candidate.23`, con la memoria revisada (728 palabras y dos páginas). [Memoria PDF](https://salidacyl.es/candidatura.pdf) · [Demo narrada en español (1 min 55 s)](https://github.com/Huntsman1756/concursos_cyl/releases/download/v2026.09.10-candidate.23/demo-salidacyl-20260910.mp4).
+La versión VPS publicada es `v2026.09.10-candidate.23`, con la memoria revisada (728 palabras y dos páginas). [Memoria PDF](https://salidacyl.es/candidatura.pdf) · [Demo con Ximena en castellano](https://github.com/Huntsman1756/concursos_cyl/releases/download/v2026.09.10-candidate.23/demo-salidacyl-ximena-20260910.mp4).
 
 La [operativa](docs/operations.md) recoge mantenimiento, recuperación y comprobaciones públicas. La [migración al dominio propio](docs/contest/domain-migration-20260910.md) registra la nueva dirección y sus comprobaciones.
