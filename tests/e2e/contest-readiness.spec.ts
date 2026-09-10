@@ -225,7 +225,7 @@ test.describe("contest readiness journeys", () => {
     );
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",
-      "https://salida-cyl.157-90-22-40.sslip.io/",
+      "https://salidacyl.es/",
     );
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
       "content",
@@ -243,11 +243,11 @@ test.describe("contest readiness journeys", () => {
     );
     await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
       "content",
-      "https://salida-cyl.157-90-22-40.sslip.io/",
+      "https://salidacyl.es/",
     );
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
       "content",
-      "https://salida-cyl.157-90-22-40.sslip.io/salida-cyl-social.png",
+      "https://salidacyl.es/salida-cyl-social.png",
     );
     await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
       "content",
@@ -265,7 +265,7 @@ test.describe("contest readiness journeys", () => {
     );
     await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
       "content",
-      "https://salida-cyl.157-90-22-40.sslip.io/salida-cyl-social.png",
+      "https://salidacyl.es/salida-cyl-social.png",
     );
     await expect(page.locator('link[rel="icon"]')).toHaveAttribute(
       "href",
@@ -293,7 +293,7 @@ test.describe("contest readiness journeys", () => {
     expect(robotsResponse.ok()).toBe(true);
     expect(robotsResponse.headers()["content-type"]).toMatch(/^text\/plain/u);
     expect(await robotsResponse.text()).toBe(
-      "User-agent: *\nAllow: /\nSitemap: https://salida-cyl.157-90-22-40.sslip.io/sitemap.xml\n",
+      "User-agent: *\nAllow: /\nSitemap: https://salidacyl.es/sitemap.xml\n",
     );
   });
 
@@ -305,7 +305,7 @@ test.describe("contest readiness journeys", () => {
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",
-      "https://salida-cyl.157-90-22-40.sslip.io/desde-fp/ADG02S",
+      "https://salidacyl.es/desde-fp/ADG02S",
     );
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       "content",
@@ -319,9 +319,7 @@ test.describe("contest readiness journeys", () => {
     const sitemap = await request.get("/sitemap.xml");
     expect(sitemap.ok()).toBe(true);
     const xml = await sitemap.text();
-    expect(xml).toContain(
-      "https://salida-cyl.157-90-22-40.sslip.io/desde-fp/ADG02S",
-    );
+    expect(xml).toContain("https://salidacyl.es/desde-fp/ADG02S");
     expect(xml).not.toContain("?q=");
   });
 
