@@ -1,7 +1,9 @@
 {
-  "model": "kokoro",
-  "voice": "ef_dora",
-  "speed": 1,
+  "provider": "Microsoft Edge TTS",
+  "client": "edge-tts",
+  "clientVersion": "7.2.8",
+  "voice": "es-ES-XimenaNeural",
+  "rate": "+0%",
   "loudnorm": { "I": -16, "TP": -1.5, "LRA": 11 },
   "lines": [
     {

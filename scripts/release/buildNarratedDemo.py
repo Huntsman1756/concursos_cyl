@@ -1,12 +1,13 @@
 """Add scene-aligned narration to the preserved candidate.21 demonstration.
 
-Requires ffmpeg, ffprobe and Pillow. Generate the seven WAV files with the
-pinned launch-video-kit gen-voice.mjs and docs/contest/demo-voiceover.json.
+Requires ffmpeg, ffprobe and Pillow. Generate the seven WAV files and timed
+cues with generateEdgeNarration.py and docs/contest/demo-voiceover.json.
 No network calls or credentials are used by this editor.
 """
 import argparse
 import hashlib
 import json
+import math
 import subprocess
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
@@ -70,16 +71,20 @@ offset = 0.0
 for index, line in enumerate(config['lines']):
     voice = args.voice_dir/f"vo-{line['id']}.wav"
     spoken = duration(voice)
-    length = ranges[index][1]-ranges[index][0] if index<6 else 18.0
+    original_length = ranges[index][1]-ranges[index][0] if index<6 else 18.0
     lead = 0.8 if index<6 else 1.0
-    if spoken+lead+0.4>length:
-        raise ValueError(f"Narration {line['id']} does not fit its scene")
+    length = math.ceil(max(original_length, spoken+lead+0.4)*25)/25
+    cue_path = voice.with_suffix('.cues.json')
+    cues = json.loads(cue_path.read_text(encoding='utf-8'))
+    if ' '.join(cue['text'] for cue in cues) != line['text']:
+        raise ValueError(f"Subtitle text differs from scene {line['id']}")
     segment = args.work_dir/f"segment-{line['id']}.mp4"
     command = ['ffmpeg','-v','error','-y']
     if index<6:
-        command += ['-ss',str(ranges[index][0]),'-t',str(length),'-i',str(args.source),
+        command += ['-ss',str(ranges[index][0]),'-t',str(original_length),'-i',str(args.source),
                     '-loop','1','-i',str(banner_path),'-i',str(voice)]
-        filters = '[0:v]setpts=PTS-STARTPTS,pad=1280:844:0:44:color=0x124e46[base];[base][1:v]overlay=0:0,setsar=1[v];'
+        filters = (f'[0:v]setpts=PTS-STARTPTS,tpad=stop_mode=clone:stop_duration={length-original_length},'
+                   'pad=1280:844:0:44:color=0x124e46[base];[base][1:v]overlay=0:0,setsar=1[v];')
         audio_index=2
     else:
         command += ['-loop','1','-i',str(closing_path),'-i',str(voice)]
@@ -94,15 +99,16 @@ for index, line in enumerate(config['lines']):
     segments.append(segment)
     scenes.append({'id':line['id'],'route':routes[index],'startSeconds':offset,
                    'durationSeconds':length,'speechStartSeconds':offset+lead,
-                   'speechDurationSeconds':spoken,'voiceSha256':digest(voice)})
-    # Sentence cues remain short enough to read over the existing scene captions.
-    sentences = [sentence.strip()+'.' for sentence in line['text'].split('.') if sentence.strip()]
-    total_characters = sum(len(sentence) for sentence in sentences)
-    cursor=offset+lead
-    for sentence in sentences:
-        end=cursor+spoken*len(sentence)/total_characters
-        subtitles.append((cursor,end,sentence))
-        cursor=end
+                   'speechDurationSeconds':spoken,'voiceSha256':digest(voice),
+                   'subtitleCuesSha256':digest(cue_path)})
+    for cue_index, cue in enumerate(cues):
+        start = cue['startSeconds']
+        end = min(start + cue['durationSeconds'], spoken)
+        if cue_index+1 < len(cues):
+            end = min(end, cues[cue_index+1]['startSeconds'])
+        if not 0 <= start < end <= spoken:
+            raise ValueError(f"Invalid subtitle timing in scene {line['id']}")
+        subtitles.append((offset+lead+start,offset+lead+end,cue['text']))
     offset+=length
     print(f"Rendered scene {line['id']}: {length:.2f}s",flush=True)
 
@@ -118,11 +124,13 @@ run(['ffmpeg','-v','error','-y','-f','concat','-safe','0','-i',str(concat_path),
      '-movflags','+faststart',str(args.output)])
 manifest={'schemaVersion':1,'sourceRecordingCommit':'ca8289ebe12c888af7765a212ce44b3754f838ca',
           'sourceFile':args.source.name,'sourceSha256':digest(args.source),
-          'canonicalUrl':'https://salidacyl.es/','voiceProvider':'NaN',
-          'model':config['model'],'voice':config['voice'],'syntheticNarration':True,
+          'canonicalUrl':'https://salidacyl.es/','voiceProvider':config['provider'],
+          'client':config['client'],'clientVersion':config['clientVersion'],
+          'voice':config['voice'],'rate':config['rate'],'syntheticNarration':True,
+          'subtitleTimingSource':'Edge TTS WordBoundary',
           'originalRecordingPreserved':True,'previousMemoSceneReplaced':True,
           'outputFile':args.output.name,'outputSha256':digest(args.output),
           'durationSeconds':duration(args.output),'scenes':scenes,
           'voiceoverSha256':digest(ROOT/'docs/contest/demo-voiceover.json')}
-args.output.with_suffix('.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+args.output.with_suffix('.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
 print(f'Created {args.output} ({manifest["durationSeconds"]:.2f}s)',flush=True)

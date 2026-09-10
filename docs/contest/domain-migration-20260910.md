@@ -23,6 +23,6 @@ Los resultados finales, con la versión observada de cada host, se publican en l
 
 ## Demostración narrada
 
-Se reutiliza el recorrido grabado de candidate.21, con las mismas cifras del catálogo. Se sustituye el cierre que mostraba una memoria anterior y se añade la dirección actual. La narración se genera en español con Kokoro (`ef_dora`) mediante la API de NaN, usando el guion de `demo-voiceover.json`.
+Se reutiliza el recorrido grabado de candidate.21, con las mismas cifras del catálogo. Se sustituye el cierre que mostraba una memoria anterior y se añade la dirección actual. La narración vigente usa Ximena en castellano de España (`es-ES-XimenaNeural`) mediante Microsoft Edge TTS, con el guion de `demo-voiceover.json`.
 
-El procedimiento de voz toma como referencia el script MIT de [launch-video-kit](https://github.com/borjaperfra/launch-video-kit), revisión `6c5c08821a6400c2067a0518f2ca23fe2fb8f5a5`: una toma por escena, silencios recortados y normalización. Se conserva el vídeo original como evidencia de su versión; el montaje narrado identifica por separado su procedencia y fecha.
+La primera narración se creó con Kokoro/NaN y el script de launch-video-kit; sus archivos se conservan como históricos. La revisión con Ximena se genera con `edge-tts==7.2.8`, una toma por escena, normalización y subtítulos sincronizados con los tiempos de palabras. La [guía de la demostración](demo-guide.md) documenta el montaje actual. Se conserva el vídeo original como evidencia de su versión; el montaje narrado identifica por separado su procedencia y fecha.
