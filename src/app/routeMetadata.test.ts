@@ -6,9 +6,7 @@ afterEach(() => {
 describe("route metadata", () => {
   it("keeps distinct training canonicals without query terms or fragments", () => {
     const a = routeMetadata("/desde-fp/SAN21/", "?query=private-term");
-    expect(a.canonical).toBe(
-      "https://salida-cyl.157-90-22-40.sslip.io/desde-fp/SAN21",
-    );
+    expect(a.canonical).toBe("https://salidacyl.es/desde-fp/SAN21");
     expect(a.canonical).not.toBe(routeMetadata("/").canonical);
     expect(a.robots).toBe("noindex,follow");
     expect(JSON.stringify(a)).not.toContain("private-term");

@@ -10,7 +10,7 @@ import {
   type PublicationMetadata,
 } from "./publicationMetadata";
 
-const CANONICAL_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
+const CANONICAL_URL = "https://salidacyl.es/";
 const FALLBACK_URL = "https://huntsman1756.github.io/concursos_cyl/";
 const FIXTURE_CANONICAL_URL = "https://fixture.example.test/publication/";
 const DESCRIPTION =

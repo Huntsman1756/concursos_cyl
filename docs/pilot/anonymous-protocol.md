@@ -2,7 +2,7 @@
 
 Versión del protocolo: `2.0.0`  
 Versión del catálogo de tareas: `2.0.0`  
-Estado actual: `HUMAN_PILOT_NOT_RUN`
+Documento de preparación archivado: 8 de septiembre de 2026.
 
 ## Identidad de la versión del piloto
 

@@ -1,5 +1,7 @@
 # Limitaciones y alcance
 
+> La URL vigente es https://salidacyl.es/. Los commits, gates y capturas del registro de release citado abajo son evidencia archivada anterior a la migración de dominio. Véase [la publicación actual](domain-migration-20260910.md) para las comprobaciones del nuevo dominio.
+
 ## Datos de FP y empleo
 
 La publicación trabaja con un snapshot direccionado por manifest. Las cifras describen los registros publicados por las fuentes oficiales en esa captura; una relación revisada sin coincidencias no se interpreta como ausencia del mercado laboral.

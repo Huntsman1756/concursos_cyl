@@ -1,5 +1,7 @@
 # Checklist de presentación
 
+> La URL vigente es https://salidacyl.es/. Los commits, gates y capturas del registro de release citado abajo son evidencia archivada anterior a la migración de dominio. Véase [la publicación actual](domain-migration-20260910.md) para las comprobaciones del nuevo dominio.
+
 ## Campos que debe completar una persona
 
 - Convocatoria: [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html).
@@ -12,7 +14,7 @@
 
 ## Campos técnicos
 
-- URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
+- URL raíz a presentar: [https://salidacyl.es/](https://salidacyl.es/)
 - El estado del respaldo GitHub Pages se registra por separado en [verification-20260908.md](verification-20260908.md).
 - Commit fuente del freeze: `8bf3ab85aac3e4c08d1826280529e9a648cbe0cc`.
 - Snapshot: `20260908155911229-c72920ec4fed`.

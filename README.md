@@ -4,7 +4,7 @@
 
 SALIDA CyL es una aplicación independiente con código bajo licencia MIT para personas que están eligiendo formación profesional, buscando empleo o acompañando decisiones de orientación en Castilla y León.
 
-[Abrir la aplicación](https://salida-cyl.157-90-22-40.sslip.io/) · [Respaldo alternativo](https://huntsman1756.github.io/concursos_cyl/) · [Memoria de candidatura](docs/contest/jury-memo.md) · [Metodología](https://salida-cyl.157-90-22-40.sslip.io/metodologia) · [Datos abiertos](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos)
+[Abrir la aplicación](https://salidacyl.es/) · [Respaldo alternativo](https://huntsman1756.github.io/concursos_cyl/) · [Memoria de candidatura](docs/contest/jury-memo.md) · [Metodología](https://salidacyl.es/metodologia) · [Datos abiertos](https://salidacyl.es/datos-abiertos)
 
 ## Qué puedes hacer
 
@@ -12,7 +12,7 @@ SALIDA CyL es una aplicación independiente con código bajo licencia MIT para p
 - **Partir de una profesión o una oferta:** explorar las formaciones relacionadas y consultar la fuente que justifica cada vínculo.
 - **Comparar estudios:** consultar referencias oficiales de ingresos de titulados, manteniendo separados sus ámbitos estadísticos. No son salarios prometidos ni predicciones individuales.
 
-Por ejemplo, la ficha de [Cuidados Auxiliares de Enfermería](https://salida-cyl.157-90-22-40.sslip.io/desde-fp/SAN21) permite pasar de la formación a sus relaciones ocupacionales y contrastarlas con las fuentes. La decisión final de matrícula o solicitud se realiza en los canales oficiales correspondientes.
+Por ejemplo, la ficha de [Cuidados Auxiliares de Enfermería](https://salidacyl.es/desde-fp/SAN21) permite pasar de la formación a sus relaciones ocupacionales y contrastarlas con las fuentes. La decisión final de matrícula o solicitud se realiza en los canales oficiales correspondientes.
 
 ## Alcance y límites
 
@@ -47,7 +47,7 @@ Se combinan con CNO-11, TodoFP, SEPE y EDUCAbase. El [inventario de fuentes](doc
 
 Categoría **Productos y Servicios** del [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html). La [comprobación de las bases](docs/contest/rules-2026.md) recoge fuentes oficiales, criterios y el límite de 1.000 palabras de la memoria.
 
-Los ajustes derivados del feedback de uso están en [feedback-uso-20260908.md](docs/qa/feedback-uso-20260908.md). La revisión del catálogo se conserva en [nan-review-20260908.md](docs/qa/nan-review-20260908.md). La revisión de fuentes del mismo día se conserva en [verification-20260908.md](docs/contest/verification-20260908.md). Los registros de releases anteriores son evidencia histórica, no una garantía del estado actual. El estado de publicación de ambos hosts se registra por separado en la [release pública](https://github.com/Huntsman1756/concursos_cyl/releases/tag/v2026.09.09-candidate.22). El repositorio y el canal de incidencias son públicos, verificados sin autenticación el 8 de septiembre. La memoria también se ofrece en la propia aplicación.
+Los ajustes derivados del feedback de uso están en [feedback-uso-20260908.md](docs/qa/feedback-uso-20260908.md). La revisión del catálogo se conserva en [nan-review-20260908.md](docs/qa/nan-review-20260908.md). La revisión de fuentes del mismo día se conserva en [verification-20260908.md](docs/contest/verification-20260908.md). Los registros de releases anteriores son evidencia histórica, no una garantía del estado actual. El estado de publicación de ambos hosts se registra por separado en la [release pública](https://github.com/Huntsman1756/concursos_cyl/releases/tag/v2026.09.10-candidate.23). El repositorio y el canal de incidencias son públicos, verificados sin autenticación el 8 de septiembre. La memoria también se ofrece en la propia aplicación.
 
 ## Desarrollo y calidad
 
@@ -75,6 +75,6 @@ Los datos se reconstruyen mediante `npm run data:build`, con revisión previa a 
 
 Código bajo licencia MIT. Los datos conservan las condiciones de cada editor: [DATA_LICENSE.md](DATA_LICENSE.md).
 
-La versión VPS publicada es `v2026.09.09-candidate.22`, con la memoria revisada (737 palabras y dos páginas). [Memoria PDF](https://salida-cyl.157-90-22-40.sslip.io/candidatura.pdf) · [Demo guiada de dos minutos (candidate.21; memoria anterior)](https://github.com/Huntsman1756/concursos_cyl/releases/download/v2026.09.08-candidate.21/demo-candidate21-20260908.webm).
+La versión VPS publicada es `v2026.09.10-candidate.23`, con la memoria revisada (728 palabras y dos páginas). [Memoria PDF](https://salidacyl.es/candidatura.pdf) · [Demo narrada en español (1 min 55 s)](https://github.com/Huntsman1756/concursos_cyl/releases/download/v2026.09.10-candidate.23/demo-salidacyl-20260910.mp4).
 
-La [operativa](docs/operations.md) recoge mantenimiento, recuperación y comprobaciones públicas. La [preparación del piloto](docs/pilot/readiness.md) distingue la versión técnica preparada de las observaciones humanas aún no realizadas.
+La [operativa](docs/operations.md) recoge mantenimiento, recuperación y comprobaciones públicas. La [migración al dominio propio](docs/contest/domain-migration-20260910.md) registra la nueva dirección y sus comprobaciones.

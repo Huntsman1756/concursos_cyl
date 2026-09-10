@@ -1,5 +1,7 @@
 # Evidencia técnica
 
+> La URL vigente es https://salidacyl.es/. Los commits, gates y capturas del registro de release citado abajo son evidencia archivada anterior a la migración de dominio. Véase [la publicación actual](domain-migration-20260910.md) para las comprobaciones del nuevo dominio.
+
 ## Freeze de cobertura
 
 <!-- prettier-ignore -->
@@ -79,7 +81,7 @@ La recomputación automatizada confirmó el manifest, sus 22 recursos, los conju
 
 ## Despliegue
 
-- URL raíz esperada: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
+- URL raíz esperada: [https://salidacyl.es/](https://salidacyl.es/)
 - Commit desplegado: `ca8289ebe12c888af7765a212ce44b3754f838ca`.
 - Run del workflow: no aplica (despliegue por script VPS, sin GitHub Actions).
 

@@ -40,9 +40,12 @@ For a reverse proxy mounted below a path, build with `--build-arg VITE_PUBLIC_BA
 ## VPS production
 
 The canonical VPS deployment serves the root-based build from
-`https://salida-cyl.157-90-22-40.sslip.io`. The DNS name resolves directly to
-the dedicated host and can be replaced with a project-owned domain by changing
-the site address in `deploy/vps/Caddyfile`.
+`https://salidacyl.es`. The domain uses DonDominio DNS: an A record for `salidacyl.es` points to
+`157.90.22.40`, and `www` is a CNAME for `salidacyl.es`.
+`deploy/vps/Caddyfile` serves the canonical host and redirects `www` while
+preserving the request URI. The previous `salida-cyl.157-90-22-40.sslip.io` host
+continues to serve the application during DNS activation. Caddy obtains and
+renews the new certificates automatically once the public DNS delegation is live.
 
 The host uses the official Caddy package and serves immutable release
 directories below `/srv/salida-cyl/releases`. The `current` symlink is replaced
@@ -89,6 +92,6 @@ never copies repository metadata or credentials to the server.
 Identifica operativamente el SHA, pero en BOUNDED_LOCAL no es evidencia firmada ni prueba criptográfica de procedencia.
 
 ```sh
-curl https://salida-cyl.157-90-22-40.sslip.io/version.json
+curl https://salidacyl.es/version.json
 ssh mcpspain-official-sources-vps "cat /srv/salida-cyl/current/version.json"
 ```

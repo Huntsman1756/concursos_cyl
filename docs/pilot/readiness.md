@@ -1,6 +1,6 @@
-# Preparación del piloto
+# Archivo del protocolo de preparación
 
-Estado: `HUMAN_PILOT_NOT_RUN`. La preparación técnica no contiene resultados de participantes.
+Este documento conserva el procedimiento preparado el 8 de septiembre de 2026 como referencia histórica. No es una lista de tareas pendientes para presentar la candidatura.
 
 1. Ejecutar `npm run pilot:preflight` y conservar el resultado local: versión pública, instantánea y hashes del protocolo y del guion.
 2. Comprobar las cinco tareas del [guion](anonymous-task-script.md), el consentimiento y la disponibilidad de 5–10 participantes adultos, incluyendo ambos roles definidos. No reclutar ni contactar personas automáticamente.
