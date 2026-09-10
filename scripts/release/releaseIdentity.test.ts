@@ -30,7 +30,7 @@ describe("publication configuration", () => {
   it("loads the only production publication URLs", () => {
     expect(loadPublicationConfig(ROOT)).toEqual({
       schemaVersion: "1.0.0",
-      canonicalRootUrl: "https://salida-cyl.157-90-22-40.sslip.io/",
+      canonicalRootUrl: "https://salidacyl.es/",
       fallbackRootUrl: "https://huntsman1756.github.io/concursos_cyl/",
     });
   });
@@ -38,7 +38,7 @@ describe("publication configuration", () => {
   it.each([
     ["canonicalRootUrl", "http://salida-cyl.example/"],
     ["canonicalRootUrl", "https://user:password@salida-cyl.example/"],
-    ["canonicalRootUrl", " https://salida-cyl.157-90-22-40.sslip.io/ "],
+    ["canonicalRootUrl", " https://salidacyl.es/ "],
     [
       "fallbackRootUrl",
       "https://huntsman1756.github.io/concursos_cyl/?source=qa",
@@ -51,7 +51,7 @@ describe("publication configuration", () => {
       expect(() =>
         parsePublicationConfig({
           schemaVersion: "1.0.0",
-          canonicalRootUrl: "https://salida-cyl.157-90-22-40.sslip.io/",
+          canonicalRootUrl: "https://salidacyl.es/",
           fallbackRootUrl: "https://huntsman1756.github.io/concursos_cyl/",
           [key]: value,
         }),
@@ -63,7 +63,7 @@ describe("publication configuration", () => {
     expect(() =>
       parsePublicationConfig({
         schemaVersion: "1.0.0",
-        canonicalRootUrl: "https://salida-cyl.157-90-22-40.sslip.io/",
+        canonicalRootUrl: "https://salidacyl.es/",
         fallbackRootUrl: "https://huntsman1756.github.io/concursos_cyl/",
         deployment: "pages",
       }),

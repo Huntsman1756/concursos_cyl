@@ -9,7 +9,7 @@ import { format } from "prettier";
 import { writeContestEvidenceChecklist } from "./validateContestEvidenceManifest";
 
 const MANIFEST_PATH = resolve("docs/contest/evidence-capture.json");
-const DEFAULT_BASE_URL = "https://salida-cyl.157-90-22-40.sslip.io";
+const DEFAULT_BASE_URL = "https://salidacyl.es";
 
 type RequiredVisible =
   | { kind: "role"; role: string; name: string }

@@ -54,7 +54,7 @@ describe("contest submission renderer", () => {
       "sigue mostrando la IX edición",
     );
     expect(rendered["submission-checklist.md"]).toContain(
-      "https://salida-cyl.157-90-22-40.sslip.io/",
+      "https://salidacyl.es/",
     );
     expect(rendered["submission-checklist.md"]).toContain(
       "PENDIENTE DE APROBACIÓN HUMANA",

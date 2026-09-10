@@ -1,4 +1,5 @@
-salida-cyl.157-90-22-40.sslip.io {
+# Keep the existing public entry point usable during .es DNS activation.
+salidacyl.es, salida-cyl.157-90-22-40.sslip.io {
 	root * /srv/salida-cyl/current
 	encode zstd gzip
 
@@ -49,4 +50,9 @@ salida-cyl.157-90-22-40.sslip.io {
 			}
 		}
 	}
+}
+
+# Preserve paths and query strings on the www alias.
+www.salidacyl.es {
+	redir https://salidacyl.es{uri} permanent
 }

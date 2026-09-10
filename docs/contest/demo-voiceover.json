@@ -1,0 +1,36 @@
+{
+  "model": "kokoro",
+  "voice": "ef_dora",
+  "speed": 1,
+  "loudnorm": { "I": -16, "TP": -1.5, "LRA": 11 },
+  "lines": [
+    {
+      "id": "01",
+      "text": "Elegir una formación exige conectar estudios, profesiones, centros y ofertas de empleo. SALIDA Castilla y León reúne estas consultas en una aplicación gratuita y permite comprobar de dónde sale la información."
+    },
+    {
+      "id": "02",
+      "text": "Este ejemplo parte de Administración y Finanzas. La ficha reúne cuatro profesiones relacionadas y cuarenta y cinco centros donde estudiar. Cada relación conserva una fuente que puedes consultar antes de dar el siguiente paso."
+    },
+    {
+      "id": "03",
+      "text": "Las ofertas pertenecen a una descarga fechada. Puedes consultar sus requisitos y la formación relacionada. Antes de enviar una solicitud, comprueba siempre la vigencia y las condiciones en la oferta oficial."
+    },
+    {
+      "id": "04",
+      "text": "También puedes localizar dónde estudiar el ciclo. En este ejemplo hay centros en las nueve provincias de Castilla y León. Consulta sus direcciones, filtra los resultados y abre la información publicada por cada centro."
+    },
+    {
+      "id": "05",
+      "text": "El comparador muestra ingresos observados de titulados, expresados como base de cotización anualizada. Mantiene visibles la cohorte y el ámbito estadístico. Son datos agregados de referencia, no una predicción de tu salario."
+    },
+    {
+      "id": "06",
+      "text": "El proyecto combina ocho conjuntos de datos abiertos de la Junta con fuentes oficiales complementarias. Sus trescientas veinte relaciones revisadas se pueden descargar en formatos JSON y CSV, con procedencia e integridad verificables."
+    },
+    {
+      "id": "07",
+      "text": "Entra en salida, ce, i griega, ele, punto es. Explora tu formación, consulta las fuentes y descarga la memoria de la candidatura. SALIDA Castilla y León: de la formación profesional al siguiente paso."
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
   [string]$SshHost = "mcpspain-official-sources-vps",
-  [string]$PublicUrl = "https://salida-cyl.157-90-22-40.sslip.io",
+  [string]$PublicUrl = "https://salidacyl.es",
   [string]$ReleaseId = ""
 )
 

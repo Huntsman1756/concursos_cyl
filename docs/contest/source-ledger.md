@@ -23,7 +23,7 @@ Las fuentes y los contratos se distinguen de las afirmaciones sobre el producto.
 | Salidas profesionales TodoFP                     | <https://www.todofp.es/que-estudiar/familias-profesionales.html>                                                                                                            | `data/curated/professional-profiles.json` and publication coverage gate                      |
 | BOE vocational qualification evidence            | <https://www.boe.es/>                                                                                                                                                       | Contrato de evidencia de relaciones curadas                                                  |
 | Ministry legal notice and terms boundary         | <https://www.educacionyfp.gob.es/comunes/aviso-legal.html>                                                                                                                  | `docs/methodology/educabase-income.md`                                                       |
-| Raíz pública de la aplicación                    | <https://salida-cyl.157-90-22-40.sslip.io/>                                                                                                                                 | `docs/deployment.md` and VPS release script                                                  |
+| Raíz pública de la aplicación                    | <https://salidacyl.es/>                                                                                                                                                     | `docs/deployment.md` and VPS release script                                                  |
 
 ## Límites de interpretación
 

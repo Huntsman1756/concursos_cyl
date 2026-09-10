@@ -1,5 +1,7 @@
 # SALIDA CyL
 
+> La URL vigente es https://salidacyl.es/. Los commits, gates y capturas del registro de release citado abajo son evidencia archivada anterior a la migración de dominio. Véase [la publicación actual](domain-migration-20260910.md) para las comprobaciones del nuevo dominio.
+
 ## Convocatoria
 
 Candidatura al [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html), categoría **Productos y Servicios**. El plazo oficial finaliza el **21 de septiembre de 2026** y la presentación se realiza mediante la [sede electrónica](https://www.tramitacastillayleon.jcyl.es/web/jcyl/AdministracionElectronica/es/Plantilla100Detalle/1251181050732/Premio/1285664800452/Propuesta).
@@ -31,8 +33,8 @@ Las cifras describen cobertura de datos, no impacto medido ni todo el mercado la
 
 ## Acceso
 
-URL raíz para la candidatura: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
+URL raíz para la candidatura: [https://salidacyl.es/](https://salidacyl.es/)
 
-Datos derivados: [https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos)
+Datos derivados: [https://salidacyl.es/datos-abiertos](https://salidacyl.es/datos-abiertos)
 
 La memoria ordenada por criterios está en [jury-memo.md](jury-memo.md). La procedencia técnica, los límites estadísticos, las pruebas y los campos que requieren confirmación humana están en [technical-evidence.md](technical-evidence.md), [limitations.md](limitations.md) y [submission-checklist.md](submission-checklist.md).

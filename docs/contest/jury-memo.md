@@ -2,7 +2,7 @@
 
 Categoría: **Productos y Servicios**. X Concurso de Datos Abiertos de Castilla y León, 2026.
 
-Acceso público: https://salida-cyl.157-90-22-40.sslip.io/
+Acceso público: https://salidacyl.es/
 
 ## Qué resuelve
 
@@ -20,7 +20,7 @@ El acceso ciudadano es gratuito. Se plantea financiar el mantenimiento mediante 
 
 ## Valor público y social
 
-Facilita el acceso a información sobre formación y empleo en Castilla y León sin registro. Los centros y filtros territoriales permiten ver qué se puede estudiar y dónde, incluidos los territorios con menos oferta. Cada relación conserva su procedencia y los vacíos de evidencia se muestran expresamente. El beneficio social es potencial: no se afirma haber reducido desempleo o despoblación ni haber demostrado impacto mediante un estudio de usuarios.
+Facilita el acceso a información sobre formación y empleo en Castilla y León sin registro. Los centros y filtros territoriales permiten ver qué se puede estudiar y dónde, incluidos los territorios con menos oferta. Cada relación conserva su procedencia y los vacíos de evidencia se muestran expresamente. El beneficio social es potencial: no se afirma haber reducido desempleo o despoblación.
 
 ## Originalidad y mejora respecto a consultas separadas
 

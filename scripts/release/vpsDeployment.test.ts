@@ -319,7 +319,7 @@ describe("VPS deployment contract", () => {
       "utf8",
     );
 
-    expect(caddyfile).toContain("salida-cyl.157-90-22-40.sslip.io {");
+    expect(caddyfile).toContain("salidacyl.es {");
     expect(caddyfile).toContain("root * /srv/salida-cyl/current");
     expect(caddyfile).toContain("try_files {path} /index.html");
     expect(caddyfile).toContain("Strict-Transport-Security");

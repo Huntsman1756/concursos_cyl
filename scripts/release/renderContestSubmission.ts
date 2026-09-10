@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 
+import { loadPublicationConfig } from "./releaseIdentity";
+
 import {
   loadAndValidateContestClaims,
   validateContestClaims,
@@ -63,7 +65,7 @@ const DOCUMENT_NAMES = [
   "submission-checklist.md",
 ] as const;
 const OUTPUT_DIRECTORY = path.join("docs", "contest");
-const ROOT_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
+const ROOT_URL = loadPublicationConfig().canonicalRootUrl;
 const CONTEST_URL =
   "https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html";
 const REGISTRATION_URL =
@@ -488,7 +490,7 @@ export function renderContestSubmission(
   const normalizeDocument = (content: string): string =>
     `${content.replace(/\n{3,}/gu, "\n\n").replace(/\n+$/u, "")}\n`;
 
-  return {
+  const documents: ContestSubmissionDocuments = {
     "application-summary.md": normalizeDocument(
       renderApplicationSummary(freeze),
     ),
@@ -500,6 +502,32 @@ export function renderContestSubmission(
       renderSubmissionChecklist(freeze, deployment),
     ),
   };
+  return addHistoricalDeploymentNote(documents, deployment);
+}
+
+function addHistoricalDeploymentNote(
+  documents: ContestSubmissionDocuments,
+  deployment: ContestDeploymentEvidence,
+): ContestSubmissionDocuments {
+  if (
+    typeof deployment.versionJsonUrl === "string" &&
+    new URL(deployment.versionJsonUrl).origin !== new URL(ROOT_URL).origin
+  ) {
+    const note =
+      "> La URL vigente es " +
+      ROOT_URL +
+      ". Los commits, gates y capturas del registro de release citado abajo " +
+      "son evidencia archivada anterior a la migración de dominio. " +
+      "Véase [la publicación actual](domain-migration-20260910.md) para las comprobaciones del nuevo dominio.\n\n";
+    for (const name of DOCUMENT_NAMES) {
+      const headingEnd = documents[name].indexOf("\n\n") + 2;
+      documents[name] =
+        documents[name].slice(0, headingEnd) +
+        note +
+        documents[name].slice(headingEnd);
+    }
+  }
+  return documents;
 }
 
 function loadContestDeploymentEvidence(
