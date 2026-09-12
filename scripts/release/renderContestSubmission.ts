@@ -441,6 +441,8 @@ function renderSubmissionChecklist(
 
   return `# Checklist de presentación
 
+> Registro técnico generado desde la evidencia de release. Para preparar la solicitud y sus adjuntos, seguir la [guía de entrega](submission-guide.md). Los estados de este registro corresponden a la release documentada; no acreditan una presentación ni el estado actual de la web.
+
 ## Campos que debe completar una persona
 
 - Convocatoria: [X Concurso de Datos Abiertos de Castilla y León](${CONTEST_URL}).

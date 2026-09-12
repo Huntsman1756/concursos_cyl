@@ -1,6 +1,6 @@
-# Bases oficiales comprobadas el 8 de septiembre de 2026
+# Bases oficiales — convocatoria y formulario revisados el 12 de septiembre de 2026
 
-Fuentes recuperadas directamente desde la sede electrónica mediante HTTPS; el navegador de búsqueda externo devolvió 403, pero la descarga desde el equipo funcionó.
+Convocatoria, sede y formulario CODA recuperados directamente mediante HTTPS el 12 de septiembre. El navegador de búsqueda externo devolvió 403, pero la descarga desde el equipo funcionó. Las bases y su modificación se contrastaron en la revisión del 8 de septiembre.
 
 - [Sede electrónica, IAPA 2377, convocatoria 2026](https://www.tramitacastillayleon.jcyl.es/web/jcyl/AdministracionElectronica/es/Plantilla100Detalle/1251181050732/Premio/1285664800452/Propuesta).
 - [Convocatoria completa y extracto: Orden de 14 de julio de 2026](https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/716/1003/IAPA_2377_EXTRACTOyCONVOCATORIA_2026.pdf).
@@ -21,16 +21,20 @@ Fuentes recuperadas directamente desde la sede electrónica mediante HTTPS; el n
 
 La convocatoria remite al artículo 10 modificado y reproduce siete criterios. Todos se consideran en la misma proporción:
 
-| Criterio                               | Evidencia en la memoria                                                                     |
-| -------------------------------------- | ------------------------------------------------------------------------------------------- |
-| Utilidad                               | Problema, destinatarios y recorrido concreto                                                |
-| Valor económico                        | Hipótesis de adaptación y mantenimiento para entidades, sin clientes ni ingresos inventados |
-| Valor público y social                 | Acceso, orientación territorial y procedencia visible                                       |
-| Originalidad, creatividad e innovación | Relaciones revisadas y navegación en ambos sentidos                                         |
-| Variedad de conjuntos                  | Ocho fuentes JCyL, funciones y complementos nacionales                                      |
-| Facilidad de uso y accesibilidad       | Entradas, filtros, móvil, teclado y límites de las pruebas                                  |
-| Calidad técnica                        | Trazabilidad, cobertura definida, integridad y validación                                   |
+| Criterio                               | Evidencia en la memoria                                                                                |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Utilidad                               | Problema, destinatarios y recorrido concreto                                                           |
+| Valor económico                        | Ahorro potencial de trabajo e integración y mantenimiento para entidades; demanda y costes por validar |
+| Valor público y social                 | Acceso, orientación territorial y procedencia visible                                                  |
+| Originalidad, creatividad e innovación | Relaciones revisadas y navegación en ambos sentidos                                                    |
+| Variedad de conjuntos                  | Ocho fuentes JCyL, funciones y complementos nacionales                                                 |
+| Facilidad de uso y accesibilidad       | Entradas, filtros, móvil, teclado y límites de las pruebas                                             |
+| Calidad técnica                        | Trazabilidad, cobertura definida, integridad y validación                                              |
 
 ## Control de presentación
 
 Comprobar el texto definitivo, su recuento de palabras, la URL y las declaraciones antes de enviar. Los campos personales y la confirmación de premios previos siguen pendientes; la autorización para modificar y desplegar el proyecto no aporta esos hechos.
+
+## Documentación concreta de entrega
+
+El apartado sexto.4 exige solicitud normalizada y memoria de hasta 1.000 palabras, con URL para Productos y Servicios. El vídeo, las capturas y los informes técnicos no figuran como adjuntos obligatorios generales. El formulario CODA incorpora la declaración responsable y las opciones de consulta tributaria y de Seguridad Social; pueden requerirse documentos según representación u oposición a consultas. Véase [lista de presentación](submission-guide.md).

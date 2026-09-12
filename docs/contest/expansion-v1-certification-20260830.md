@@ -17,7 +17,7 @@ jury memo, final application, A4, pilot, release evidence, or final demo.
 
 ## CANDIDATE
 
-- Worktree: F:\CodexHome\worktrees\expansion-v1-certification-20260830.
+- Worktree local: `expansion-v1-certification-20260830` (ruta del equipo omitida; identidad de rama y snapshot conservada).
 - Branch: codex/expansion-v1-certification-20260830.
 - Candidate snapshot: 20260830120000000-8c6c79fbd2a1.
 - Candidate changes are limited to the offer-evidence data contract, its
