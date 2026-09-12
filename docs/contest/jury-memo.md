@@ -16,7 +16,7 @@ El servicio se dirige a estudiantes, personas que buscan empleo o un cambio prof
 
 ## Valor económico
 
-El acceso ciudadano es gratuito. Se plantea financiar el mantenimiento mediante servicios de adaptación, integración y actualización para centros educativos, entidades de orientación y administraciones locales. El código y el grafo abiertos facilitan su reutilización y mantenimiento por terceros. La viabilidad de este modelo está pendiente de contrastarse.
+SALIDA CyL permite aprovechar en una misma consulta información que estudiantes y orientadores tendrían que reunir en varios portales. Su valor económico potencial está en reducir ese trabajo de búsqueda y contraste y en reutilizar las relaciones documentadas entre formación y ocupaciones. Para entidades con servicios de orientación, una posible actividad sería integrar esta información en sus propias herramientas y mantener actualizados los datos y las relaciones. El servicio remunerado sería esa implantación y mantenimiento; la consulta ciudadana seguiría siendo gratuita. El código y los datos derivados abiertos facilitan la integración. Esta vía requiere validar demanda y costes: no se presentan contratos, ingresos ni ahorros medidos.
 
 ## Valor público y social
 
@@ -32,11 +32,11 @@ Combina ocho conjuntos del Portal de Datos Abiertos de la Junta: oferta de FP, o
 
 ## Facilidad de uso y accesibilidad
 
-La aplicación ofrece entradas por formación, profesión y oferta, búsquedas y filtros, navegación adaptable a móvil y enlaces a las fuentes. Las pruebas automatizadas comprueban recorridos, teclado y reglas de accesibilidad; no equivalen a una certificación integral. La comparación de ingresos distingue ámbitos estadísticos y evita presentarlos como salarios individuales garantizados.
+La aplicación ofrece entradas por formación, profesión y oferta, búsquedas y filtros, navegación adaptable a móvil y enlaces a las fuentes. Las pruebas automatizadas comprueban recorridos, teclado y reglas de accesibilidad; no equivalen a una certificación integral. Las referencias de bases de cotización distinguen ámbitos estadísticos y no se presentan como salarios individuales garantizados.
 
 ## Calidad técnica y cobertura comprobable
 
-El candidato contiene 320 relaciones aprobadas: 185 de las 187 claves de programa tienen alguna relación revisada (98,9 %). Las modalidades se cuentan por separado; no son 185 titulaciones diferentes. Dos programas siguen pendientes de evidencia precisa.
+La instantánea publicada contiene 320 relaciones aprobadas: 185 de las 187 claves de programa tienen alguna relación revisada (98,9 %). Las modalidades se cuentan por separado; no son 185 titulaciones diferentes. Dos programas siguen pendientes de evidencia precisa.
 
 301 de las 1.032 ofertas de la instantánea tienen relación FP revisada (29,2 %). Se cuentan ofertas distintas; no representan todo el mercado laboral. Las fuentes JCyL se descargaron el 8 de septiembre de 2026; las ofertas incluyen publicaciones hasta el 4 de septiembre. El recurso derivado se generó el 8 de septiembre. Las revisiones nacionales conservan sus fechas originales. La vigencia se contrasta en la fuente oficial.
 

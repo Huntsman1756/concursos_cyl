@@ -2,54 +2,40 @@
 
 **Explora qué ocupaciones están relacionadas con una FP, dónde estudiarla y qué ofertas se conectan mediante evidencia revisada.**
 
-SALIDA CyL es una aplicación independiente con código bajo licencia MIT para personas que están eligiendo formación profesional, buscando empleo o acompañando decisiones de orientación en Castilla y León.
+Aplicación independiente y gratuita para personas que eligen formación profesional, buscan empleo o acompañan decisiones de orientación en Castilla y León. No requiere registro.
 
-[Abrir la aplicación](https://salidacyl.es/) · [Respaldo alternativo](https://huntsman1756.github.io/concursos_cyl/) · [Memoria de candidatura](docs/contest/jury-memo.md) · [Metodología](https://salidacyl.es/metodologia) · [Datos abiertos](https://salidacyl.es/datos-abiertos)
+[Abrir la aplicación](https://salidacyl.es/) · [Memoria PDF de esta versión](public/candidatura.pdf) · [Metodología](https://salidacyl.es/metodologia) · [Datos abiertos](https://salidacyl.es/datos-abiertos) · [Respaldo](https://huntsman1756.github.io/concursos_cyl/)
 
 ## Qué puedes hacer
 
 - **Partir de una FP:** consultar ocupaciones relacionadas, ofertas de una instantánea fechada y centros donde se imparte.
-- **Partir de una profesión o una oferta:** explorar las formaciones relacionadas y consultar la fuente que justifica cada vínculo.
-- **Comparar estudios:** consultar referencias oficiales de ingresos de titulados, manteniendo separados sus ámbitos estadísticos. No son salarios prometidos ni predicciones individuales.
+- **Partir de una profesión o una oferta:** explorar las formaciones relacionadas y la fuente que justifica cada vínculo.
+- **Comparar estudios:** consultar referencias oficiales de bases de cotización de titulados, manteniendo separados sus ámbitos estadísticos. No son salarios prometidos ni predicciones individuales.
 
-Por ejemplo, la ficha de [Cuidados Auxiliares de Enfermería](https://salidacyl.es/desde-fp/SAN21) permite pasar de la formación a sus relaciones ocupacionales y contrastarlas con las fuentes. La decisión final de matrícula o solicitud se realiza en los canales oficiales correspondientes.
+Por ejemplo, la ficha de [Cuidados Auxiliares de Enfermería](https://salidacyl.es/desde-fp/SAN21) permite explorar sus relaciones ocupacionales y contrastarlas con las fuentes. La matrícula o solicitud se realiza en los canales oficiales correspondientes.
 
-## Alcance y límites
+## Alcance de los datos
 
-Estas cifras corresponden al catálogo conservado en candidate.21, publicada en la web principal el 8 de septiembre de 2026. La [revisión documental asistida](analysis/nan-review/README.md) documenta las fuentes, correcciones y límites.
+La instantánea del **8 de septiembre de 2026** contiene **187 claves de programa, incluidas modalidades**, y **320 relaciones ocupacionales revisadas**. **185 claves tienen alguna relación aprobada (98,9 %)**; no son 185 titulaciones distintas.
 
-El catálogo contiene **187 claves de programa, incluidas modalidades**. **185 tienen al menos una relación ocupacional aprobada (98,9 %)**. El grafo del candidato contiene 320 relaciones revisadas. Las modalidades no se presentan como titulaciones distintas.
+**301 de las 1.032 ofertas de la instantánea tienen relación FP revisada (29,2 %)**. Son ofertas distintas, no un porcentaje de todo el mercado laboral. Una formación sin oferta relacionada no significa que carezca de oportunidades.
 
-**301 de las 1.032 ofertas de la instantánea (29,2 %) tienen una relación FP revisada.** Son ofertas distintas, no número de vínculos ni porcentaje de todo el mercado laboral. Una formación sin oferta relacionada no significa que carezca de oportunidades.
+Integra ocho conjuntos del Portal de Datos Abiertos de la Junta: oferta de FP, ofertas de empleo, formación del ECYL, certificados de profesionalidad, convocatorias de empleo público, contratos provinciales, municipios y centros docentes. Se complementan con CNO-11, TodoFP, SEPE y EDUCAbase. El [inventario de fuentes](docs/contest/source-ledger.md) identifica sus funciones; las [condiciones de los datos](DATA_LICENSE.md) distinguen las licencias aplicables.
 
-Las ocho fuentes JCyL se descargaron el **8 de septiembre de 2026**; las fechas de publicación de las ofertas llegan hasta el **4 de septiembre**. El recurso derivado de evidencia se generó el **8 de septiembre**. Las revisiones TodoFP, SEPE y EDUCAbase conservan sus propias fechas y no se presentan como actualizadas por esta descarga. Regenerar ese recurso no actualiza las fuentes. La vigencia de cada oferta debe comprobarse en su enlace oficial. Véase la [revisión de fuentes y despliegue](docs/contest/verification-20260908.md).
+Las fuentes JCyL se descargaron el 8 de septiembre; las ofertas incluyen publicaciones hasta el 4 de septiembre. Las fuentes nacionales conservan sus propias fechas. La vigencia de cada oferta se comprueba en su enlace oficial. No se afirman equivalencias profesionales, empleabilidad ni impacto social medido.
 
-Solo se publican relaciones justificadas por fuentes identificadas. No se completan vacíos por semejanza textual ni se afirman equivalencias profesionales, empleabilidad o impacto social medido.
+## Candidatura
 
-## Datos públicos reutilizados
+Categoría **Productos y Servicios** del [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html).
 
-Integra ocho conjuntos del Portal de Datos Abiertos de la Junta:
+- [Memoria](docs/contest/jury-memo.md) y [PDF de esta versión](public/candidatura.pdf).
+- [Guía de entrega](docs/contest/submission-guide.md): solicitud, adjuntos y comprobaciones antes de registrar.
+- [Índice documental](docs/contest/README.md): fuentes, límites, evidencia técnica y registros históricos.
+- [Demostración narrada](https://github.com/Huntsman1756/concursos_cyl/releases/download/v2026.09.10-candidate.23/demo-salidacyl-ximena-20260910.mp4): recorrido grabado con la instantánea del 8 de septiembre, voz sintética y subtítulos en español.
 
-| Conjunto                               | Utilidad                             |
-| -------------------------------------- | ------------------------------------ |
-| Oferta de formación profesional        | Estudios, modalidades y centros      |
-| Ofertas de empleo                      | Ofertas en una instantánea fechada   |
-| Formación del ECYL                     | Opciones de formación complementaria |
-| Certificados de profesionalidad        | Contexto de cualificaciones          |
-| Convocatorias de empleo público        | Acceso a convocatorias y sus fuentes |
-| Contratos realizados en las provincias | Contexto territorial agregado        |
-| Registro de municipios                 | Referencias territoriales            |
-| Directorio de centros docentes         | Información de centros               |
+El PDF enlazado pertenece a esta rama o versión del repositorio. La web y las releases tienen su propio ciclo de publicación y pueden conservar una memoria anterior. Las comprobaciones fechadas acreditan la versión observada, no el estado actual de todos los accesos.
 
-Se combinan con CNO-11, TodoFP, SEPE y EDUCAbase. El [inventario de fuentes](docs/contest/source-ledger.md) explica su función y sus condiciones. El grafo FP–ocupación se ofrece en JSON y CSV con fuente por relación, licencia e integridad verificable.
-
-## Candidatura y estado público
-
-Categoría **Productos y Servicios** del [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html). La [comprobación de las bases](docs/contest/rules-2026.md) recoge fuentes oficiales, criterios y el límite de 1.000 palabras de la memoria.
-
-Los ajustes derivados del feedback de uso están en [feedback-uso-20260908.md](docs/qa/feedback-uso-20260908.md). La revisión del catálogo se conserva en [nan-review-20260908.md](docs/qa/nan-review-20260908.md). La revisión de fuentes del mismo día se conserva en [verification-20260908.md](docs/contest/verification-20260908.md). Los registros de releases anteriores son evidencia histórica, no una garantía del estado actual. El estado de publicación de ambos hosts se registra por separado en la [release pública](https://github.com/Huntsman1756/concursos_cyl/releases/tag/v2026.09.10-candidate.23). El repositorio y el canal de incidencias son públicos, verificados sin autenticación el 8 de septiembre. La memoria también se ofrece en la propia aplicación.
-
-## Desarrollo y calidad
+## Desarrollo y comprobaciones
 
 Requiere Node.js 24.
 
@@ -58,8 +44,6 @@ npm ci
 npm run dev
 ```
 
-Comprobaciones del proyecto:
-
 ```sh
 npm run license:check
 npm run lint
@@ -67,14 +51,15 @@ npm test
 npm run build
 npm run test:e2e
 npm run contest:submission:check
+npm run contest:content:check
 ```
 
-Las pruebas cubren lógica de datos, interfaz, recorridos y comprobaciones automatizadas de accesibilidad. Su resultado corresponde al árbol y fecha de ejecución registrados; no acredita por sí solo conformidad completa de accesibilidad. La aplicación no requiere cuentas, cookies ni analítica. Los términos presentes en la URL pueden permanecer en el historial del navegador.
+Las pruebas cubren datos, interfaz y recorridos, incluyendo comprobaciones automatizadas de accesibilidad; no acreditan una certificación integral. La aplicación no requiere cuentas, cookies ni analítica. Los términos presentes en la URL pueden permanecer en el historial del navegador.
 
-Los datos se reconstruyen mediante `npm run data:build`, con revisión previa a su publicación. El [procedimiento de despliegue](docs/deployment.md) describe VPS, respaldo y verificación de versión.
+Los datos se reconstruyen con `npm run data:build`, con revisión previa a su publicación. La [operativa](docs/operations.md) y el [despliegue](docs/deployment.md) describen mantenimiento, recuperación y verificación.
 
-Código bajo licencia MIT. Los datos conservan las condiciones de cada editor: [DATA_LICENSE.md](DATA_LICENSE.md).
+## Ayuda y licencia
 
-La versión VPS publicada es `v2026.09.10-candidate.23`, con la memoria revisada (728 palabras y dos páginas). [Memoria PDF](https://salidacyl.es/candidatura.pdf) · [Demo con Ximena en castellano](https://github.com/Huntsman1756/concursos_cyl/releases/download/v2026.09.10-candidate.23/demo-salidacyl-ximena-20260910.mp4).
+El mantenimiento corresponde a la persona mantenedora de este repositorio. Para comunicar un error reproducible o proponer una mejora, utiliza [GitHub Issues](https://github.com/Huntsman1756/concursos_cyl/issues), sin incluir datos personales, credenciales ni documentos de la solicitud.
 
-La [operativa](docs/operations.md) recoge mantenimiento, recuperación y comprobaciones públicas. La [migración al dominio propio](docs/contest/domain-migration-20260910.md) registra la nueva dirección y sus comprobaciones.
+Código bajo [licencia MIT](LICENSE). Los datos conservan las [condiciones de sus editores](DATA_LICENSE.md); los componentes y recursos de terceros se detallan en [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

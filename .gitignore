@@ -25,6 +25,15 @@ policies/
 opencode.json
 AGENTS.md
 tmp/
+.tmp/
+.orca-local/
+orca.yaml
+__pycache__/
+*.py[cod]
+
+# Local release archives and submission records (may contain personal data)
+/audits/
+/private-submission/
 
 # Internal agent/orchestration tooling, docs and local analysis artifacts
 docs/agent-orchestration.md

@@ -2,6 +2,8 @@
 
 > La URL vigente es https://salidacyl.es/. Los commits, gates y capturas del registro de release citado abajo son evidencia archivada anterior a la migración de dominio. Véase [la publicación actual](domain-migration-20260910.md) para las comprobaciones del nuevo dominio.
 
+> Registro técnico generado desde la evidencia de release. Para preparar la solicitud y sus adjuntos, seguir la [guía de entrega](submission-guide.md). Los estados de este registro corresponden a la release documentada; no acreditan una presentación ni el estado actual de la web.
+
 ## Campos que debe completar una persona
 
 - Convocatoria: [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html).
