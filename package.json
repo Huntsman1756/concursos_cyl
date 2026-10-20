@@ -112,7 +112,7 @@
     "jsdom": "^30.0.1",
     "playwright": "^1.62.1",
     "prettier": "^3.9.6",
-    "sanitize-html": "^2.17.7",
+    "sanitize-html": "^2.18.0",
     "tsx": "^4.23.5",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.66.0",
