@@ -1,0 +1,1 @@
+function e(e){let t=e.map(e=>e.trim()).filter(e=>e.length>0).join(`, `);return t.length>0?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(t)}`:null}export{e as t};

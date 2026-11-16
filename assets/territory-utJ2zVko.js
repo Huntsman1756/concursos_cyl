@@ -1,0 +1,1 @@
+var e=[`Ávila`,`Burgos`,`León`,`Palencia`,`Salamanca`,`Segovia`,`Soria`,`Valladolid`,`Zamora`];function t(t){if(t.length===0)return{kind:`none`};if(t.length!==1)return{kind:`invalid`};let n=t[0];return n!==void 0&&e.includes(n)?{kind:`valid`,province:n}:{kind:`invalid`}}export{t as n,e as t};

@@ -1,0 +1,1 @@
+import{o as e}from"./index-B2DAKxma.js";var t=e();function n({children:e,...n}){return(0,t.jsxs)(`a`,{...n,target:`_blank`,rel:`noopener noreferrer`,children:[e,(0,t.jsx)(`span`,{className:`sr-only`,children:` (abre en una pestaña nueva)`})]})}export{n as t};

@@ -1,0 +1,1020 @@
+{
+  "kind": "salida-cyl-center-link-policy",
+  "version": "1.0.0",
+  "derivedFrom": "analysis/centers-link-audit.json",
+  "auditedAt": "2026-09-02T08:41:56.345Z",
+  "finishedAt": "2026-09-02T08:42:20.074Z",
+  "snapshotId": "20260830120000000-8c6c79fbd2a1",
+  "policy": {
+    "website": "Web del centro",
+    "sourcePublished": "Web publicada en la fuente",
+    "note": "Los enlaces se muestran tal como los publica la fuente. Disponibilidad e identidad verificadas en la auditoría fechada; no es una garantía continua."
+  },
+  "centers": {
+    "24000655": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24000990": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24005291": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24005355": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24006037": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24006049": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24006050": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24006074": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24006116": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24006128": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24008320": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24008393": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24008411": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24009610": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24009622": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24010995": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24014150": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24015403": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24016225": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24016237": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24016481": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24016602": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24016705": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24017801": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24017965": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "24018210": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24018222": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24018234": {
+      "cta": "source_published",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_NOT_CONFIRMED"
+    },
+    "24018544": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24018775": {
+      "cta": "source_published",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_NOT_CONFIRMED"
+    },
+    "24022006": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24022195": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24022250": {
+      "cta": "source_published",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_NOT_CONFIRMED"
+    },
+    "24022432": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24022511": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "24022596": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "34001686": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "34001777": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "34001893": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "34001901": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "34001911": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "34001935": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "34001947": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "34003245": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "34003661": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "34003831": {
+      "cta": "source_published",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_NOT_CONFIRMED"
+    },
+    "34003932": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "34007007": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "34007159": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37001031": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37002197": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37002227": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "37005526": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37005599": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37005630": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37005733": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37005782": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37005812": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37005851": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37005861": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37005873": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37006014": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37007729": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37008084": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37008102": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37008205": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37008217": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37008515": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37008813": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37009131": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37009921": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "37010017": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37010108": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37010145": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37013341": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37013626": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37013729": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37013857": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37013882": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "37013997": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "40000550": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "40002169": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "40003642": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "40003678": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "40003708": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "40004257": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "40004351": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "40004521": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "40004567": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "40004786": {
+      "cta": "source_published",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_NOT_CONFIRMED"
+    },
+    "40005018": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "40008445": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "40008536": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "42000322": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "42000437": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "42002665": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "42002690": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "42002707": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "42002720": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "42002744": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "42003268": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "42003700": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "42003761": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "42004029": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "42007195": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47000609": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "47002692": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47003593": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "47003611": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47003684": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47003878": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47004135": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "47004214": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47004354": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "47004421": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47004585": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47004615": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47004706": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47004937": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47004986": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47005747": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47005981": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47006284": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47006697": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47007021": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47007070": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47007197": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47007291": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47007306": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47007318": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47007461": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47007525": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47007719": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "47007744": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47011231": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47011668": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47011930": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "47012004": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "47012089": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47012090": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47012156": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47012171": {
+      "cta": "source_published",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_NOT_CONFIRMED"
+    },
+    "47012247": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47012260": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "47012314": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "49000418": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "49004588": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "49005994": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "49006007": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "49006019": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "49006020": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "49006044": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "49006378": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "49007164": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "49007531": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "49007619": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "49010643": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "49010679": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05000658": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05004378": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "05009698": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09004099": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09012096": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09012163": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05009923": {
+      "cta": "source_published",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_NOT_CONFIRMED"
+    },
+    "09008299": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09012229": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09012072": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09012187": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09012126": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09007994": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "09000264": {
+      "cta": "source_published",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_NOT_CONFIRMED"
+    },
+    "05005462": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05000701": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05005395": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05006387": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05004846": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "09001670": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09007751": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05000427": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09004142": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "05001547": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05000725": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05006156": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05009571": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "09007684": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "09003599": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05006399": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09007179": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05005425": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05000737": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09012552": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05004585": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "05009868": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09012734": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09001581": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_LIVE",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "05000580": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09001372": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09008834": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    },
+    "09012667": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_PLAUSIBLE"
+    },
+    "09001633": {
+      "cta": "website",
+      "classification": "SOURCE_PUBLISHED_REDIRECTED",
+      "identity": "IDENTITY_CONFIRMED"
+    }
+  }
+}

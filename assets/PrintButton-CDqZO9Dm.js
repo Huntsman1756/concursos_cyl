@@ -1,0 +1,1 @@
+import{a as e,o as t}from"./index-B2DAKxma.js";var n=t();function r({label:t=`Imprimir esta orientación`,className:r}){let i=[`print-control`,r].filter(e=>e!==void 0&&e.length>0).join(` `);return(0,n.jsxs)(`button`,{className:i,type:`button`,onClick:()=>window.print(),children:[(0,n.jsx)(e,{name:`printer`}),t]})}export{r as t};

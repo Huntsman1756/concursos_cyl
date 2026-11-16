@@ -1,0 +1,1 @@
+import{o as e}from"./index-B2DAKxma.js";var t=e();function n(e){let t=decodeURIComponent(e.slice(1));document.getElementById(t)?.focus({preventScroll:!0})}function r({href:e,onClick:r,...i}){function a(t){r?.(t),t.defaultPrevented||n(e)}return(0,t.jsx)(`a`,{...i,href:e,onClick:a})}export{r as t};
