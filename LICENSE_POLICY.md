@@ -1,7 +1,7 @@
 # Dependency license policy
 
-SALIDA CyL is open-source software distributed under the MIT license. Runtime
-and development software packages must use an approved open-source or
+SALIDA CyL's own code is proprietary (all rights reserved, see LICENSE). The
+runtime and development software packages it depends on must use an approved open-source or
 permissive license. The automated allowlist currently covers `0BSD`,
 `Apache-2.0`, `BSD-2-Clause`, `BSD-3-Clause`, `ISC`, `MIT`, `MIT-0`, and
 `MPL-2.0`.

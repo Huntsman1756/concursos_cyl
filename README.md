@@ -62,4 +62,4 @@ Los datos se reconstruyen con `npm run data:build`, con revisión previa a su pu
 
 El mantenimiento corresponde a la persona mantenedora de este repositorio. Para comunicar un error reproducible o proponer una mejora, utiliza [GitHub Issues](https://github.com/Huntsman1756/concursos_cyl/issues), sin incluir datos personales, credenciales ni documentos de la solicitud.
 
-Código bajo [licencia MIT](LICENSE). Los datos conservan las [condiciones de sus editores](DATA_LICENSE.md); los componentes y recursos de terceros se detallan en [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Código: todos los derechos reservados (h1756), publicado solo para consulta ([aviso](LICENSE)). Los datos conservan las [condiciones de sus editores](DATA_LICENSE.md); los componentes y recursos de terceros se detallan en [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

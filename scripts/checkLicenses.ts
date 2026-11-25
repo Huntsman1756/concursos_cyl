@@ -32,7 +32,9 @@ function dependencyLicenses(lock: PackageLock): DependencyLicense[] {
     throw new Error("package-lock.json does not expose a packages table.");
   }
 
+  // The root entry is this project itself (proprietary), not a dependency.
   return Object.entries(lock.packages)
+    .filter(([path]) => path !== "")
     .map(([path, metadata]) => ({
       name: packageNameFromLockPath(path, metadata),
       license: typeof metadata.license === "string" ? metadata.license : null,

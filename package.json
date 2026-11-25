@@ -76,7 +76,7 @@
     "empleo"
   ],
   "author": "",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "type": "module",
   "dependencies": {
     "@noble/hashes": "^2.2.0",
