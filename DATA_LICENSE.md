@@ -27,8 +27,8 @@ The manifest preserves the source identifier, official records URL, fetch
 time, source update time where published, record count, and content hash for
 each generated resource. Employment records also preserve their own official
 update timestamp. Normalization, reconciliation, and sanitization do not
-remove the source attribution or replace the source license. The MIT software
-license applies to project code, not to third-party source data.
+remove the source attribution or replace the source license. The copyright notice
+in LICENSE applies to project code, not to third-party source data.
 
 ## EDUCAbase income evidence
 
@@ -53,6 +53,6 @@ transformation verifies both formats, selects only the approved scopes, and
 represents unavailable source cells without substituting values. See
 `docs/methodology/educabase-income.md` for the complete method.
 
-The repository's MIT license covers project software only. It does not cover
+The repository's copyright notice covers project software only. It does not cover
 or relicense the Ministry's source data or the normalized values derived from
 those data.

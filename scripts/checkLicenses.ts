@@ -33,6 +33,8 @@ function dependencyLicenses(lock: PackageLock): DependencyLicense[] {
   }
 
   return Object.entries(lock.packages)
+    // The root entry is this project itself (proprietary), not a dependency.
+    .filter(([path]) => path !== "")
     .map(([path, metadata]) => ({
       name: packageNameFromLockPath(path, metadata),
       license: typeof metadata.license === "string" ? metadata.license : null,

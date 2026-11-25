@@ -120,5 +120,5 @@ El publicador es el Ministerio de Educación, Formación Profesional y Deportes.
 El catálogo oficial remite al
 [aviso legal del Ministerio](https://www.educacionyfp.gob.es/comunes/aviso-legal.html),
 que se registra sin cambiar su calificación ni sugerir respaldo institucional.
-La licencia MIT del repositorio se aplica al código del proyecto, no a los
-datos de origen.
+El aviso de derechos del repositorio se aplica al código del proyecto, no a
+los datos de origen.
